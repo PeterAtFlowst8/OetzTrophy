@@ -29,7 +29,7 @@ export default function LatestNews() {
           Aktuelles
         </h2>
 
-        <div className="divide-y" style={{ borderColor: 'var(--color-border)' }}>
+        <div className="divide-y divide-[#E5E5E0]">
           {latestPosts.map((post) => (
             <article key={post.slug} className="py-8 group">
               <time
