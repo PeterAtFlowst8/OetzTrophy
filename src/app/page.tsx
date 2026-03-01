@@ -1,3 +1,9 @@
+import Hero from '@/components/Hero';
+
 export default function Home() {
-  return <main>OetzTrophy coming soon</main>;
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 }
