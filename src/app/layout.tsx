@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Agdasima, Inter } from 'next/font/google';
 import './globals.css';
+import Nav from '@/components/Nav';
 
 const agdasima = Agdasima({
   weight: ['400', '700'],
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className={`${agdasima.variable} ${inter.variable}`}>
+        <Nav />
         {children}
       </body>
     </html>
