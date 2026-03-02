@@ -1,7 +1,7 @@
 const events = [
   {
     title: 'Oetz Kayak Cross',
-    subtitle: 'Extreme Slalom · WW III–IV',
+    subtitle: 'Extreme Slalom · WW V',
     image: '/images/hero.jpg',
     href: '/oetz-kayak-cross',
   },
@@ -21,34 +21,39 @@ const events = [
 
 export default function Events() {
   return (
-    <section className="py-20 md:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-5 md:px-10">
+    <section className="py-20 md:py-28" style={{ backgroundColor: 'var(--color-background)' }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        <p
-          className="uppercase tracking-widest mb-3 text-center"
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px',
-            letterSpacing: '0.2em',
-            color: 'var(--color-accent)',
-          }}
-        >
-          Events 2026
-        </p>
-        <h2
-          className="uppercase text-center mb-12"
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            fontWeight: 700,
-            color: 'var(--color-ink)',
-            lineHeight: 0.95,
-          }}
-        >
-          Das Programm
-        </h2>
+        {/* Left-aligned editorial header */}
+        <div className="mb-10 md:mb-14">
+          <p
+            className="uppercase mb-4"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '11px',
+              letterSpacing: '0.25em',
+              color: 'var(--color-accent)',
+            }}
+          >
+            Events 2026
+          </p>
+          <h2
+            className="uppercase"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(40px, 5.5vw, 72px)',
+              fontWeight: 700,
+              color: 'var(--color-ink)',
+              lineHeight: 0.92,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Das Programm
+          </h2>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Cards — full width of container */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {events.map((event) => (
             <a
               key={event.title}
@@ -61,36 +66,32 @@ export default function Events() {
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                 style={{ backgroundImage: `url('${event.image}')` }}
               />
-              {/* Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-              {/* Amber accent line — slides up on hover */}
+              {/* Base gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
+              {/* Amber bottom accent — slides in on hover */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-1 transition-transform duration-300 group-hover:translate-y-0 translate-y-full"
+                className="absolute bottom-0 left-0 right-0 h-[3px] translate-y-full transition-transform duration-300 group-hover:translate-y-0"
                 style={{ backgroundColor: 'var(--color-accent)' }}
               />
-              {/* Text */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
+              {/* Event label */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
+                <p
+                  className="uppercase mb-2 text-white/50 tracking-[0.2em]"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '10px' }}
+                >
+                  {event.subtitle}
+                </p>
                 <h3
-                  className="uppercase text-white"
+                  className="uppercase text-white leading-none"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(28px, 3vw, 40px)',
+                    fontSize: 'clamp(28px, 2.8vw, 42px)',
                     fontWeight: 700,
-                    lineHeight: 1,
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   {event.title}
                 </h3>
-                <p
-                  className="mt-2 text-white/70 uppercase tracking-wider transition-opacity duration-300 group-hover:text-white/90"
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '11px',
-                    letterSpacing: '0.12em',
-                  }}
-                >
-                  {event.subtitle}
-                </p>
               </div>
             </a>
           ))}

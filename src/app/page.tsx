@@ -1,5 +1,4 @@
 import Hero from '@/components/Hero';
-import Countdown from '@/components/Countdown';
 import DasRennen from '@/components/DasRennen';
 import Events from '@/components/Events';
 import LatestNews from '@/components/LatestNews';
@@ -9,7 +8,6 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Countdown />
       <DasRennen />
       <Events />
       <LatestNews />
