@@ -17,7 +17,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'OETZ TROPHY — Extreme Kayak Championships',
-  description: 'Das härteste Kajak-Rennen der Alpen. Ötztaler Ache, WW III–IV. Nur auf Einladung.',
+  description: 'Das härteste Kajak-Rennen der Alpen. Ötztaler Ache, WW V. Nur auf Einladung.',
   openGraph: {
     title: 'OETZ TROPHY — Extreme Kayak Championships',
     description: 'Das härteste Kajak-Rennen der Alpen. Nur auf Einladung.',
