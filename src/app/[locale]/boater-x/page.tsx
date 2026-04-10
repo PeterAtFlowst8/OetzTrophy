@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import Reveal from '@/components/Reveal';
+import FadeIn from '@/components/motion/FadeIn';
 
 export default async function BoaterXPage() {
   const t = await getTranslations('boaterX');
@@ -23,15 +23,15 @@ export default async function BoaterXPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12">
 
-          <Reveal>
+          <FadeIn>
             <div className="max-w-3xl mb-16 md:mb-20">
               <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
                 {t('intro')}
               </p>
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={100}>
+          <FadeIn delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
                 { label: t('dateLabel'), value: t('dateValue') },
@@ -65,9 +65,9 @@ export default async function BoaterXPage() {
               <span style={{ fontSize: '16px' }}>↗</span>
               {t('regNote')}
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={50}>
+          <FadeIn delay={0.05}>
             <div className="max-w-3xl mb-16 md:mb-20">
               <h2 className="uppercase mb-6" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
                 {t('formatHeading')}
@@ -76,9 +76,9 @@ export default async function BoaterXPage() {
                 {t('formatText')}
               </p>
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={50}>
+          <FadeIn delay={0.05}>
             <div className="max-w-3xl">
               <h2 className="uppercase mb-6" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
                 {t('rulesHeading')}
@@ -94,7 +94,7 @@ export default async function BoaterXPage() {
                 ))}
               </ul>
             </div>
-          </Reveal>
+          </FadeIn>
 
         </div>
       </section>

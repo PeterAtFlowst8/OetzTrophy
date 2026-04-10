@@ -1,4 +1,7 @@
 import { getTranslations } from 'next-intl/server';
+import FadeIn from '@/components/motion/FadeIn';
+import CountUp from '@/components/motion/CountUp';
+import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
 
 const DIVIDER = '1px solid rgba(255,255,255,0.1)';
 
@@ -48,122 +51,127 @@ export default async function DasRennen() {
         className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28"
         style={{ paddingTop: 'calc(4rem + 40px)' }}
       >
-        {/* Section label */}
-        <p
-          className="uppercase mb-6"
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px',
-            letterSpacing: '0.25em',
-            color: 'var(--color-accent)',
-          }}
-        >
-          {t('label')}
-        </p>
+        <FadeIn>
+          <p
+            className="uppercase mb-6"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '11px',
+              letterSpacing: '0.25em',
+              color: 'var(--color-accent)',
+            }}
+          >
+            {t('label')}
+          </p>
+        </FadeIn>
 
-        {/* Manifesto pullquote */}
-        <h2
-          className="uppercase mb-14 md:mb-20"
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(56px, 9.5vw, 128px)',
-            fontWeight: 700,
-            color: '#FAFAF7',
-            lineHeight: 0.88,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {t('headline1')}<br />{t('headline2')}
-        </h2>
+        <FadeIn delay={0.15}>
+          <h2
+            className="uppercase mb-14 md:mb-20"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(56px, 9.5vw, 128px)',
+              fontWeight: 700,
+              color: '#FAFAF7',
+              lineHeight: 0.88,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {t('headline1')}<br />{t('headline2')}
+          </h2>
+        </FadeIn>
 
         {/* Stat strip — desktop */}
-        <div className="hidden md:flex" style={{ borderTop: DIVIDER }}>
+        <StaggerContainer className="hidden md:flex" style={{ borderTop: DIVIDER }} stagger={0.12}>
           {stats.map(({ value, label }, i) => (
-            <div
+            <StaggerItem
               key={value}
               className="flex-1 py-8 pr-8"
-              style={{
-                paddingLeft: i === 0 ? '0' : '2rem',
-                borderLeft: i === 0 ? 'none' : DIVIDER,
-              }}
             >
-              <p
-                className="uppercase leading-none"
+              <div
                 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(28px, 4vw, 68px)',
-                  fontWeight: 700,
-                  color: 'var(--color-accent)',
-                  letterSpacing: '-0.01em',
+                  paddingLeft: i === 0 ? '0' : '2rem',
+                  borderLeft: i === 0 ? 'none' : DIVIDER,
                 }}
               >
-                {value}
-              </p>
-              <p
-                className="mt-3 uppercase"
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '11px',
-                  letterSpacing: '0.15em',
-                  color: 'rgba(255,255,255,0.35)',
-                }}
-              >
-                {label}
-              </p>
-            </div>
+                <CountUp
+                  value={value}
+                  className="uppercase leading-none block"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(28px, 4vw, 68px)',
+                    fontWeight: 700,
+                    color: 'var(--color-accent)',
+                    letterSpacing: '-0.01em',
+                  }}
+                />
+                <p
+                  className="mt-3 uppercase"
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '11px',
+                    letterSpacing: '0.15em',
+                    color: 'rgba(255,255,255,0.35)',
+                  }}
+                >
+                  {label}
+                </p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {/* Stat strip — mobile */}
-        <div className="md:hidden" style={{ borderTop: DIVIDER }}>
+        <StaggerContainer className="md:hidden" style={{ borderTop: DIVIDER }} stagger={0.08}>
           {stats.map(({ value, label }) => (
-            <div
-              key={value}
-              className="py-5 pl-4"
-              style={{
-                borderBottom: DIVIDER,
-                borderLeft: '3px solid var(--color-accent)',
-              }}
-            >
-              <p
-                className="uppercase leading-none"
+            <StaggerItem key={value}>
+              <div
+                className="py-5 pl-4"
                 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(32px, 9vw, 60px)',
-                  fontWeight: 700,
-                  color: 'var(--color-accent)',
-                  letterSpacing: '-0.01em',
+                  borderBottom: DIVIDER,
+                  borderLeft: '3px solid var(--color-accent)',
                 }}
               >
-                {value}
-              </p>
-              <p
-                className="mt-2 uppercase"
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '11px',
-                  letterSpacing: '0.15em',
-                  color: 'rgba(255,255,255,0.35)',
-                }}
-              >
-                {label}
-              </p>
-            </div>
+                <CountUp
+                  value={value}
+                  className="uppercase leading-none block"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(32px, 9vw, 60px)',
+                    fontWeight: 700,
+                    color: 'var(--color-accent)',
+                    letterSpacing: '-0.01em',
+                  }}
+                />
+                <p
+                  className="mt-2 uppercase"
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '11px',
+                    letterSpacing: '0.15em',
+                    color: 'rgba(255,255,255,0.35)',
+                  }}
+                >
+                  {label}
+                </p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        {/* Editorial paragraph */}
-        <p
-          className="mt-12 max-w-xl"
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '16px',
-            lineHeight: 1.8,
-            color: 'rgba(255,255,255,0.45)',
-          }}
-        >
-          {t('body')}
-        </p>
+        <FadeIn delay={0.3}>
+          <p
+            className="mt-12 max-w-xl"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '16px',
+              lineHeight: 1.8,
+              color: 'rgba(255,255,255,0.45)',
+            }}
+          >
+            {t('body')}
+          </p>
+        </FadeIn>
       </div>
     </section>
   );

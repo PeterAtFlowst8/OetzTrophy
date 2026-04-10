@@ -1,0 +1,181 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to content" [ref=e3] [cursor=pointer]:
+      - /url: "#main"
+    - banner [ref=e4]:
+      - generic [ref=e8]:
+        - generic [ref=e12]:
+          - paragraph [ref=e17]: OETZ TROPHY | info@oetz-trophy.com
+          - generic [ref=e21]:
+            - link "Instagram" [ref=e22] [cursor=pointer]:
+              - /url: https://www.instagram.com/oetz_trophy/
+              - img "Instagram" [ref=e24]
+            - link "Facebook" [ref=e26] [cursor=pointer]:
+              - /url: https://www.facebook.com/oetztrophy
+              - img "Facebook" [ref=e28]
+            - link "YouTube" [ref=e30] [cursor=pointer]:
+              - /url: https://www.youtube.com/c/OETZTROPHYExtremeKayakChampionships
+              - img "YouTube" [ref=e32]
+        - generic [ref=e37]:
+          - link "OETZ TROPHY" [ref=e41] [cursor=pointer]:
+            - /url: https://oetz-trophy.com/en/
+            - img "OETZ TROPHY" [ref=e42]
+          - navigation "Haupt-Navigation" [ref=e45]:
+            - list [ref=e47]:
+              - listitem [ref=e48]:
+                - generic [ref=e50]:
+                  - text: Kayak festival
+                  - img [ref=e53]
+                - button "Untermenü von Kayak festival"
+              - listitem [ref=e55]:
+                - link "Media Contest" [ref=e56] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/media-contest/
+              - listitem [ref=e57]:
+                - link "Save the Oetz" [ref=e58] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/save-the-oetz/
+              - listitem [ref=e59]:
+                - link "Contact us" [ref=e60] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/infos-kontakt/kontakt/
+    - main [ref=e64]:
+      - article [ref=e66]:
+        - generic [ref=e68]:
+          - generic [ref=e73]:
+            - paragraph
+            - heading "Ötztal Kayak Festival & Media Contest 2025" [level=2] [ref=e74]
+            - heading "September 17 - 21, 2025" [level=2] [ref=e75]
+            - heading [level=2]
+            - paragraph
+            - heading "Oetz / Tyrol / Austria" [level=2] [ref=e76]:
+              - strong [ref=e77]: Oetz / Tyrol / Austria
+            - heading [level=2]
+            - paragraph
+          - generic [ref=e79]:
+            - link "Kayak festival Timetable for the Ötztal Kayak Festival 2025" [ref=e87] [cursor=pointer]:
+              - /url: /en/oetztal-kajakfestival/
+              - generic [ref=e89]:
+                - heading "Kayak festival" [level=2] [ref=e90]
+                - heading "Timetable for the Ötztal Kayak Festival 2025" [level=5] [ref=e91]
+            - link "Oetz Kayak Cross Extreme slalom competition on the slalom course in Oetz" [ref=e99] [cursor=pointer]:
+              - /url: /en/oetztal-kajakfestival/oetz-kayak-cross/
+              - generic [ref=e101]:
+                - heading "Oetz Kayak Cross" [level=2] [ref=e102]
+                - heading "Extreme slalom competition on the slalom course in Oetz" [level=5] [ref=e103]
+            - generic [ref=e105]:
+              - link "Media Contest Information on participation and procedure." [ref=e111] [cursor=pointer]:
+                - /url: /en/media-contest/
+                - generic [ref=e113]:
+                  - heading "Media Contest" [level=2] [ref=e114]
+                  - heading "Information on participation and procedure." [level=5] [ref=e115]
+              - paragraph
+          - generic [ref=e120]:
+            - heading "Welcome to the OETZ TROPHY CONTEST & Kayak Festival 2025" [level=2] [ref=e121]
+            - paragraph [ref=e122]: On this website you will find all information about the Ötztal Kayak Festival 2025. In addition to the Ötztal Kayak Festival and an Extreme Slalom competition on the slalom course in Oetz, there will be a Media Contest this year.
+          - heading "Current information on the OETZ TROPHY" [level=2] [ref=e124]
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - article [ref=e127]:
+                - generic [ref=e128]:
+                  - link "Oetz Trophy 2022 rules" [ref=e132] [cursor=pointer]:
+                    - /url: https://oetz-trophy.com/en/2024/08/regeln-zur-teilnahme-am-oetz-kayak-cross/
+                    - img "Oetz Trophy 2022 rules" [ref=e133]
+                  - generic [ref=e134]:
+                    - generic [ref=e135]:
+                      - heading "Rules for participating in the Oetz Kayak Cross" [level=2] [ref=e136]:
+                        - link "Rules for participating in the Oetz Kayak Cross" [ref=e137] [cursor=pointer]:
+                          - /url: https://oetz-trophy.com/en/2024/08/regeln-zur-teilnahme-am-oetz-kayak-cross/
+                      - generic [ref=e139]:
+                        - text: Posted on
+                        - time [ref=e140]: August 28, 2024
+                    - generic [ref=e141]: Safety First and foremost, all athletes must be experienced kayakers who feel comfortable on the slalom course of the Ötztaler Ache (WW III - IV). Athletes must be present at the briefing before the race. During the race it is forbidden to get on the upper part of the slalom course or to continue below the Wellerbrücke course! Material All...
+              - article [ref=e142]:
+                - generic [ref=e143]:
+                  - link [ref=e147] [cursor=pointer]:
+                    - /url: https://oetz-trophy.com/en/2024/01/absage-oetz-trophy-2024/
+                  - generic [ref=e148]:
+                    - generic [ref=e149]:
+                      - heading "Cancellation of the OETZ TROPHY 2024" [level=2] [ref=e150]:
+                        - link "Cancellation of the OETZ TROPHY 2024" [ref=e151] [cursor=pointer]:
+                          - /url: https://oetz-trophy.com/en/2024/01/absage-oetz-trophy-2024/
+                      - generic [ref=e153]:
+                        - text: Posted on
+                        - time [ref=e154]: January 28, 2024
+                    - generic [ref=e155]: It is with great regret that we have to inform you today that the OETZ TROPHY - Extreme Kayak World Championships 2024 have to be canceled. This decision was made after a thorough examination of the current situation and in consultation with experts, our sponsors and local partners. The race course has changed significantly due to the flooding in August 2023,...
+              - article [ref=e156]:
+                - generic [ref=e157]:
+                  - link [ref=e161] [cursor=pointer]:
+                    - /url: https://oetz-trophy.com/en/2023/11/noetztal-von-bren-orton/
+                  - generic [ref=e162]:
+                    - generic [ref=e163]:
+                      - heading "\"Noetztal\" - by Bren Orton" [level=2] [ref=e164]:
+                        - link "\"Noetztal\" - by Bren Orton" [ref=e165] [cursor=pointer]:
+                          - /url: https://oetz-trophy.com/en/2023/11/noetztal-von-bren-orton/
+                      - generic [ref=e167]:
+                        - text: Posted on
+                        - time [ref=e168]: November 3, 2023
+                    - generic [ref=e169]: When Bren asked us if we would like to support his latest film project, we didn't have to think twice. He has lived in Innsbruck for several years and has grown quite fond of the Ötztaler Ache during this time. In this guest article, he describes how he experienced the flood at the end of August 2023, which led to the...
+            - navigation "Seitennummerierung der Beiträge" [ref=e171]:
+              - heading "Page numbering of the contributions" [level=2] [ref=e172]
+              - generic [ref=e173]:
+                - generic [ref=e174]: "1"
+                - link "2" [ref=e175] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/page/2/
+                - link "3" [ref=e176] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/page/3/
+                - link "4" [ref=e177] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/page/4/
+                - generic [ref=e178]: ...
+                - link "14" [ref=e179] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/page/14/
+                - link [ref=e180] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/en/page/2/
+                  - img [ref=e181]
+          - heading "Our partners and main sponsors" [level=2] [ref=e183]
+          - generic [ref=e185]:
+            - link "VAUDE more" [ref=e189] [cursor=pointer]:
+              - /url: https://www.vaude.com/
+              - generic [ref=e195]:
+                - heading "VAUDE" [level=4] [ref=e196]
+                - paragraph
+                - generic [ref=e198]: more
+            - link "Ötztal Tourism more" [ref=e202] [cursor=pointer]:
+              - /url: https://www.oetz.com
+              - generic [ref=e208]:
+                - heading "Ötztal Tourism" [level=4] [ref=e209]
+                - paragraph
+                - generic [ref=e211]: more
+            - link "Kayak session more" [ref=e215] [cursor=pointer]:
+              - /url: https://www.kayaksession.com/
+              - generic [ref=e221]:
+                - heading "Kayak session" [level=4] [ref=e222]
+                - paragraph
+                - generic [ref=e224]: more
+            - link "SOURCE TO SEA Logo Further sponsors more" [ref=e228] [cursor=pointer]:
+              - /url: https://oetz-trophy.com/en/infos-kontakt/partner-sponsoren/
+              - img "SOURCE TO SEA Logo" [ref=e234]
+              - generic [ref=e235]:
+                - heading "Further sponsors" [level=4] [ref=e236]
+                - paragraph
+                - generic [ref=e238]: more
+    - contentinfo [ref=e239]:
+      - generic [ref=e240]:
+        - generic [ref=e250]:
+          - link "Instagram" [ref=e251] [cursor=pointer]:
+            - /url: https://www.instagram.com/oetz_trophy/
+            - img "Instagram" [ref=e253]
+          - link "Facebook" [ref=e255] [cursor=pointer]:
+            - /url: https://www.facebook.com/oetztrophy
+            - img "Facebook" [ref=e257]
+          - link "YouTube" [ref=e259] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/OETZTROPHYExtremeKayakChampionships
+            - img "YouTube" [ref=e261]
+        - navigation "Footer Navigation" [ref=e272]:
+          - list [ref=e274]:
+            - listitem [ref=e275]:
+              - link "Imprint" [ref=e276] [cursor=pointer]:
+                - /url: https://oetz-trophy.com/en/impressum/
+            - listitem [ref=e277]:
+              - link "Contact us" [ref=e278] [cursor=pointer]:
+                - /url: https://oetz-trophy.com/en/infos-kontakt/kontakt/
+        - paragraph [ref=e290]: © 2026 OETZ TROPHY Extreme Kayak Championships
+  - 'complementary "Language selected: English" [ref=e292]':
+    - generic [ref=e294]: English

@@ -1,0 +1,116 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Zum Inhalt springen" [ref=e3] [cursor=pointer]:
+      - /url: "#main"
+    - banner [ref=e4]:
+      - generic [ref=e8]:
+        - generic [ref=e12]:
+          - paragraph [ref=e17]: OETZ TROPHY | info@oetz-trophy.com
+          - generic [ref=e21]:
+            - link "Instagram" [ref=e22] [cursor=pointer]:
+              - /url: https://www.instagram.com/oetz_trophy/
+              - img "Instagram" [ref=e24]
+            - link "Facebook" [ref=e26] [cursor=pointer]:
+              - /url: https://www.facebook.com/oetztrophy
+              - img "Facebook" [ref=e28]
+            - link "YouTube" [ref=e30] [cursor=pointer]:
+              - /url: https://www.youtube.com/c/OETZTROPHYExtremeKayakChampionships
+              - img "YouTube" [ref=e32]
+        - generic [ref=e37]:
+          - link "OETZ TROPHY" [ref=e41] [cursor=pointer]:
+            - /url: https://oetz-trophy.com/
+            - img "OETZ TROPHY" [ref=e42]
+          - navigation "Haupt-Navigation" [ref=e45]:
+            - list [ref=e47]:
+              - listitem [ref=e48]:
+                - generic [ref=e50]:
+                  - text: Kajakfestival
+                  - img [ref=e53]
+                - button "Untermenü von Kajakfestival"
+              - listitem [ref=e55]:
+                - link "Media Contest" [ref=e56] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/media-contest/
+              - listitem [ref=e57]:
+                - link "Save the Oetz" [ref=e58] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/save-the-oetz/
+              - listitem [ref=e59]:
+                - link "Kontakt" [ref=e60] [cursor=pointer]:
+                  - /url: https://oetz-trophy.com/infos-kontakt/kontakt/
+    - main [ref=e64]:
+      - article [ref=e66]:
+        - generic [ref=e68]:
+          - generic [ref=e74]:
+            - paragraph
+            - paragraph
+          - heading "Partners" [level=1] [ref=e75]
+          - paragraph [ref=e76]:
+            - text: The
+            - emphasis [ref=e77]: OETZ TROPHY – Extreme Kayak Championships
+            - text: is an event by kayakers for kayakers. We – the organizing team of
+            - link "SOURCE TO SEA" [ref=e78] [cursor=pointer]:
+              - /url: https://s2s.at
+            - text: – will give everything to deliver a top-class kayaking race and to further develop the event. The
+            - emphasis [ref=e79]: OETZ TROPHY
+            - text: is made possible by our sponsors – we thank them a lot and hope for a long-term cooperation!
+          - generic [ref=e82]:
+            - link "VAUDE more" [ref=e86] [cursor=pointer]:
+              - /url: https://www.vaude.com/
+              - generic [ref=e92]:
+                - heading "VAUDE" [level=4] [ref=e93]
+                - paragraph
+                - generic [ref=e95]: more
+            - link "Ötztal Tourismus more" [ref=e99] [cursor=pointer]:
+              - /url: https://oetz.com
+              - generic [ref=e105]:
+                - heading "Ötztal Tourismus" [level=4] [ref=e106]
+                - paragraph
+                - generic [ref=e108]: more
+            - link "SOURCE TO SEA Logo SOURCE TO SEA more" [ref=e112] [cursor=pointer]:
+              - /url: https://s2s.at
+              - img "SOURCE TO SEA Logo" [ref=e118]
+              - generic [ref=e119]:
+                - heading "SOURCE TO SEA" [level=4] [ref=e120]
+                - paragraph
+                - generic [ref=e122]: more
+          - generic [ref=e125]:
+            - link "Kayak Session more" [ref=e129] [cursor=pointer]:
+              - /url: https://www.kayaksession.com/
+              - generic [ref=e135]:
+                - heading "Kayak Session" [level=4] [ref=e136]
+                - paragraph
+                - generic [ref=e138]: more
+            - link "NRS more" [ref=e142] [cursor=pointer]:
+              - /url: https://www.nrs.com/
+              - generic [ref=e148]:
+                - heading "NRS" [level=4] [ref=e149]
+                - paragraph
+                - generic [ref=e151]: more
+          - heading "Support us" [level=3] [ref=e153]
+          - paragraph [ref=e154]:
+            - text: You would also like to become a part of the OETZ TROPHY, support us with your company or cooperate with us? Then please contact us by
+            - link "e-mail" [ref=e155] [cursor=pointer]:
+              - /url: https://oetz-trophy.com/info-contact/contact-us/?lang=en
+            - text: . We are looking forward to hearing from you!
+    - contentinfo [ref=e156]:
+      - generic [ref=e157]:
+        - generic [ref=e167]:
+          - link "Instagram" [ref=e168] [cursor=pointer]:
+            - /url: https://www.instagram.com/oetz_trophy/
+            - img "Instagram" [ref=e170]
+          - link "Facebook" [ref=e172] [cursor=pointer]:
+            - /url: https://www.facebook.com/oetztrophy
+            - img "Facebook" [ref=e174]
+          - link "YouTube" [ref=e176] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/OETZTROPHYExtremeKayakChampionships
+            - img "YouTube" [ref=e178]
+        - navigation "Footer Navigation" [ref=e189]:
+          - list [ref=e191]:
+            - listitem [ref=e192]:
+              - link "Impressum" [ref=e193] [cursor=pointer]:
+                - /url: https://oetz-trophy.com/impressum/
+            - listitem [ref=e194]:
+              - link "Kontakt" [ref=e195] [cursor=pointer]:
+                - /url: https://oetz-trophy.com/infos-kontakt/kontakt/
+        - paragraph [ref=e207]: © 2026 OETZ TROPHY Extreme Kayak Championships
+  - 'complementary "Language selected: German" [ref=e209]':
+    - generic [ref=e211]: Deutsch

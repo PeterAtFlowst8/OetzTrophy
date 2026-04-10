@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import Reveal from '@/components/Reveal';
+import FadeIn from '@/components/motion/FadeIn';
 
 const socialLinks = [
   {
@@ -52,7 +52,7 @@ export default async function KontaktPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
 
-            <Reveal>
+            <FadeIn>
               <div>
                 <h2
                   className="uppercase mb-6"
@@ -91,9 +91,9 @@ export default async function KontaktPage() {
                   </p>
                 </div>
               </div>
-            </Reveal>
+            </FadeIn>
 
-            <Reveal delay={150}>
+            <FadeIn delay={0.15}>
               <div>
                 <h2
                   className="uppercase mb-6"
@@ -156,7 +156,7 @@ export default async function KontaktPage() {
                   ))}
                 </div>
               </div>
-            </Reveal>
+            </FadeIn>
 
           </div>
 

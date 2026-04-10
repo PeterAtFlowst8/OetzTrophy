@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import Reveal from '@/components/Reveal';
+import FadeIn from '@/components/motion/FadeIn';
 
 export default async function OetzTrophyPage() {
   const t = await getTranslations('oetzTrophy');
@@ -24,7 +24,7 @@ export default async function OetzTrophyPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12">
 
-          <Reveal>
+          <FadeIn>
             <div className="max-w-3xl mb-16 md:mb-20">
               <p
                 style={{
@@ -37,9 +37,9 @@ export default async function OetzTrophyPage() {
                 {t('intro')}
               </p>
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={100}>
+          <FadeIn delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
                 { label: t('dateLabel'), value: t('dateValue') },
@@ -73,9 +73,9 @@ export default async function OetzTrophyPage() {
                 </div>
               ))}
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={50}>
+          <FadeIn delay={0.05}>
             <div className="max-w-3xl mb-16 md:mb-20">
               <h2
                 className="uppercase mb-6"
@@ -100,9 +100,9 @@ export default async function OetzTrophyPage() {
                 {t('courseText')}
               </p>
             </div>
-          </Reveal>
+          </FadeIn>
 
-          <Reveal delay={50}>
+          <FadeIn delay={0.05}>
             <div className="max-w-3xl">
               <h2
                 className="uppercase mb-6"
@@ -146,7 +146,7 @@ export default async function OetzTrophyPage() {
                 ))}
               </ul>
             </div>
-          </Reveal>
+          </FadeIn>
 
         </div>
       </section>
