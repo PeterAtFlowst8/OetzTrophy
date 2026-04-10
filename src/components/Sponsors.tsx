@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { sponsors } from '@/lib/sponsors';
+import { getSponsors } from '@/lib/sponsors';
 import FadeIn from '@/components/motion/FadeIn';
 import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
 
+export const revalidate = 60;
+
 export default async function Sponsors() {
   const t = await getTranslations('sponsors');
+  const sponsors = await getSponsors();
+
+  if (sponsors.length === 0) return null;
 
   return (
     <section

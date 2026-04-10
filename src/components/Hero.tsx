@@ -3,18 +3,24 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { getCountdownState, FESTIVAL_DATE, type CountdownState } from '@/lib/countdown';
+import { getCountdownState, type CountdownState } from '@/lib/countdown';
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
-export default function Hero() {
+type Props = {
+  festivalDate?: string | null;
+};
+
+export default function Hero({ festivalDate }: Props) {
   const [state, setState] = useState<CountdownState | null>(null);
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
 
+  const targetDate = festivalDate ? new Date(festivalDate) : new Date('2026-09-17T09:00:00Z');
+
   useEffect(() => {
-    setState(getCountdownState(new Date(), FESTIVAL_DATE));
-    const id = setInterval(() => setState(getCountdownState(new Date(), FESTIVAL_DATE)), 1000);
+    setState(getCountdownState(new Date(), targetDate));
+    const id = setInterval(() => setState(getCountdownState(new Date(), targetDate)), 1000);
     return () => clearInterval(id);
   }, []);
 

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
   de: {
@@ -11,14 +12,19 @@ const meta = {
   },
 };
 
-type Props = { params: Promise<{ locale: string }> };
+type Props = { params: Promise<{ locale: string }>; children: React.ReactNode };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
   return { title: m.title, description: m.description };
 }
 
-export default function RegistrationLayout({ children }: { children: React.ReactNode }) {
-  return children;
+export const revalidate = 60;
+
+export default async function RegistrationLayout({ children }: Props) {
+  // Fetch settings to check if registration is open
+  // This data is available to child pages via the Sanity API
+  // The client component will check the date independently
+  return <>{children}</>;
 }

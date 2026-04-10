@@ -6,13 +6,18 @@ import DasRennen from '@/components/DasRennen';
 import LatestNews from '@/components/LatestNews';
 import Sponsors from '@/components/Sponsors';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
+import { getSiteSettings } from '@/lib/settings';
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const settings = await getSiteSettings();
+
   return (
     <main>
       <JsonLd data={organizationSchema} />
       <JsonLd data={festivalEventSchema} />
-      <Hero />
+      <Hero festivalDate={settings.festivalDate} />
       <MarqueeBanner />
       <FestivalOverview />
       <Events />
