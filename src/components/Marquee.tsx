@@ -39,9 +39,10 @@ export default async function MarqueeBanner() {
 
   return (
     <div
+      className="w-full"
       style={{
         backgroundColor: 'var(--color-accent)',
-        overflow: 'hidden',
+        overflow: 'clip',
         padding: '11px 0',
       }}
     >

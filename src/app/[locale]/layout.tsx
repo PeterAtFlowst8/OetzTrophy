@@ -50,8 +50,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className={`${agdasima.variable} ${inter.variable}`}>
+    <html lang={locale} className="overflow-x-hidden">
+      <body className={`${agdasima.variable} ${inter.variable} overflow-x-hidden`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Nav />
           {children}

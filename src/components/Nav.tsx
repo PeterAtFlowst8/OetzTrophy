@@ -46,8 +46,8 @@ export default function Nav() {
           showSolidBg ? 'bg-white shadow-sm py-3' : 'py-6'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <Link href="/" className="block shrink-0">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between overflow-hidden">
+          <Link href="/" className="block shrink-0 min-w-0">
             <Image
               src="/images/logo.png"
               alt="OETZ TROPHY"
