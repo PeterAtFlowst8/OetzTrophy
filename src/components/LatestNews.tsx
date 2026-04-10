@@ -1,11 +1,17 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { latestPosts } from '@/lib/news';
+import { getLatestPosts, localizedTitle, localizedSlug, localizedExcerpt, formatDate } from '@/lib/news';
 import FadeIn from '@/components/motion/FadeIn';
 import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
 
+export const revalidate = 60;
+
 export default async function LatestNews() {
   const t = await getTranslations('news');
+  const locale = await getLocale();
+  const posts = await getLatestPosts(3);
+
+  if (posts.length === 0) return null;
 
   return (
     <section style={{ backgroundColor: 'var(--color-surface)' }}>
@@ -58,13 +64,15 @@ export default async function LatestNews() {
       </div>
 
       <StaggerContainer className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28" stagger={0.12}>
-        {latestPosts.map((post, i) => (
-          <StaggerItem key={post.slug}>
+        {posts.map((post, i) => (
+          <StaggerItem key={post._id}>
             <article
               style={{ borderBottom: '1px solid var(--color-border)' }}
             >
-              <div className="py-8 md:py-10 flex gap-4 md:gap-14 items-start">
-
+              <Link
+                href={`/news/${localizedSlug(post, locale)}` as '/news/regeln-zur-teilnahme'}
+                className="block py-8 md:py-10 flex gap-4 md:gap-14 items-start group"
+              >
                 <span
                   className="shrink-0 leading-none select-none hidden md:block"
                   style={{
@@ -91,11 +99,11 @@ export default async function LatestNews() {
                       color: 'var(--color-muted)',
                     }}
                   >
-                    {post.date}
+                    {formatDate(post.publishedAt, locale)}
                   </time>
 
                   <h3
-                    className="uppercase mb-3"
+                    className="uppercase mb-3 transition-colors duration-200 group-hover:text-[var(--color-accent)]"
                     style={{
                       fontFamily: 'var(--font-display)',
                       fontSize: 'clamp(22px, 3.5vw, 48px)',
@@ -105,7 +113,7 @@ export default async function LatestNews() {
                       letterSpacing: '-0.01em',
                     }}
                   >
-                    {post.title}
+                    {localizedTitle(post, locale)}
                   </h3>
 
                   <p
@@ -117,11 +125,10 @@ export default async function LatestNews() {
                       color: 'var(--color-body-text)',
                     }}
                   >
-                    {post.excerpt}
+                    {localizedExcerpt(post, locale)}
                   </p>
                 </div>
-
-              </div>
+              </Link>
             </article>
           </StaggerItem>
         ))}

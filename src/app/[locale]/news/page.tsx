@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { allPosts } from '@/lib/news';
+import { Link } from '@/i18n/navigation';
+import { getAllPosts, localizedTitle, localizedSlug, localizedExcerpt, formatDate } from '@/lib/news';
 
 const meta = {
   de: { title: 'News & Berichte — OETZ TROPHY Kajakfestival Ötztal', description: 'Aktuelle Neuigkeiten, Rennberichte und Ergebnisse rund um die OETZ TROPHY, den Boater X und das Kajakfestival auf der Ötztaler Ache in Tirol, Österreich.' },
@@ -16,8 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: m.title, description: m.description };
 }
 
+export const revalidate = 60;
+
 export default async function NewsPage() {
   const t = await getTranslations('news');
+  const locale = await getLocale();
+  const posts = await getAllPosts();
 
   return (
     <main>
@@ -25,13 +30,16 @@ export default async function NewsPage() {
 
       <section style={{ backgroundColor: 'var(--color-surface)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-24">
-          {allPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <article
-              key={post.slug}
+              key={post._id}
               className="group"
               style={{ borderBottom: '1px solid var(--color-border)' }}
             >
-              <div className="py-8 md:py-10 flex gap-5 md:gap-10 items-start">
+              <Link
+                href={`/news/${localizedSlug(post, locale)}` as '/news/regeln-zur-teilnahme'}
+                className="block py-8 md:py-10 flex gap-5 md:gap-10 items-start"
+              >
                 <span
                   className="shrink-0 leading-none select-none hidden md:block"
                   style={{
@@ -58,7 +66,7 @@ export default async function NewsPage() {
                       color: 'var(--color-muted)',
                     }}
                   >
-                    {post.date}
+                    {formatDate(post.publishedAt, locale)}
                   </time>
 
                   <h2
@@ -71,7 +79,7 @@ export default async function NewsPage() {
                       lineHeight: 0.95,
                     }}
                   >
-                    {post.title}
+                    {localizedTitle(post, locale)}
                   </h2>
 
                   <p
@@ -83,10 +91,10 @@ export default async function NewsPage() {
                       color: 'var(--color-body-text)',
                     }}
                   >
-                    {post.excerpt}
+                    {localizedExcerpt(post, locale)}
                   </p>
                 </div>
-              </div>
+              </Link>
             </article>
           ))}
         </div>

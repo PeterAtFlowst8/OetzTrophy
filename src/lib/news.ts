@@ -1,69 +1,65 @@
-export type Post = {
-  title: string;
-  slug: string;
-  date: string;
-  excerpt: string;
+import { sanityClient } from './sanity';
+
+export type SanityPost = {
+  _id: string;
+  title: { de: string; en: string };
+  slug: { de: { current: string }; en: { current: string } };
+  excerpt: { de: string; en: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body: { de: any[]; en: any[] };
+  publishedAt: string;
+  categories: string[];
 };
 
-// Hardcoded from WP export — replace with Sanity query when CMS is populated
-export const latestPosts: Post[] = [
-  {
-    title: 'Regeln zur Teilnahme am Oetz Kayak Cross',
-    slug: 'regeln-zur-teilnahme',
-    date: '28. August 2024',
-    excerpt: 'Sicherheit, Material und Ablauf — alles, was Athletinnen und Athleten vor dem Rennen wissen müssen.',
-  },
-  {
-    title: '„Noetztal" — von Bren Orton',
-    slug: 'noetztal-bren-orton',
-    date: '3. November 2023',
-    excerpt: 'Bren Orton über das Hochwasser 2023, die Ötztaler Ache und warum dieser Fluss ihn nicht loslässt.',
-  },
-  {
-    title: 'Absage OETZ TROPHY 2024',
-    slug: 'absage-2024',
-    date: '28. Januar 2024',
-    excerpt: 'Nach dem Hochwasser 2023 musste die OETZ TROPHY 2024 leider abgesagt werden. Hier sind die Hintergründe.',
-  },
-];
+const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
+  _id, title, slug, excerpt, body, publishedAt, categories
+}`;
 
-// Full news archive for the /news page
-export const allPosts: Post[] = [
-  ...latestPosts,
-  {
-    title: 'OETZ TROPHY 2023 — Results',
-    slug: 'results-2023',
-    date: '25. September 2023',
-    excerpt: 'Die Ergebnisse der OETZ TROPHY 2023 sind da. Alle Platzierungen und Zeiten im Überblick.',
-  },
-  {
-    title: 'Oetz Kayak Cross 2023 — Recap',
-    slug: 'oetz-kayak-cross-2023',
-    date: '23. September 2023',
-    excerpt: 'Rückblick auf den Boater Cross 2023 — spannende Rennen, enge Duelle und beste Stimmung auf der Ötztaler Ache.',
-  },
-  {
-    title: 'Kajakfestival 2023 — Das Programm',
-    slug: 'kajakfestival-2023-programm',
-    date: '1. September 2023',
-    excerpt: 'Das vollständige Programm für das Ötztaler Kajakfestival 2023 — vier Tage Wildwasser, Wettbewerb und Community.',
-  },
-  {
-    title: 'Hochwasser Ötztaler Ache — August 2023',
-    slug: 'hochwasser-2023',
-    date: '16. August 2023',
-    excerpt: 'Das Hochwasser im August 2023 hat die Rennstrecke der Ötztaler Ache stark verändert. Ein Bericht über die Schäden und Auswirkungen.',
-  },
-  {
-    title: 'OETZ TROPHY 2022 — Final Results',
-    slug: 'results-2022',
-    date: '20. September 2022',
-    excerpt: 'Die offiziellen Ergebnisse der OETZ TROPHY 2022 — das härteste Kajakrennen in den Alpen.',
-  },
-  {
-    title: 'Media Contest — Gewinnerfotos 2022',
-    slug: 'media-contest-2022',
-    date: '15. Oktober 2022',
-    excerpt: 'Die besten Fotos und Videos des Media Contest 2022. Beeindruckende Aufnahmen von der Ötztaler Ache.',
-  },
-];
+const postBySlugQuery = `*[_type == "post" && (slug.de.current == $slug || slug.en.current == $slug)][0] {
+  _id, title, slug, excerpt, body, publishedAt, categories
+}`;
+
+export async function getAllPosts(): Promise<SanityPost[]> {
+  return sanityClient.fetch(postsQuery);
+}
+
+export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
+  return sanityClient.fetch(postBySlugQuery, { slug });
+}
+
+export async function getLatestPosts(count = 3): Promise<SanityPost[]> {
+  const posts = await getAllPosts();
+  return posts.slice(0, count);
+}
+
+/** Format a Sanity date for display */
+export function formatDate(dateString: string, locale: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(locale === 'de' ? 'de-AT' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+/** Get the localized title */
+export function localizedTitle(post: SanityPost, locale: string): string {
+  return locale === 'en' ? (post.title.en || post.title.de) : post.title.de;
+}
+
+/** Get the localized slug */
+export function localizedSlug(post: SanityPost, locale: string): string {
+  if (locale === 'en' && post.slug.en?.current) return post.slug.en.current;
+  return post.slug.de.current;
+}
+
+/** Get the localized excerpt */
+export function localizedExcerpt(post: SanityPost, locale: string): string {
+  return locale === 'en' ? (post.excerpt.en || post.excerpt.de) : post.excerpt.de;
+}
+
+/** Get the localized body */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function localizedBody(post: SanityPost, locale: string): any[] {
+  return locale === 'en' ? (post.body.en || post.body.de) : post.body.de;
+}
