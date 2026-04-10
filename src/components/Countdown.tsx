@@ -46,7 +46,7 @@ export default function Countdown() {
                 color: 'var(--color-muted)',
               }}
             >
-              {state.label}
+              {state.phase === 'launch' ? 'WEBSITE LAUNCH IN' : 'FESTIVAL STARTS IN'}
             </p>
             <div className="flex items-start justify-center gap-6 md:gap-12">
               {([

@@ -14,7 +14,6 @@
   --color-accent: #F59E0B;
   --color-accent-dark: #D97706;
   --color-border: #E5E5E0;
-  --color-footer-bg: #111111;
 }
 
 html {
@@ -26,6 +25,13 @@ body {
   color: var(--color-body-text);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Hero entrance animations */
@@ -67,16 +73,8 @@ body {
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
 }
 
-.hero-line-3 {
-  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
-}
-
 .hero-location {
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
-}
-
-.hero-scroll-indicator {
-  animation: scrollPulse 2s ease-in-out infinite, fadeOutDelay 4s ease-out 1s both;
 }
 
 .hero-countdown {

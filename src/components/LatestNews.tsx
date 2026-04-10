@@ -1,10 +1,13 @@
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { latestPosts } from '@/lib/news';
 
-export default function LatestNews() {
+export default async function LatestNews() {
+  const t = await getTranslations('news');
+
   return (
     <section style={{ backgroundColor: 'var(--color-surface)' }}>
 
-      {/* Section header */}
       <div
         className="max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-10 md:pb-12"
         style={{ borderBottom: '1px solid var(--color-border)' }}
@@ -20,7 +23,7 @@ export default function LatestNews() {
                 color: 'var(--color-accent)',
               }}
             >
-              Neuigkeiten
+              {t('label')}
             </p>
             <h2
               className="uppercase leading-none"
@@ -32,11 +35,12 @@ export default function LatestNews() {
                 letterSpacing: '-0.02em',
               }}
             >
-              Aktuelles
+              {t('headline')}
             </h2>
           </div>
-          <p
-            className="uppercase shrink-0 pb-1"
+          <Link
+            href="/news"
+            className="uppercase shrink-0 pb-1 transition-colors duration-200 hover:text-[var(--color-accent)]"
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: '11px',
@@ -44,24 +48,21 @@ export default function LatestNews() {
               color: 'var(--color-muted)',
             }}
           >
-            {latestPosts.length} Artikel
-          </p>
+            {t('viewAll')} →
+          </Link>
         </div>
       </div>
 
-      {/* Article list */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28">
         {latestPosts.map((post, i) => (
           <article
             key={post.slug}
-            className="group"
             style={{ borderBottom: '1px solid var(--color-border)' }}
           >
-            <div className="py-10 md:py-12 flex gap-6 md:gap-14 items-start">
+            <div className="py-8 md:py-10 flex gap-4 md:gap-14 items-start">
 
-              {/* Index number — amber, large */}
               <span
-                className="shrink-0 leading-none select-none"
+                className="shrink-0 leading-none select-none hidden md:block"
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontWeight: 700,
@@ -76,10 +77,9 @@ export default function LatestNews() {
                 0{i + 1}
               </span>
 
-              {/* Content */}
               <div className="flex-1 min-w-0">
                 <time
-                  className="block uppercase mb-3"
+                  className="block uppercase mb-2"
                   style={{
                     fontFamily: 'var(--font-body)',
                     fontSize: '11px',
@@ -91,10 +91,10 @@ export default function LatestNews() {
                 </time>
 
                 <h3
-                  className="uppercase mb-4 transition-colors duration-200 group-hover:text-[var(--color-accent)]"
+                  className="uppercase mb-3"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(26px, 3.5vw, 48px)',
+                    fontSize: 'clamp(22px, 3.5vw, 48px)',
                     fontWeight: 700,
                     color: 'var(--color-ink)',
                     lineHeight: 0.95,
@@ -105,29 +105,16 @@ export default function LatestNews() {
                 </h3>
 
                 <p
-                  className="mb-5 max-w-2xl"
+                  className="max-w-2xl"
                   style={{
                     fontFamily: 'var(--font-body)',
-                    fontSize: '15px',
+                    fontSize: '14px',
                     lineHeight: 1.7,
                     color: 'var(--color-body-text)',
                   }}
                 >
                   {post.excerpt}
                 </p>
-
-                <a
-                  href={post.href}
-                  className="inline-flex items-center gap-1.5 uppercase tracking-widest font-semibold transition-all duration-200 hover:gap-3"
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '11px',
-                    letterSpacing: '0.18em',
-                    color: 'var(--color-accent)',
-                  }}
-                >
-                  Weiterlesen <span aria-hidden="true">→</span>
-                </a>
               </div>
 
             </div>

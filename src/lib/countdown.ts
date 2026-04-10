@@ -1,7 +1,7 @@
 export type CountdownState =
-  | { phase: 'launch'; label: 'WEBSITE LAUNCH IN'; delta: TimeDelta }
-  | { phase: 'race'; label: 'RACE DAY IN'; delta: TimeDelta }
-  | { phase: 'static'; label: 'COMING SEPTEMBER 2026' };
+  | { phase: 'launch'; delta: TimeDelta }
+  | { phase: 'festival'; delta: TimeDelta }
+  | { phase: 'static' };
 
 export type TimeDelta = {
   days: number;
@@ -11,6 +11,8 @@ export type TimeDelta = {
 };
 
 const LAUNCH_DATE = new Date('2026-03-15T00:00:00');
+export const FESTIVAL_DATE = new Date('2026-09-17T09:00:00');
+export const RACE_DATE = new Date('2026-09-19T09:00:00');
 
 function getDelta(target: Date, now: Date): TimeDelta | null {
   const diff = target.getTime() - now.getTime();
@@ -23,16 +25,16 @@ function getDelta(target: Date, now: Date): TimeDelta | null {
   };
 }
 
-export function getCountdownState(now: Date, raceDate: Date | null): CountdownState {
+export function getCountdownState(now: Date, festivalDate: Date | null): CountdownState {
   const launchDelta = getDelta(LAUNCH_DATE, now);
   if (launchDelta) {
-    return { phase: 'launch', label: 'WEBSITE LAUNCH IN', delta: launchDelta };
+    return { phase: 'launch', delta: launchDelta };
   }
-  if (raceDate) {
-    const raceDelta = getDelta(raceDate, now);
-    if (raceDelta) {
-      return { phase: 'race', label: 'RACE DAY IN', delta: raceDelta };
+  if (festivalDate) {
+    const festDelta = getDelta(festivalDate, now);
+    if (festDelta) {
+      return { phase: 'festival', delta: festDelta };
     }
   }
-  return { phase: 'static', label: 'COMING SEPTEMBER 2026' };
+  return { phase: 'static' };
 }

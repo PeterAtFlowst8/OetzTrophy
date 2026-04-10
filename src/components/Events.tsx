@@ -1,30 +1,78 @@
-const events = [
-  {
-    title: 'Oetz Kayak Cross',
-    subtitle: 'Extreme Slalom · WW V',
-    image: '/images/hero.jpg',
-    href: '/oetz-kayak-cross',
-  },
-  {
-    title: 'Kajakfestival',
-    subtitle: 'Drei Tage · Gemeinschaft · Wildwasser',
-    image: '/images/event-festival.jpg',
-    href: '/kajakfestival',
-  },
-  {
-    title: 'Media Contest',
-    subtitle: 'Bestes Foto · Bestes Video',
-    image: '/images/event-media-contest.jpg',
-    href: '/media-contest',
-  },
-];
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 
-export default function Events() {
+const eventConfigs = [
+  { image: '/images/hero.jpg', href: '/oetz-trophy' },
+  { image: '/images/event-boaterx.jpg', href: '/boater-x' },
+  { image: '/images/event-festival-2.jpg', href: '/kajakfestival' },
+] as const;
+
+function EventCard({
+  event,
+}: {
+  event: { title: string; subtitle: string; image: string; href: string };
+}) {
+  return (
+    <Link
+      href={event.href as '/oetz-trophy' | '/boater-x' | '/kajakfestival'}
+      className="group relative overflow-hidden block cursor-pointer"
+      style={{ aspectRatio: '3/4' }}
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+        style={{ backgroundImage: `url('${event.image}')` }}
+      />
+      <div className="absolute inset-0 bg-[#1a1a1a]" style={{ zIndex: -1 }} />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[3px] translate-y-full transition-transform duration-300 group-hover:translate-y-0"
+        style={{ backgroundColor: 'var(--color-accent)' }}
+      />
+      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between">
+        <div>
+          <p
+            className="uppercase mb-2 text-white/50 tracking-[0.2em]"
+            style={{ fontFamily: 'var(--font-body)', fontSize: '10px' }}
+          >
+            {event.subtitle}
+          </p>
+          <h3
+            className="uppercase text-white leading-none"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(28px, 3.5vw, 48px)',
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            {event.title}
+          </h3>
+        </div>
+        <span
+          className="text-white/0 group-hover:text-white/70 translate-x-2 group-hover:translate-x-0 transition-all duration-300 shrink-0 ml-4"
+          style={{ fontFamily: 'var(--font-body)', fontSize: '18px' }}
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+export default async function Events() {
+  const t = await getTranslations('events');
+
+  const events = eventConfigs.map((config, i) => ({
+    ...config,
+    title: t(`item${i}Title` as Parameters<typeof t>[0]),
+    subtitle: t(`item${i}Subtitle` as Parameters<typeof t>[0]),
+  }));
+
   return (
     <section className="py-20 md:py-28" style={{ backgroundColor: 'var(--color-background)' }}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* Left-aligned editorial header */}
         <div className="mb-10 md:mb-14">
           <p
             className="uppercase mb-4"
@@ -35,7 +83,7 @@ export default function Events() {
               color: 'var(--color-accent)',
             }}
           >
-            Events 2026
+            {t('label')}
           </p>
           <h2
             className="uppercase"
@@ -48,52 +96,14 @@ export default function Events() {
               letterSpacing: '-0.02em',
             }}
           >
-            Das Programm
+            {t('headline')}
           </h2>
         </div>
 
-        {/* Cards — full width of container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+        {/* Equal 3-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {events.map((event) => (
-            <a
-              key={event.title}
-              href={event.href}
-              className="group relative overflow-hidden block"
-              style={{ aspectRatio: '3/4' }}
-            >
-              {/* Photo */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{ backgroundImage: `url('${event.image}')` }}
-              />
-              {/* Base gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
-              {/* Amber bottom accent — slides in on hover */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-[3px] translate-y-full transition-transform duration-300 group-hover:translate-y-0"
-                style={{ backgroundColor: 'var(--color-accent)' }}
-              />
-              {/* Event label */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
-                <p
-                  className="uppercase mb-2 text-white/50 tracking-[0.2em]"
-                  style={{ fontFamily: 'var(--font-body)', fontSize: '10px' }}
-                >
-                  {event.subtitle}
-                </p>
-                <h3
-                  className="uppercase text-white leading-none"
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(28px, 2.8vw, 42px)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  {event.title}
-                </h3>
-              </div>
-            </a>
+            <EventCard key={event.title} event={event} />
           ))}
         </div>
 

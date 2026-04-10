@@ -11,18 +11,23 @@ export const sponsors: Sponsor[] = [
     href: 'https://www.vaude.com/',
   },
   {
-    name: 'S2S Shop',
-    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2023/08/s2s-shop-logo-web.jpg',
+    name: 'Ötztal Tourismus',
+    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2021/02/Oetztal_Logo_370.jpg',
+    href: 'https://www.oetztal.com/',
+  },
+  {
+    name: 'Source To Sea',
+    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2021/02/S2S_Logo_370-300x300.jpg',
     href: 'https://s2s.at',
   },
   {
     name: 'Kayak Session',
-    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2023/08/hiko-logo-web.jpg',
+    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2021/04/KS-logo-partner-3-e1618820345971.png',
     href: 'https://www.kayaksession.com/',
   },
   {
-    name: 'Lettmann',
-    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2024/09/lettmann.jpg',
-    href: 'https://www.lettmann.de/',
+    name: 'NRS',
+    logoUrl: 'https://oetz-trophy.com/wp-content/uploads/2022/07/NRS_logo_370.jpg',
+    href: 'https://www.nrs.com/',
   },
 ];

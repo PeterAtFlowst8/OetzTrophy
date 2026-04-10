@@ -1,19 +1,53 @@
-const stats = [
-  { value: 'WW V', label: 'Schwierigkeitsgrad' },
-  { value: 'EINLADUNG', label: 'Teilnahme' },
-  { value: 'TIROL', label: 'Österreich' },
-  { value: '2019', label: 'Seit' },
-];
+import { getTranslations } from 'next-intl/server';
 
 const DIVIDER = '1px solid rgba(255,255,255,0.1)';
 
-export default function DasRennen() {
-  return (
-    <section style={{ backgroundColor: 'var(--color-ink)' }}>
-      {/* Amber top accent rule */}
-      <div style={{ height: '4px', backgroundColor: 'var(--color-accent)' }} />
+export default async function DasRennen() {
+  const t = await getTranslations('dasRennen');
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-28">
+  const stats = [
+    { value: t('stat0Value'), label: t('stat0Label') },
+    { value: t('stat1Value'), label: t('stat1Label') },
+    { value: t('stat2Value'), label: t('stat2Label') },
+    { value: t('stat3Value'), label: t('stat3Label') },
+  ];
+
+  return (
+    <section
+      style={{
+        backgroundColor: 'var(--color-ink)',
+        position: 'relative',
+        overflow: 'hidden',
+        clipPath: 'polygon(0 40px, 100% 0, 100% 100%, 0 100%)',
+        marginTop: '-40px',
+        zIndex: 1,
+      }}
+    >
+      {/* Decorative watermark */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          right: '3%',
+          top: '45%',
+          transform: 'translateY(-50%)',
+          fontFamily: 'var(--font-display)',
+          fontWeight: 700,
+          fontSize: 'clamp(220px, 28vw, 400px)',
+          color: 'rgba(255,255,255,0.035)',
+          lineHeight: 1,
+          userSelect: 'none',
+          pointerEvents: 'none',
+          letterSpacing: '-0.05em',
+        }}
+      >
+        V
+      </div>
+
+      <div
+        className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28"
+        style={{ paddingTop: 'calc(4rem + 40px)' }}
+      >
         {/* Section label */}
         <p
           className="uppercase mb-6"
@@ -24,7 +58,7 @@ export default function DasRennen() {
             color: 'var(--color-accent)',
           }}
         >
-          Das Rennen
+          {t('label')}
         </p>
 
         {/* Manifesto pullquote */}
@@ -32,21 +66,18 @@ export default function DasRennen() {
           className="uppercase mb-14 md:mb-20"
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(48px, 7.5vw, 104px)',
+            fontSize: 'clamp(56px, 9.5vw, 128px)',
             fontWeight: 700,
             color: '#FAFAF7',
-            lineHeight: 0.9,
+            lineHeight: 0.88,
             letterSpacing: '-0.02em',
           }}
         >
-          Nur die Besten<br />fahren hier.
+          {t('headline1')}<br />{t('headline2')}
         </h2>
 
-        {/* Stat strip — desktop: horizontal row */}
-        <div
-          className="hidden md:flex"
-          style={{ borderTop: DIVIDER }}
-        >
+        {/* Stat strip — desktop */}
+        <div className="hidden md:flex" style={{ borderTop: DIVIDER }}>
           {stats.map(({ value, label }, i) => (
             <div
               key={value}
@@ -83,11 +114,8 @@ export default function DasRennen() {
           ))}
         </div>
 
-        {/* Stat strip — mobile: vertical list with amber left accent */}
-        <div
-          className="md:hidden"
-          style={{ borderTop: DIVIDER }}
-        >
+        {/* Stat strip — mobile */}
+        <div className="md:hidden" style={{ borderTop: DIVIDER }}>
           {stats.map(({ value, label }) => (
             <div
               key={value}
@@ -134,9 +162,7 @@ export default function DasRennen() {
             color: 'rgba(255,255,255,0.45)',
           }}
         >
-          Die Ötztaler Ache. WW&nbsp;V. Eines der härtesten Kajak-Rennen der Alpen.
-          Kein offener Start — hier fährt man nur auf Einladung.
-          Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen.
+          {t('body')}
         </p>
       </div>
     </section>

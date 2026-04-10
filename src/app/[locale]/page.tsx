@@ -1,6 +1,8 @@
 import Hero from '@/components/Hero';
-import DasRennen from '@/components/DasRennen';
+import MarqueeBanner from '@/components/Marquee';
+import FestivalOverview from '@/components/FestivalOverview';
 import Events from '@/components/Events';
+import DasRennen from '@/components/DasRennen';
 import LatestNews from '@/components/LatestNews';
 import Sponsors from '@/components/Sponsors';
 
@@ -8,8 +10,10 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <DasRennen />
+      <MarqueeBanner />
+      <FestivalOverview />
       <Events />
+      <DasRennen />
       <LatestNews />
       <Sponsors />
     </main>

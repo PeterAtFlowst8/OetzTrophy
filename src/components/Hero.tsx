@@ -1,28 +1,35 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getCountdownState, type CountdownState } from '@/lib/countdown';
+import { useTranslations } from 'next-intl';
+import { getCountdownState, FESTIVAL_DATE, type CountdownState } from '@/lib/countdown';
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 export default function Hero() {
   const [state, setState] = useState<CountdownState | null>(null);
+  const t = useTranslations('hero');
+  const tc = useTranslations('countdown');
 
   useEffect(() => {
-    setState(getCountdownState(new Date(), null));
-    const id = setInterval(() => setState(getCountdownState(new Date(), null)), 1000);
+    setState(getCountdownState(new Date(), FESTIVAL_DATE));
+    const id = setInterval(() => setState(getCountdownState(new Date(), FESTIVAL_DATE)), 1000);
     return () => clearInterval(id);
   }, []);
 
   const units =
     state && state.phase !== 'static'
       ? [
-          { v: String(state.delta.days).padStart(2, '0'), l: 'Tage' },
-          { v: String(state.delta.hours).padStart(2, '0'), l: 'Std' },
-          { v: String(state.delta.minutes).padStart(2, '0'), l: 'Min' },
-          { v: String(state.delta.seconds).padStart(2, '0'), l: 'Sek' },
+          { v: String(state.delta.days).padStart(2, '0'), l: tc('days') },
+          { v: String(state.delta.hours).padStart(2, '0'), l: tc('hours') },
+          { v: String(state.delta.minutes).padStart(2, '0'), l: tc('minutes') },
+          { v: String(state.delta.seconds).padStart(2, '0'), l: tc('seconds') },
         ]
       : null;
+
+  const countdownLabel =
+    state?.phase === 'launch' ? tc('launch') :
+    state?.phase === 'festival' ? tc('festival') : '';
 
   return (
     <section className="relative w-full h-screen min-h-[680px] overflow-hidden">
@@ -44,32 +51,34 @@ export default function Hero() {
         }}
       />
 
-      {/* Gradient layers: general darkening + strong bottom for title */}
-      <div className="absolute inset-0 bg-black/45" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+      {/* Gradient layers */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-      {/* ── COUNTDOWN — dead center ── */}
+      {/* Countdown — dead center */}
       {state && (
         <div className="absolute inset-0 flex flex-col items-center justify-center hero-countdown">
           {units ? (
-            <div className="text-center px-4">
-              {/* Amber accent line */}
+            <div
+              className="text-center px-6 py-8 md:px-10 md:py-10"
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 60%, transparent 100%)',
+              }}
+            >
               <div
                 className="mx-auto mb-5"
-                style={{
-                  width: '40px',
-                  height: '3px',
-                  backgroundColor: 'var(--color-accent)',
-                }}
+                style={{ width: '40px', height: '3px', backgroundColor: 'var(--color-accent)' }}
               />
-              {/* Label */}
               <p
-                className="uppercase text-white/75 mb-6 tracking-[0.25em]"
-                style={{ fontFamily: 'var(--font-body)', fontSize: '11px' }}
+                className="uppercase text-white mb-6 tracking-[0.25em]"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '11px',
+                  textShadow: '0 1px 8px rgba(0,0,0,0.6)',
+                }}
               >
-                {state.label}
+                {countdownLabel}
               </p>
-              {/* Numbers */}
               <div className="flex items-end justify-center gap-0">
                 {units.map(({ v, l }, i) => (
                   <div key={l} className="flex items-end">
@@ -122,13 +131,13 @@ export default function Hero() {
                 textShadow: '0 4px 24px rgba(0,0,0,0.4)',
               }}
             >
-              Coming<br />September 2026
+              {t('static')}
             </p>
           )}
         </div>
       )}
 
-      {/* ── RACE TITLE — pinned bottom-left ── */}
+      {/* Race title — pinned bottom-left */}
       <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 md:px-12 md:pb-12">
         <span
           className="inline-block mb-4 px-[10px] py-[5px] text-[11px] font-bold uppercase tracking-widest hero-badge"
@@ -141,7 +150,7 @@ export default function Hero() {
             boxShadow: '0 2px 16px rgba(0,0,0,0.5)',
           }}
         >
-          Invite Only · 2026
+          {t('badge')}
         </span>
 
         <h1
@@ -152,20 +161,19 @@ export default function Hero() {
             letterSpacing: '-0.02em',
           }}
         >
-          <span className="block hero-line-1" style={{ fontSize: 'clamp(36px, 5vw, 68px)' }}>Extreme</span>
-          <span className="block hero-line-2" style={{ fontSize: 'clamp(36px, 5vw, 68px)' }}>Kayak Championships</span>
+          <span className="block hero-line-1" style={{ fontSize: 'clamp(52px, 12vw, 160px)', lineHeight: 0.88 }}>{t('line1')}</span>
+          <span className="block hero-line-2" style={{ fontSize: 'clamp(28px, 7.5vw, 100px)', lineHeight: 0.9 }}>{t('line2')}</span>
         </h1>
 
         <p
-          className="mt-3 uppercase text-white/45"
+          className="mt-3 uppercase text-white/45 hero-location"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '11px',
             letterSpacing: '0.28em',
-            animation: 'fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both',
           }}
         >
-          Oetz · Tirol · Österreich
+          {t('location')}
         </p>
       </div>
 
