@@ -161,8 +161,8 @@ export default function Hero() {
             letterSpacing: '-0.02em',
           }}
         >
-          <span className="block hero-line-1" style={{ fontSize: 'clamp(52px, 12vw, 160px)', lineHeight: 0.88 }}>{t('line1')}</span>
-          <span className="block hero-line-2 mt-1 md:mt-2" style={{ fontSize: 'clamp(28px, 7.5vw, 100px)', lineHeight: 0.9 }}>{t('line2')}</span>
+          <span className="block hero-line-1" style={{ fontSize: 'clamp(44px, 8vw, 100px)', lineHeight: 0.9 }}>{t('line1')}</span>
+          <span className="block hero-line-2 mt-1 md:mt-2" style={{ fontSize: 'clamp(26px, 5vw, 64px)', lineHeight: 0.95 }}>{t('line2')}</span>
         </h1>
 
         <p
