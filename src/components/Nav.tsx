@@ -47,17 +47,25 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between overflow-hidden">
-          <Link href="/" className="block shrink-0 min-w-0">
+          <Link href="/" className="block shrink-0 min-w-0 relative">
+            {/* Dark logo for solid white nav */}
             <Image
-              src="/images/logo.png"
+              src="/images/logo-dark.webp"
               alt="OETZ TROPHY"
-              width={220}
-              height={40}
-              className="h-6 md:h-8 w-auto object-contain transition-all duration-300"
-              style={{
-                filter: showSolidBg ? 'none' : 'invert(1)',
-                mixBlendMode: showSolidBg ? 'normal' : 'screen',
-              }}
+              width={440}
+              height={81}
+              className="h-6 md:h-8 w-auto object-contain transition-opacity duration-300"
+              style={{ opacity: showSolidBg ? 1 : 0 }}
+              priority
+            />
+            {/* White logo for transparent hero nav */}
+            <Image
+              src="/images/logo-white.webp"
+              alt="OETZ TROPHY"
+              width={440}
+              height={81}
+              className="absolute inset-0 h-6 md:h-8 w-auto object-contain transition-opacity duration-300"
+              style={{ opacity: showSolidBg ? 0 : 1 }}
               priority
             />
           </Link>
