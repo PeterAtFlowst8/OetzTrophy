@@ -193,5 +193,25 @@
     "phone": "Phone",
     "orgHeading": "Organiser",
     "contactHeading": "Get in Touch"
+  },
+  "registration": {
+    "label": "Registration",
+    "title": "Boater X Registration",
+    "intro": "Register for the Oetz Kayak Cross (Boater X). Open entry for all paddlers with whitewater experience (min. class III). The registration fee secures your start position.",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "John Smith",
+    "emailLabel": "Email",
+    "emailPlaceholder": "john@example.com",
+    "clubLabel": "Club / Team",
+    "clubPlaceholder": "Optional",
+    "nationalityLabel": "Nationality",
+    "nationalityPlaceholder": "e.g. Austria",
+    "experienceLabel": "Whitewater Experience",
+    "submit": "Register & Pay",
+    "submitting": "Processing...",
+    "feeNote": "Registration fee: €50 — Payment via Stripe",
+    "successTitle": "Registration confirmed",
+    "successText": "Your registration for Boater X 2026 has been received and payment confirmed. You will receive a confirmation email. See you on the Ötztaler Ache!",
+    "backHome": "Back to homepage"
   }
 }

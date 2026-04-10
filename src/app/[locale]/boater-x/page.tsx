@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+import { Link } from '@/i18n/navigation';
 
 export default async function BoaterXPage() {
   const t = await getTranslations('boaterX');
@@ -49,9 +50,10 @@ export default async function BoaterXPage() {
               ))}
             </div>
 
-            {/* Registration notice */}
-            <div
-              className="inline-flex items-center gap-3 px-5 py-3 mb-16 md:mb-20"
+            {/* Registration CTA */}
+            <Link
+              href="/registration"
+              className="inline-flex items-center gap-3 px-6 py-4 mb-16 md:mb-20 transition-opacity duration-200 hover:opacity-90"
               style={{
                 backgroundColor: 'var(--color-accent)',
                 color: '#111',
@@ -64,7 +66,7 @@ export default async function BoaterXPage() {
             >
               <span style={{ fontSize: '16px' }}>↗</span>
               {t('regNote')}
-            </div>
+            </Link>
           </FadeIn>
 
           <FadeIn delay={0.05}>

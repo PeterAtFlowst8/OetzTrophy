@@ -193,5 +193,25 @@
     "phone": "Telefon",
     "orgHeading": "Veranstalter",
     "contactHeading": "Kontakt"
+  },
+  "registration": {
+    "label": "Anmeldung",
+    "title": "Boater X Anmeldung",
+    "intro": "Melde dich für den Oetz Kayak Cross (Boater X) an. Offene Anmeldung für alle Paddler mit Wildwassererfahrung (min. WW III). Die Anmeldegebühr sichert deinen Startplatz.",
+    "nameLabel": "Vollständiger Name",
+    "namePlaceholder": "Max Mustermann",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "max@example.com",
+    "clubLabel": "Verein / Team",
+    "clubPlaceholder": "Optional",
+    "nationalityLabel": "Nationalität",
+    "nationalityPlaceholder": "z.B. Österreich",
+    "experienceLabel": "Wildwasser-Erfahrung",
+    "submit": "Anmelden & Bezahlen",
+    "submitting": "Wird verarbeitet...",
+    "feeNote": "Anmeldegebühr: €50 — Zahlung via Stripe",
+    "successTitle": "Anmeldung bestätigt",
+    "successText": "Deine Anmeldung für den Boater X 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
+    "backHome": "Zur Startseite"
   }
 }
