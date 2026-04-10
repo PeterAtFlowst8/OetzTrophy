@@ -8,11 +8,22 @@ const DIVIDER = '1px solid rgba(255,255,255,0.1)';
 export default async function DasRennen() {
   const t = await getTranslations('dasRennen');
 
+  const statIcons = [
+    // Waves — WW V difficulty
+    <svg key="waves" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /></svg>,
+    // Shield — invite only
+    <svg key="shield" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+    // Mountain — Tyrol
+    <svg key="mountain" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z" /><path d="m4.14 15.08 2.86-2.86L9.86 15" /></svg>,
+    // Flag — since 2019
+    <svg key="flag" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" x2="4" y1="22" y2="15" /></svg>,
+  ];
+
   const stats = [
-    { value: t('stat0Value'), label: t('stat0Label') },
-    { value: t('stat1Value'), label: t('stat1Label') },
-    { value: t('stat2Value'), label: t('stat2Label') },
-    { value: t('stat3Value'), label: t('stat3Label') },
+    { value: t('stat0Value'), label: t('stat0Label'), icon: statIcons[0] },
+    { value: t('stat1Value'), label: t('stat1Label'), icon: statIcons[1] },
+    { value: t('stat2Value'), label: t('stat2Label'), icon: statIcons[2] },
+    { value: t('stat3Value'), label: t('stat3Label'), icon: statIcons[3] },
   ];
 
   return (
@@ -83,7 +94,7 @@ export default async function DasRennen() {
 
         {/* Stat strip — desktop */}
         <StaggerContainer className="hidden md:flex" style={{ borderTop: DIVIDER }} stagger={0.12}>
-          {stats.map(({ value, label }, i) => (
+          {stats.map(({ value, label, icon }, i) => (
             <StaggerItem
               key={value}
               className="flex-1 py-8 pr-8"
@@ -94,6 +105,9 @@ export default async function DasRennen() {
                   borderLeft: i === 0 ? 'none' : DIVIDER,
                 }}
               >
+                <span className="block mb-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                  {icon}
+                </span>
                 <CountUp
                   value={value}
                   className="uppercase leading-none block"
@@ -123,15 +137,19 @@ export default async function DasRennen() {
 
         {/* Stat strip — mobile */}
         <StaggerContainer className="md:hidden" style={{ borderTop: DIVIDER }} stagger={0.08}>
-          {stats.map(({ value, label }) => (
+          {stats.map(({ value, label, icon }) => (
             <StaggerItem key={value}>
               <div
-                className="py-5 pl-4"
+                className="py-5 pl-4 flex items-start gap-4"
                 style={{
                   borderBottom: DIVIDER,
                   borderLeft: '3px solid var(--color-accent)',
                 }}
               >
+                <span className="shrink-0 mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                  {icon}
+                </span>
+                <div>
                 <CountUp
                   value={value}
                   className="uppercase leading-none block"
@@ -154,6 +172,7 @@ export default async function DasRennen() {
                 >
                   {label}
                 </p>
+                </div>
               </div>
             </StaggerItem>
           ))}
