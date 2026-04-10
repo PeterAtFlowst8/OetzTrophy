@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 
@@ -60,9 +61,11 @@ export default async function Footer() {
       <div className="relative" style={{ height: '4px', backgroundColor: 'var(--color-accent)' }} />
 
       <div className="relative text-center px-6 pt-16 md:pt-24 pb-10 md:pb-14">
-        <img
+        <Image
           src="/images/logo-white.webp"
           alt="OETZ TROPHY"
+          width={440}
+          height={81}
           className="mx-auto"
           style={{
             width: 'clamp(220px, 40vw, 440px)',

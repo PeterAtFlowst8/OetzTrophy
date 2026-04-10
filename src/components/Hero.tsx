@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { getCountdownState, FESTIVAL_DATE, type CountdownState } from '@/lib/countdown';
 
@@ -35,9 +36,13 @@ export default function Hero() {
     <section className="relative w-full h-screen min-h-[680px] overflow-hidden">
 
       {/* Background photo */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero.jpg')" }}
+      <Image
+        src="/images/hero.jpg"
+        alt="Kayakers racing through whitewater rapids on the Ötztaler Ache"
+        fill
+        className="object-cover object-center"
+        priority
+        sizes="100vw"
       />
 
       {/* Film grain */}

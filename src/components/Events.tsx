@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import FadeIn from '@/components/motion/FadeIn';
@@ -22,9 +23,12 @@ function EventCard({
         className="group relative overflow-hidden block cursor-pointer"
         style={{ aspectRatio: '3/4' }}
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-          style={{ backgroundImage: `url('${event.image}')` }}
+        <Image
+          src={event.image}
+          alt={event.title}
+          fill
+          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, 33vw"
         />
         <div className="absolute inset-0 bg-[#1a1a1a]" style={{ zIndex: -1 }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />

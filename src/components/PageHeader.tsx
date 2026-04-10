@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
 type Props = {
@@ -17,9 +19,13 @@ export default function PageHeader({ label, title, image }: Props) {
     >
       {image && (
         <>
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${image}')` }}
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/25" />
         </>
