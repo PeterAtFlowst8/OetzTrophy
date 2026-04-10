@@ -4,8 +4,8 @@ import { Link } from '@/i18n/navigation';
 import FadeIn from '@/components/motion/FadeIn';
 
 const meta = {
-  de: { title: 'Anmeldung bestätigt', description: 'Deine Anmeldung für den Boater X 2026 wurde bestätigt.' },
-  en: { title: 'Registration Confirmed', description: 'Your registration for Boater X 2026 has been confirmed.' },
+  de: { title: 'Anmeldung bestätigt — Boater X OETZ TROPHY 2026', description: 'Deine Anmeldung für den Boater X beim Ötztaler Kajakfestival 2026 wurde bestätigt. Zahlung eingegangen. Wir sehen uns am 18. September auf der Ötztaler Ache!' },
+  en: { title: 'Registration Confirmed — Boater X OETZ TROPHY 2026', description: 'Your registration for Boater X at the Ötztal Kayak Festival 2026 has been confirmed. Payment received. See you on 18 September on the Ötztaler Ache in Tyrol!' },
 };
 
 type Props = { params: Promise<{ locale: string }> };

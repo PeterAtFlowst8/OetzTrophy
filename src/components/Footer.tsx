@@ -136,6 +136,28 @@ export default async function Footer() {
         </span>
 
       </div>
+
+      {/* Credit */}
+      <div
+        className="relative text-center pb-5"
+        style={{
+          fontFamily: 'var(--font-body)',
+          fontSize: '10px',
+          letterSpacing: '0.1em',
+          color: 'rgba(255,255,255,0.12)',
+        }}
+      >
+        Design &amp; Entwicklung{' '}
+        <a
+          href="https://www.flowst8.eu"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-colors duration-200 hover:text-white/30"
+          style={{ color: 'rgba(255,255,255,0.2)' }}
+        >
+          FlowSt8 Digital
+        </a>
+      </div>
     </footer>
   );
 }

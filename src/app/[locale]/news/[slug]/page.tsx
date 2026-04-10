@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import PageHeader from '@/components/PageHeader';
@@ -8,6 +9,17 @@ import { allPosts } from '@/lib/news';
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = allPosts.find((p) => p.slug === slug);
+  if (!post) return { title: 'Article Not Found' };
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+  };
+}
 
 export default async function NewsArticlePage({ params }: Props) {
   const { slug } = await params;

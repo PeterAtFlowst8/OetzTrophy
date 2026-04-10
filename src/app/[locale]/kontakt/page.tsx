@@ -4,8 +4,8 @@ import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 
 const pageMeta = {
-  de: { title: 'Kontakt', description: 'Kontakt zur OETZ TROPHY — Source To Sea GmbH, Oetz, Tirol. Telefon, E-Mail und Social Media.' },
-  en: { title: 'Contact', description: 'Contact OETZ TROPHY — Source To Sea GmbH, Oetz, Tyrol. Phone, email, and social media.' },
+  de: { title: 'Kontakt — OETZ TROPHY Veranstalter Source To Sea', description: 'Kontakt zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol. Telefon, E-Mail und Social Media. Wir freuen uns auf deine Nachricht.' },
+  en: { title: 'Contact — OETZ TROPHY Organiser Source To Sea', description: 'Contact OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Phone, email, and social media. We look forward to hearing from you.' },
 };
 
 type MetaProps = { params: Promise<{ locale: string }> };

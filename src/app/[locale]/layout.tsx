@@ -24,12 +24,12 @@ const inter = Inter({
 
 const meta = {
   de: {
-    title: 'OETZ TROPHY — Extreme Kayak Championships',
-    description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Boater X und die OETZ TROPHY. 17.–20. September 2026 in Oetz, Tirol.',
+    title: 'OETZ TROPHY — Extreme Kayak Championships · Ötztaler Ache',
+    description: 'Das Ötztaler Kajakfestival 2026: 4 Tage Wildwasser, der offene Boater X und die OETZ TROPHY auf der Ötztaler Ache. 17.–20. September 2026 in Oetz, Tirol, Österreich.',
   },
   en: {
-    title: 'OETZ TROPHY — Extreme Kayak Championships',
-    description: 'The Ötztal Kayak Festival: 4 days of whitewater, Boater X, and the OETZ TROPHY. 17–20 September 2026 in Oetz, Tyrol, Austria.',
+    title: 'OETZ TROPHY — Extreme Kayak Championships · Ötztaler Ache',
+    description: 'The Ötztal Kayak Festival 2026: 4 days of whitewater racing, the open Boater X and the OETZ TROPHY on the Ötztaler Ache. 17–20 September 2026 in Oetz, Tyrol, Austria.',
   },
 };
 

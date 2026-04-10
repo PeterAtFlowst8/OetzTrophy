@@ -3,8 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 
 const meta = {
-  de: { title: 'Impressum', description: 'Impressum der OETZ TROPHY — Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol.' },
-  en: { title: 'Legal Notice', description: 'Legal notice for OETZ TROPHY — Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria.' },
+  de: { title: 'Impressum — OETZ TROPHY Source To Sea GmbH Tirol', description: 'Impressum und rechtliche Angaben zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol, Österreich. Haftungshinweis für externe Links.' },
+  en: { title: 'Legal Notice — OETZ TROPHY Source To Sea GmbH Tyrol', description: 'Legal notice and imprint for OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Liability information for external links.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };

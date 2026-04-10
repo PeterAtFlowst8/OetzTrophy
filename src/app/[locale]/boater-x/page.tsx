@@ -5,8 +5,8 @@ import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 
 const meta = {
-  de: { title: 'Boater X — Oetz Kayak Cross', description: 'Der Boater X: Offenes Kajakrennen auf der Ötztaler Ache. Vier Paddler, Head-to-Head durch die Stromschnellen. 18. September 2026.' },
-  en: { title: 'Boater X — Oetz Kayak Cross', description: 'Boater X: Open entry kayak cross race on the Ötztaler Ache. Four paddlers, head-to-head through the rapids. 18 September 2026.' },
+  de: { title: 'Boater X — Offenes Kajakrennen auf der Ötztaler Ache', description: 'Der Boater X (Oetz Kayak Cross): Offenes Wildwasserrennen, vier Paddler starten gleichzeitig, Head-to-Head durch die Stromschnellen. 18. September 2026 in Oetz.' },
+  en: { title: 'Boater X — Open Kayak Cross Race on the Ötztaler Ache', description: 'Boater X (Oetz Kayak Cross): Open entry whitewater race, four paddlers start simultaneously, head-to-head through the rapids. 18 September 2026 in Oetz, Tyrol.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };

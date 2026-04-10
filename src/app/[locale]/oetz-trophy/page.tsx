@@ -4,8 +4,8 @@ import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 
 const meta = {
-  de: { title: 'Oetz Trophy — Das Rennen', description: 'Die OETZ TROPHY: Eines der härtesten Kajakrennen der Alpen. Wildwasser V auf der Ötztaler Ache — nur auf Einladung. 19. September 2026.' },
-  en: { title: 'Oetz Trophy — The Race', description: 'The OETZ TROPHY: One of the hardest kayak races in the Alps. Class V whitewater on the Ötztaler Ache — invite only. 19 September 2026.' },
+  de: { title: 'Oetz Trophy — Das härteste Kajakrennen der Alpen 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, nur auf Einladung. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
+  en: { title: 'Oetz Trophy — The Hardest Kayak Race in the Alps 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, invite only. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
