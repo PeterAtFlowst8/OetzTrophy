@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+
+const pageMeta = {
+  de: { title: 'Kontakt', description: 'Kontakt zur OETZ TROPHY — Source To Sea GmbH, Oetz, Tirol. Telefon, E-Mail und Social Media.' },
+  en: { title: 'Contact', description: 'Contact OETZ TROPHY — Source To Sea GmbH, Oetz, Tyrol. Phone, email, and social media.' },
+};
+
+type MetaProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
+  const { locale } = await params;
+  const m = pageMeta[(locale === 'en' ? 'en' : 'de') as keyof typeof pageMeta];
+  return { title: m.title, description: m.description };
+}
 
 const socialLinks = [
   {
@@ -104,7 +118,7 @@ export default async function KontaktPage() {
                     color: 'var(--color-ink)',
                   }}
                 >
-                  Social Media
+                  {t('socialHeading')}
                 </h2>
                 <div className="flex flex-col gap-3">
                   {socialLinks.map(({ label, href, handle, icon }) => (

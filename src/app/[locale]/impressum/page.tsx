@@ -1,5 +1,19 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+
+const meta = {
+  de: { title: 'Impressum', description: 'Impressum der OETZ TROPHY — Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol.' },
+  en: { title: 'Legal Notice', description: 'Legal notice for OETZ TROPHY — Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function ImpressumPage() {
   const t = await getTranslations('impressum');

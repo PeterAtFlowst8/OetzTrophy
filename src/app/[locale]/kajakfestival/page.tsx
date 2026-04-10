@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+
+const meta = {
+  de: { title: 'Kajakfestival — Ötztaler Kajakfestival', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Live-Musik in Oetz. 17.–20. September 2026.' },
+  en: { title: 'Kayak Festival — Ötztal Kayak Festival', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings, and live music in Oetz. 17–20 September 2026.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function KajakfestivalPage() {
   const t = await getTranslations('kajakfestival');

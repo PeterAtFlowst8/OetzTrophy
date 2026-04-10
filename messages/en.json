@@ -170,27 +170,14 @@
     "locationHeading": "Getting There & Accommodation",
     "locationText": "The festival takes place in Oetz in the Ötztal valley, Tyrol. Camping is available directly at the festival grounds. For accommodation, we recommend the Ötztal Tourism portal. From Innsbruck, it's approximately 45 minutes by car."
   },
-  "mediaContest": {
-    "label": "Contest",
-    "title": "Media Contest",
-    "intro": "The OETZ TROPHY Media Contest celebrates the best photos and videos from the event. Whether action shot, landscape photograph or short film — show us the Ötztaler Ache from your perspective.",
-    "categoriesHeading": "Categories",
-    "cat1Title": "Photo — Action",
-    "cat1Desc": "The best action photograph from the race or on the river. Sharpness, timing and drama count.",
-    "cat2Title": "Photo — Lifestyle",
-    "cat2Desc": "The festival, the community, the atmosphere. Moments away from the water that capture the spirit of the event.",
-    "cat3Title": "Video",
-    "cat3Desc": "Short film (max. 3 minutes) about the OETZ TROPHY or the Ötztaler Ache. Creativity and storytelling are key.",
-    "howHeading": "How to Enter",
-    "howText": "Send entries by email to info@oetz-trophy.com by Saturday, 19 September 2026 at the latest. Please include your name, category and a short description. Winners will be announced at the award ceremony on Saturday evening. Prizes from our sponsors."
-  },
   "kontakt": {
     "label": "Contact",
     "title": "Contact",
     "country": "Austria",
     "phone": "Phone",
     "orgHeading": "Organiser",
-    "contactHeading": "Get in Touch"
+    "contactHeading": "Get in Touch",
+    "socialHeading": "Social Media"
   },
   "registration": {
     "label": "Registration",

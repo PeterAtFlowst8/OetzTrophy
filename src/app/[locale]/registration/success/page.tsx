@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import FadeIn from '@/components/motion/FadeIn';
+
+const meta = {
+  de: { title: 'Anmeldung bestätigt', description: 'Deine Anmeldung für den Boater X 2026 wurde bestätigt.' },
+  en: { title: 'Registration Confirmed', description: 'Your registration for Boater X 2026 has been confirmed.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function RegistrationSuccessPage() {
   const t = await getTranslations('registration');

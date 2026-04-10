@@ -1,5 +1,19 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+
+const meta = {
+  de: { title: 'Datenschutz', description: 'Datenschutzerklärung der OETZ TROPHY — Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.' },
+  en: { title: 'Privacy Policy', description: 'Privacy policy for OETZ TROPHY — Information on personal data processing in accordance with GDPR.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function DatenschutzPage() {
   const t = await getTranslations('datenschutz');

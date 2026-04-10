@@ -170,27 +170,14 @@
     "locationHeading": "Anfahrt & Unterkunft",
     "locationText": "Das Festival findet in Oetz im Ötztal, Tirol statt. Camping direkt am Festivalgelände ist möglich. Für Unterkünfte empfehlen wir das Ötztal Tourismus Portal. Von Innsbruck sind es ca. 45 Minuten mit dem Auto."
   },
-  "mediaContest": {
-    "label": "Wettbewerb",
-    "title": "Media Contest",
-    "intro": "Der OETZ TROPHY Media Contest zeichnet die besten Fotos und Videos rund um das Event aus. Ob Actionfoto, Landschaftsaufnahme oder Kurzfilm — zeig uns die Ötztaler Ache aus deiner Perspektive.",
-    "categoriesHeading": "Kategorien",
-    "cat1Title": "Foto — Action",
-    "cat1Desc": "Das beste Actionfoto vom Rennen oder aus dem Wildwasser. Schärfe, Timing und Dramatik zählen.",
-    "cat2Title": "Foto — Lifestyle",
-    "cat2Desc": "Das Festival, die Community, das Drumherum. Momente abseits des Wassers, die die Atmosphäre einfangen.",
-    "cat3Title": "Video",
-    "cat3Desc": "Kurzfilm (max. 3 Minuten) über die OETZ TROPHY oder die Ötztaler Ache. Kreativität und Storytelling gefragt.",
-    "howHeading": "Teilnahme",
-    "howText": "Einsendungen per E-Mail an info@oetz-trophy.com bis spätestens Samstag, 19. September 2026. Bitte Name, Kategorie und eine kurze Beschreibung angeben. Die Gewinner werden bei der Siegerehrung am Samstagabend bekanntgegeben. Es gibt Preise von unseren Sponsoren."
-  },
   "kontakt": {
     "label": "Kontakt",
     "title": "Kontakt",
     "country": "Österreich",
     "phone": "Telefon",
     "orgHeading": "Veranstalter",
-    "contactHeading": "Kontakt"
+    "contactHeading": "Kontakt",
+    "socialHeading": "Social Media"
   },
   "registration": {
     "label": "Anmeldung",

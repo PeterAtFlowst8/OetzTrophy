@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+
+const meta = {
+  de: { title: 'Oetz Trophy — Das Rennen', description: 'Die OETZ TROPHY: Eines der härtesten Kajakrennen der Alpen. Wildwasser V auf der Ötztaler Ache — nur auf Einladung. 19. September 2026.' },
+  en: { title: 'Oetz Trophy — The Race', description: 'The OETZ TROPHY: One of the hardest kayak races in the Alps. Class V whitewater on the Ötztaler Ache — invite only. 19 September 2026.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function OetzTrophyPage() {
   const t = await getTranslations('oetzTrophy');

@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { allPosts } from '@/lib/news';
+
+const meta = {
+  de: { title: 'News', description: 'Neuigkeiten und Berichte rund um die OETZ TROPHY, das Kajakfestival und den Boater X auf der Ötztaler Ache.' },
+  en: { title: 'News', description: 'News and reports about the OETZ TROPHY, the Kayak Festival, and Boater X on the Ötztaler Ache.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function NewsPage() {
   const t = await getTranslations('news');

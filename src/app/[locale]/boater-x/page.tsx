@@ -1,7 +1,21 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
+
+const meta = {
+  de: { title: 'Boater X — Oetz Kayak Cross', description: 'Der Boater X: Offenes Kajakrennen auf der Ötztaler Ache. Vier Paddler, Head-to-Head durch die Stromschnellen. 18. September 2026.' },
+  en: { title: 'Boater X — Oetz Kayak Cross', description: 'Boater X: Open entry kayak cross race on the Ötztaler Ache. Four paddlers, head-to-head through the rapids. 18 September 2026.' },
+};
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  return { title: m.title, description: m.description };
+}
 
 export default async function BoaterXPage() {
   const t = await getTranslations('boaterX');
