@@ -13,38 +13,37 @@ export default async function Sponsors() {
   if (sponsors.length === 0) return null;
 
   return (
-    <section
-      className="py-20 md:py-28"
-      style={{
-        backgroundColor: 'var(--color-background)',
-        borderTop: '1px solid var(--color-border)',
-        borderBottom: '1px solid var(--color-border)',
-      }}
-    >
+    <section className="relative py-20 md:py-28" style={{ backgroundColor: 'var(--color-background)' }}>
+
+      {/* Decorative top border with accent dash */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="flex items-center gap-4 mb-14 md:mb-20">
+          <div style={{ width: '40px', height: '3px', backgroundColor: 'var(--color-accent)' }} />
+          <FadeIn>
+            <p
+              className="uppercase"
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '11px',
+                letterSpacing: '0.25em',
+                color: 'var(--color-muted)',
+              }}
+            >
+              {t('label')}
+            </p>
+          </FadeIn>
+        </div>
+      </div>
 
-        <FadeIn>
-          <p
-            className="uppercase text-center mb-12 md:mb-16"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '11px',
-              letterSpacing: '0.25em',
-              color: 'var(--color-muted)',
-            }}
-          >
-            {t('label')}
-          </p>
-        </FadeIn>
-
-        <StaggerContainer className="flex flex-wrap items-center justify-center gap-10 md:gap-14" stagger={0.08}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <StaggerContainer className="flex flex-wrap items-center justify-center gap-12 md:gap-16" stagger={0.1}>
           {sponsors.map((sponsor) => (
             <StaggerItem key={sponsor.name}>
               <a
                 href={sponsor.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0"
+                className="group block transition-all duration-500 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 hover:scale-105"
                 title={sponsor.name}
               >
                 <Image
@@ -52,14 +51,14 @@ export default async function Sponsors() {
                   alt={sponsor.name}
                   width={140}
                   height={70}
-                  className="h-10 md:h-12 w-auto object-contain"
+                  className="h-10 md:h-14 w-auto object-contain"
                 />
               </a>
             </StaggerItem>
           ))}
         </StaggerContainer>
-
       </div>
+
     </section>
   );
 }
