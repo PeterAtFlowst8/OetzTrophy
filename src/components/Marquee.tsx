@@ -22,7 +22,7 @@ const dotStyle: React.CSSProperties = {
 
 export default async function MarqueeBanner() {
   const t = await getTranslations('marquee');
-  const items = [0, 1, 2, 3, 4, 5].map((i) => t(`item${i}` as Parameters<typeof t>[0]));
+  const items = [0, 1, 2, 3, 4].map((i) => t(`item${i}` as Parameters<typeof t>[0]));
 
   function Track() {
     return (
