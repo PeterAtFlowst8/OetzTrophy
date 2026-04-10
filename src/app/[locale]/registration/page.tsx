@@ -5,6 +5,8 @@ import { useTranslations } from 'next-intl';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 
+const REGISTRATION_OPENS = new Date('2026-05-01T00:00:00');
+
 const experienceLevels = [
   { value: 'ww3', label: 'WW III' },
   { value: 'ww4', label: 'WW IV' },
@@ -13,6 +15,7 @@ const experienceLevels = [
 
 export default function RegistrationPage() {
   const t = useTranslations('registration');
+  const isOpen = new Date() >= REGISTRATION_OPENS;
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -84,6 +87,35 @@ export default function RegistrationPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-2xl mx-auto px-6 md:px-12">
 
+          {!isOpen ? (
+            <FadeIn>
+              <div className="text-center py-12">
+                <p
+                  className="uppercase mb-4"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(28px, 4vw, 44px)',
+                    fontWeight: 700,
+                    color: 'var(--color-ink)',
+                    lineHeight: 0.95,
+                  }}
+                >
+                  {t('closedTitle')}
+                </p>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '16px',
+                    lineHeight: 1.7,
+                    color: 'var(--color-body-text)',
+                  }}
+                >
+                  {t('closedText')}
+                </p>
+              </div>
+            </FadeIn>
+          ) : (
+          <>
           <FadeIn>
             <p
               className="mb-10"
@@ -209,6 +241,8 @@ export default function RegistrationPage() {
 
             </form>
           </FadeIn>
+          </>
+          )}
 
         </div>
       </section>

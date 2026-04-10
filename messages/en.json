@@ -207,6 +207,8 @@
     "nationalityLabel": "Nationality",
     "nationalityPlaceholder": "e.g. Austria",
     "experienceLabel": "Whitewater Experience",
+    "closedTitle": "Registration not yet open",
+    "closedText": "Registration for Boater X 2026 opens on 1 May 2026. Check back then!",
     "submit": "Register & Pay",
     "submitting": "Processing...",
     "feeNote": "Registration fee: €50 — Payment via Stripe",

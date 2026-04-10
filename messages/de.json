@@ -207,6 +207,8 @@
     "nationalityLabel": "Nationalität",
     "nationalityPlaceholder": "z.B. Österreich",
     "experienceLabel": "Wildwasser-Erfahrung",
+    "closedTitle": "Anmeldung noch nicht geöffnet",
+    "closedText": "Die Anmeldung für den Boater X 2026 öffnet am 1. Mai 2026. Komm dann wieder!",
     "submit": "Anmelden & Bezahlen",
     "submitting": "Wird verarbeitet...",
     "feeNote": "Anmeldegebühr: €50 — Zahlung via Stripe",
