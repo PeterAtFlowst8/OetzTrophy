@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
+import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
   de: { title: 'Boater X — Offenes Kajakrennen auf der Ötztaler Ache', description: 'Der Boater X (Oetz Kayak Cross): Offenes Wildwasserrennen, vier Paddler starten gleichzeitig, Head-to-Head durch die Stromschnellen. 18. September 2026 in Oetz.' },
@@ -17,21 +20,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: m.title, description: m.description };
 }
 
-export default async function BoaterXPage() {
-  const t = await getTranslations('boaterX');
+export const revalidate = 60;
 
-  const rules = [
-    t('rule1'),
-    t('rule2'),
-    t('rule3'),
-    t('rule4'),
-  ];
+export default async function BoaterXPage() {
+  const locale = await getLocale();
+  const event = await getEventBySlug('boater-x');
+  if (!event) notFound();
+
+  const t = await getTranslations('boaterX');
+  const title = localizedField(event.title, locale);
+  const body = localizedField(event.body, locale);
+  const rules = event.rules || [];
 
   return (
     <main>
       <PageHeader
-        label={t('label')}
-        title={t('title')}
+        label="Boater X"
+        title={title}
         image="/images/event-boaterx.jpg"
       />
 
@@ -40,18 +45,24 @@ export default async function BoaterXPage() {
 
           <FadeIn>
             <div className="max-w-3xl mb-16 md:mb-20">
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                {t('intro')}
-              </p>
+              {body && body.length > 0 ? (
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
+                  <PortableText value={body} />
+                </div>
+              ) : (
+                <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
+                  {localizedField(event.excerpt, locale)}
+                </p>
+              )}
             </div>
           </FadeIn>
 
           <FadeIn delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
-                { label: t('dateLabel'), value: t('dateValue') },
-                { label: t('formatLabel'), value: t('formatValue') },
-                { label: t('entryLabel'), value: t('entryValue') },
+                { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(event.date, locale) },
+                { label: 'Format', value: event.format },
+                { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryTypeLabel(event.entryType, locale) },
               ].map((item) => (
                 <div key={item.label} style={{ borderLeft: '3px solid var(--color-accent)', paddingLeft: '1.25rem' }}>
                   <p className="uppercase mb-2" style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.2em', color: 'var(--color-muted)' }}>
@@ -83,34 +94,32 @@ export default async function BoaterXPage() {
             </Link>
           </FadeIn>
 
-          <FadeIn delay={0.05}>
-            <div className="max-w-3xl mb-16 md:mb-20">
-              <h2 className="uppercase mb-6" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
-                {t('formatHeading')}
-              </h2>
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '16px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                {t('formatText')}
-              </p>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.05}>
-            <div className="max-w-3xl">
-              <h2 className="uppercase mb-6" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
-                {t('rulesHeading')}
-              </h2>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {rules.map((rule, i) => (
-                  <li key={i} className="flex gap-4 items-start" style={{ fontFamily: 'var(--font-body)', fontSize: '15px', lineHeight: 1.7, color: 'var(--color-body-text)', padding: '0.75rem 0', borderBottom: '1px solid var(--color-border)' }}>
-                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', color: 'var(--color-accent)', minWidth: '2ch' }}>
-                      0{i + 1}
-                    </span>
-                    {rule}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </FadeIn>
+          {rules.length > 0 && (
+            <FadeIn delay={0.15}>
+              <div className="max-w-3xl">
+                <h2
+                  className="uppercase mb-6"
+                  style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}
+                >
+                  {locale === 'de' ? 'Regeln' : 'Rules'}
+                </h2>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {rules.map((rule, i) => (
+                    <li
+                      key={i}
+                      className="flex gap-4 items-start"
+                      style={{ fontFamily: 'var(--font-body)', fontSize: '15px', lineHeight: 1.7, color: 'var(--color-body-text)', padding: '0.75rem 0', borderBottom: '1px solid var(--color-border)' }}
+                    >
+                      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', color: 'var(--color-accent)', minWidth: '2ch' }}>
+                        0{i + 1}
+                      </span>
+                      {localizedField(rule, locale)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeIn>
+          )}
 
         </div>
       </section>

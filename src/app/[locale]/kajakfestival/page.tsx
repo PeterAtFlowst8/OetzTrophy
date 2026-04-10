@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+import { getEventBySlug, localizedField } from '@/lib/events';
 
 const meta = {
   de: { title: 'Kajakfestival — 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Live-Musik. Die europäische Paddel-Community trifft sich in Oetz, Tirol.' },
@@ -16,8 +19,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: m.title, description: m.description };
 }
 
+export const revalidate = 60;
+
 export default async function KajakfestivalPage() {
+  const locale = await getLocale();
+  const event = await getEventBySlug('kajakfestival');
+  if (!event) notFound();
+
   const t = await getTranslations('kajakfestival');
+  const title = localizedField(event.title, locale);
+  const body = localizedField(event.body, locale);
 
   const schedule = [
     { day: t('day1Day'), date: t('day1Date'), desc: t('day1Desc') },
@@ -29,8 +40,8 @@ export default async function KajakfestivalPage() {
   return (
     <main>
       <PageHeader
-        label={t('label')}
-        title={t('title')}
+        label="Kajakfestival"
+        title={title}
         image="https://oetz-trophy.com/wp-content/uploads/2023/07/OETZ-TROPHY-Oetztal-Kajakfestival-header.jpg"
       />
 
@@ -39,9 +50,15 @@ export default async function KajakfestivalPage() {
 
           <FadeIn>
             <div className="max-w-3xl mb-16 md:mb-20">
-              <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                {t('intro')}
-              </p>
+              {body && body.length > 0 ? (
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
+                  <PortableText value={body} />
+                </div>
+              ) : (
+                <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
+                  {localizedField(event.excerpt, locale)}
+                </p>
+              )}
             </div>
           </FadeIn>
 
