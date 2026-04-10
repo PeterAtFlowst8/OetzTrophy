@@ -4,9 +4,9 @@ import { Link } from '@/i18n/navigation';
 import FadeIn from '@/components/motion/FadeIn';
 
 const eventConfigs = [
-  { image: '/images/hero.jpg', href: '/oetz-trophy' },
-  { image: '/images/event-boaterx.jpg', href: '/boater-x' },
   { image: '/images/event-festival-2.jpg', href: '/kajakfestival' },
+  { image: '/images/event-boaterx.jpg', href: '/boater-x' },
+  { image: '/images/hero.jpg', href: '/oetz-trophy' },
 ] as const;
 
 function EventCard({
