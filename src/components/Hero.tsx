@@ -68,7 +68,7 @@ export default function Hero({ festivalDate }: Props) {
 
       {/* Countdown — dead center */}
       {state && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center pb-32 md:pb-40 hero-countdown">
+        <div className="absolute inset-0 flex flex-col items-center justify-center pb-40 md:pb-64 hero-countdown">
           {units ? (
             <div
               className="text-center px-6 py-8 md:px-10 md:py-10"
