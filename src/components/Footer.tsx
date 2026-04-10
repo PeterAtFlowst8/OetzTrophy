@@ -60,18 +60,16 @@ export default async function Footer() {
       <div className="relative" style={{ height: '4px', backgroundColor: 'var(--color-accent)' }} />
 
       <div className="relative text-center px-6 pt-16 md:pt-24 pb-10 md:pb-14">
-        <p
-          className="uppercase leading-none"
+        <img
+          src="/images/logo-white.webp"
+          alt="OETZ TROPHY"
+          className="mx-auto"
           style={{
-            fontFamily: 'var(--font-display)',
-            fontWeight: 700,
-            fontSize: 'clamp(52px, 9vw, 120px)',
-            color: 'rgba(255,255,255,0.92)',
-            letterSpacing: '-0.02em',
+            width: 'clamp(220px, 40vw, 440px)',
+            height: 'auto',
+            opacity: 0.92,
           }}
-        >
-          OETZ TROPHY
-        </p>
+        />
         <p
           className="mt-4 uppercase"
           style={{

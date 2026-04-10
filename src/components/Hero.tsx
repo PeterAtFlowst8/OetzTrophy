@@ -57,7 +57,7 @@ export default function Hero() {
 
       {/* Countdown — dead center */}
       {state && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center hero-countdown">
+        <div className="absolute inset-0 flex flex-col items-center justify-center pb-32 md:pb-40 hero-countdown">
           {units ? (
             <div
               className="text-center px-6 py-8 md:px-10 md:py-10"
@@ -101,7 +101,7 @@ export default function Hero() {
                         style={{
                           fontFamily: 'var(--font-display)',
                           fontWeight: 700,
-                          fontSize: 'clamp(48px, 7vw, 96px)',
+                          fontSize: 'clamp(36px, 7vw, 96px)',
                           letterSpacing: '-0.03em',
                           fontVariantNumeric: 'tabular-nums',
                           textShadow: '0 4px 32px rgba(0,0,0,0.4)',
@@ -138,9 +138,9 @@ export default function Hero() {
       )}
 
       {/* Race title — pinned bottom-left */}
-      <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 md:px-12 md:pb-12">
+      <div className="absolute bottom-0 left-0 right-0 px-6 pb-14 md:px-12 md:pb-20">
         <span
-          className="inline-block mb-4 px-[10px] py-[5px] text-[11px] font-bold uppercase tracking-widest hero-badge"
+          className="inline-block mb-5 md:mb-6 px-[12px] py-[6px] text-[11px] font-bold uppercase tracking-widest hero-badge"
           style={{
             backgroundColor: 'var(--color-accent)',
             color: '#111',
@@ -162,11 +162,11 @@ export default function Hero() {
           }}
         >
           <span className="block hero-line-1" style={{ fontSize: 'clamp(52px, 12vw, 160px)', lineHeight: 0.88 }}>{t('line1')}</span>
-          <span className="block hero-line-2" style={{ fontSize: 'clamp(28px, 7.5vw, 100px)', lineHeight: 0.9 }}>{t('line2')}</span>
+          <span className="block hero-line-2 mt-1 md:mt-2" style={{ fontSize: 'clamp(28px, 7.5vw, 100px)', lineHeight: 0.9 }}>{t('line2')}</span>
         </h1>
 
         <p
-          className="mt-3 uppercase text-white/45 hero-location"
+          className="mt-4 md:mt-5 uppercase text-white/45 hero-location"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '11px',
