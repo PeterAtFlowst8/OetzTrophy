@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
             currency: 'eur',
             unit_amount: registrationFee,
             product_data: {
-              name: 'Boater X Registration — OETZ TROPHY 2026',
+              name: 'OETZ TROPHY Race Weekend Registration 2026',
               description: `${name}${club ? ` (${club})` : ''} — ${experienceLevel.toUpperCase()}`,
             },
           },

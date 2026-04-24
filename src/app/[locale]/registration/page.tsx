@@ -8,7 +8,6 @@ import FadeIn from '@/components/motion/FadeIn';
 const REGISTRATION_OPENS = new Date('2026-05-19T00:00:00');
 
 const experienceLevels = [
-  { value: 'ww3', label: 'WW III' },
   { value: 'ww4', label: 'WW IV' },
   { value: 'ww5', label: 'WW V+' },
 ];

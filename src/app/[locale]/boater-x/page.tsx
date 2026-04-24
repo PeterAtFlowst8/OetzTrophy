@@ -8,8 +8,8 @@ import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
-  de: { title: 'Boater X — Offenes Kajakrennen auf der Ötztaler Ache', description: 'Der Boater X (Oetz Kayak Cross): Offenes Wildwasserrennen, vier Paddler starten gleichzeitig, Head-to-Head durch die Stromschnellen. 18. September 2026 in Oetz.' },
-  en: { title: 'Boater X — Open Kayak Cross Race on the Ötztaler Ache', description: 'Boater X (Oetz Kayak Cross): Open entry whitewater race, four paddlers start simultaneously, head-to-head through the rapids. 18 September 2026 in Oetz, Tyrol.' },
+  de: { title: 'Boater X — Kajak Cross auf der Slalomstrecke in Oetz', description: 'Der Boater X (Oetz Kayak Cross) am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.' },
+  en: { title: 'Boater X — Kayak Cross on the Slalom Course in Oetz', description: 'Boater X (Oetz Kayak Cross) on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
