@@ -3,12 +3,12 @@ import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
   de: {
-    title: 'Boater X Anmeldung — Oetz Kayak Cross 2026',
-    description: 'Melde dich für den Oetz Kayak Cross (Boater X) an. Offene Anmeldung für alle Paddler mit Wildwassererfahrung ab WW III. 18. September 2026 auf der Ötztaler Ache in Tirol.',
+    title: 'Anmeldung — Boater X & OETZ TROPHY 2026',
+    description: 'Melde dich für den Boater X an — gleichzeitig Qualifikation für die OETZ TROPHY. Offene Anmeldung für alle Paddler mit Wildwassererfahrung ab WW III. 18.–19. September 2026 auf der Ötztaler Ache in Tirol.',
   },
   en: {
-    title: 'Boater X Registration — Oetz Kayak Cross 2026',
-    description: 'Register for the Oetz Kayak Cross (Boater X). Open entry for all paddlers with whitewater experience from class III. 18 September 2026 on the Ötztaler Ache in Tyrol, Austria.',
+    title: 'Registration — Boater X & OETZ TROPHY 2026',
+    description: 'Register for the Boater X — also the qualifier for the OETZ TROPHY. Open entry for all paddlers with whitewater experience from class III. 18–19 September 2026 on the Ötztaler Ache in Tyrol, Austria.',
   },
 };
 

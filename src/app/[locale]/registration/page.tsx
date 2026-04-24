@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 
-const REGISTRATION_OPENS = new Date('2026-05-01T00:00:00');
+const REGISTRATION_OPENS = new Date('2026-05-19T00:00:00');
 
 const experienceLevels = [
   { value: 'ww3', label: 'WW III' },

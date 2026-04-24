@@ -57,7 +57,7 @@ export function formatShortDate(dateString: string, locale: string): string {
 
 export function entryTypeLabel(entryType: string, locale: string): string {
   const labels: Record<string, { de: string; en: string }> = {
-    'invite-only': { de: 'Nur auf Einladung', en: 'Invite Only' },
+    'qualification': { de: 'Qualifikation', en: 'Qualification' },
     'open': { de: 'Offene Anmeldung', en: 'Open Entry' },
     'free': { de: 'Freier Eintritt', en: 'Free Entry' },
   };

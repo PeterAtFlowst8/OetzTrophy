@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
-import { getLocale } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
+import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
-  de: { title: 'Oetz Trophy — Das härteste Kajakrennen der Alpen 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, nur auf Einladung. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
-  en: { title: 'Oetz Trophy — The Hardest Kayak Race in the Alps 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, invite only. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
+  de: { title: 'Oetz Trophy — Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
+  en: { title: 'Oetz Trophy — The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -26,6 +27,7 @@ export default async function OetzTrophyPage() {
   const event = await getEventBySlug('oetz-trophy');
   if (!event) notFound();
 
+  const t = await getTranslations('boaterX');
   const title = localizedField(event.title, locale);
   const body = localizedField(event.body, locale);
   const rules = event.rules || [];
@@ -72,6 +74,24 @@ export default async function OetzTrophyPage() {
                 </div>
               ))}
             </div>
+
+            {/* Registration CTA — shared registration with Boater X */}
+            <Link
+              href="/registration"
+              className="inline-flex items-center gap-3 px-6 py-4 mb-16 md:mb-20 transition-opacity duration-200 hover:opacity-90"
+              style={{
+                backgroundColor: 'var(--color-accent)',
+                color: '#111',
+                fontFamily: 'var(--font-body)',
+                fontSize: '13px',
+                fontWeight: 600,
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+              }}
+            >
+              <span style={{ fontSize: '16px' }}>↗</span>
+              {t('regNote')}
+            </Link>
           </FadeIn>
 
           {rules.length > 0 && (
