@@ -8,8 +8,8 @@ import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
-  de: { title: 'Oetz Trophy — Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
-  en: { title: 'Oetz Trophy — The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
+  de: { title: 'OETZ TROPHY — Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
+  en: { title: 'OETZ TROPHY — The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -35,7 +35,7 @@ export default async function OetzTrophyPage() {
   return (
     <main>
       <PageHeader
-        label="Oetz Trophy"
+        label="OETZ TROPHY"
         title={title}
         image="/images/hero.jpg"
       />

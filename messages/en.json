@@ -15,36 +15,34 @@
     "seconds": "Sec"
   },
   "marquee": {
-    "item0": "Oetz Trophy · 19 Sept",
+    "item0": "OETZ TROPHY · 19 Sept",
     "item1": "Boater X · 18 Sept",
     "item2": "Kayak Festival · 17–20 Sept",
     "item3": "Ötztaler Ache · WW V"
   },
   "dasRennen": {
-    "label": "Oetz Trophy",
+    "label": "OETZ TROPHY",
     "headline1": "Born from",
     "headline2": "the river.",
     "stat0Value": "WW V",
     "stat0Label": "Difficulty",
-    "stat1Value": "QUALIFY",
-    "stat1Label": "Entry",
     "stat2Value": "TYROL",
     "stat2Label": "Austria",
     "stat3Value": "2019",
     "stat3Label": "Since",
-    "body": "The Ötztaler Ache. WW\u00a0V. One of the hardest kayak races in the world. No open entry — only the fastest from Friday's qualifying heats start. The course demands experience, technique, and the willingness to push your limits."
+    "body": "The Ötztaler Ache. WW\u00a0V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
   },
   "festivalOverview": {
     "label": "17–20 September 2026",
     "headline1": "4 Days of",
     "headline2": "Whitewater.",
-    "body": "The Ötztal Kayak Festival brings Europe's paddling community together for four days in Oetz. Racing, demo boats, film screenings, live music — and of course, the Ötztaler Ache.",
+    "body": "The Ötztal Kayak Festival brings the paddling community together for four days in Oetz. Racing, demo boats, film screenings, music — and of course, the Ötztaler Ache.",
     "day0Label": "Thu",
     "day0": "Opening & welcome party",
     "day1Label": "Fri",
     "day1": "Qualifying heats & Boater X",
     "day2Label": "Sat",
-    "day2": "Oetz Trophy — main race",
+    "day2": "OETZ TROPHY — main race",
     "day3Label": "Sun",
     "day3": "Community paddling & farewell"
   },
@@ -55,7 +53,7 @@
     "item0Subtitle": "17–20 September 2026",
     "item1Title": "Boater X",
     "item1Subtitle": "Open Entry · Fri 18 Sept",
-    "item2Title": "Oetz Trophy",
+    "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualification · Sat 19 Sept"
   },
   "news": {
@@ -76,7 +74,7 @@
   },
   "nav": {
     "switchTo": "DE",
-    "race": "Oetz Trophy",
+    "race": "OETZ TROPHY",
     "boaterX": "Boater X",
     "festival": "Festival",
     "news": "News",
@@ -114,7 +112,7 @@
   },
   "oetzTrophy": {
     "label": "The Race",
-    "title": "Oetz Trophy",
+    "title": "OETZ TROPHY",
     "intro": "The OETZ TROPHY is one of the hardest kayak races in the world. On the Ötztaler Ache — whitewater class V — the world's best paddlers compete head to head. No open entry: only the fastest 30 men and 10 women from the qualifying heats will be allowed to compete in the race.",
     "dateLabel": "Date",
     "dateValue": "19 Sept 2026",
