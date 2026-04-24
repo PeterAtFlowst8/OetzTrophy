@@ -88,7 +88,7 @@ export default async function FestivalOverview() {
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src="/images/event-festival-2.jpg"
-                alt="Kayak Festival atmosphere"
+                alt={t('imageAlt')}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"

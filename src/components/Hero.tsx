@@ -44,7 +44,7 @@ export default function Hero({ festivalDate }: Props) {
       {/* Background photo */}
       <Image
         src="/images/hero.jpg"
-        alt="Kayakers racing through whitewater rapids on the Ötztaler Ache"
+        alt={t('imageAlt')}
         fill
         className="object-cover object-center"
         priority

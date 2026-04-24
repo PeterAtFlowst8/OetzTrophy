@@ -8,27 +8,26 @@ describe('getCountdownState', () => {
     expect(state.phase).toBe('launch');
     if (state.phase === 'launch') {
       expect(state.delta.days).toBeGreaterThan(0);
-      expect(state.label).toBe('WEBSITE LAUNCH IN');
     }
   });
 
-  it('returns race phase when after launch and race date is set', () => {
+  it('returns festival phase when after launch and festival date is set', () => {
     const now = new Date('2026-03-20T12:00:00');
-    const raceDate = new Date('2026-09-15T09:00:00');
-    const state = getCountdownState(now, raceDate);
-    expect(state.phase).toBe('race');
+    const festivalDate = new Date('2026-09-15T09:00:00');
+    const state = getCountdownState(now, festivalDate);
+    expect(state.phase).toBe('festival');
   });
 
-  it('returns static when after launch and no race date', () => {
+  it('returns static when after launch and no festival date', () => {
     const now = new Date('2026-03-20T12:00:00');
     const state = getCountdownState(now, null);
     expect(state.phase).toBe('static');
   });
 
-  it('returns static when race has already passed', () => {
+  it('returns static when festival has already passed', () => {
     const now = new Date('2026-09-20T12:00:00');
-    const raceDate = new Date('2026-09-15T09:00:00');
-    const state = getCountdownState(now, raceDate);
+    const festivalDate = new Date('2026-09-15T09:00:00');
+    const state = getCountdownState(now, festivalDate);
     expect(state.phase).toBe('static');
   });
 

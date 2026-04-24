@@ -12,9 +12,9 @@ export type Sponsor = {
 
 // Fallback logo URLs (used until logos are uploaded to Sanity)
 const fallbackLogos: Record<string, string> = {
-  'Ötztal Tourismus': 'https://oetz-trophy.com/wp-content/uploads/2021/02/Oetztal_Logo_370.jpg',
-  'Source To Sea': 'https://oetz-trophy.com/wp-content/uploads/2021/02/S2S_Logo_370-300x300.jpg',
-  'Kayak Session': 'https://oetz-trophy.com/wp-content/uploads/2021/04/KS-logo-partner-3-e1618820345971.png',
+  'Ötztal Tourismus': '/images/sponsor-oetztal.jpg',
+  'Source To Sea': '/images/sponsor-s2s.jpg',
+  'Kayak Session': '/images/sponsor-ks.png',
 };
 
 const sponsorsQuery = `*[_type == "sponsor"] | order(order asc) {

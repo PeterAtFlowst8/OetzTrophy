@@ -125,7 +125,7 @@ export default function Nav() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="relative w-6 h-5 flex flex-col justify-between"
-              aria-label="Menu"
+              aria-label={t('menuLabel')}
             >
               <span
                 className="block h-[2px] w-full transition-all duration-300"

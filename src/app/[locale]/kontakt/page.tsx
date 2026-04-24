@@ -58,7 +58,7 @@ export default async function KontaktPage() {
     <main>
       <PageHeader
         title={t('title')}
-        image="https://oetz-trophy.com/wp-content/uploads/2023/03/rivers-day-header.jpg"
+        image="/images/page-contact.jpg"
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>

@@ -7,8 +7,8 @@ import FadeIn from '@/components/motion/FadeIn';
 import { getEventBySlug, localizedField } from '@/lib/events';
 
 const meta = {
-  de: { title: 'Kajakfestival — 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Live-Musik. Die europäische Paddel-Community trifft sich in Oetz, Tirol.' },
-  en: { title: 'Kayak Festival — 4 Days of Whitewater in Ötztal 2026', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and live music. Europe\'s paddling community gathers in Oetz, Tyrol, Austria.' },
+  de: { title: 'Kajakfestival — 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Musik. Die Paddel-Community trifft sich in Oetz, Tirol.' },
+  en: { title: 'Kayak Festival — 4 Days of Whitewater in Ötztal 2026', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and music. The paddling community gathers in Oetz, Tyrol, Austria.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -42,7 +42,7 @@ export default async function KajakfestivalPage() {
       <PageHeader
         label="Kajakfestival"
         title={title}
-        image="https://oetz-trophy.com/wp-content/uploads/2023/07/OETZ-TROPHY-Oetztal-Kajakfestival-header.jpg"
+        image="/images/page-kajakfestival.jpg"
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>

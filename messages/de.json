@@ -4,7 +4,8 @@
     "line1": "Extreme",
     "line2": "Kayak Championships",
     "location": "Oetz · Tirol · Österreich",
-    "static": "Coming September 2026"
+    "static": "Coming September 2026",
+    "imageAlt": "Kajakfahrer im Wildwasser auf der Ötztaler Ache"
   },
   "countdown": {
     "launch": "Website Launch in",
@@ -44,7 +45,8 @@
     "day2Label": "Sa",
     "day2": "OETZ TROPHY — Hauptrennen",
     "day3Label": "So",
-    "day3": "Community-Paddeln & Abschied"
+    "day3": "Community-Paddeln & Abschied",
+    "imageAlt": "Stimmung beim Kajakfestival"
   },
   "events": {
     "label": "Events 2026",
@@ -78,7 +80,8 @@
     "boaterX": "Boater X",
     "festival": "Festival",
     "news": "News",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "menuLabel": "Menü"
   },
   "impressum": {
     "label": "Rechtliches",
@@ -176,6 +179,18 @@
     "orgHeading": "Veranstalter",
     "contactHeading": "Kontakt",
     "socialHeading": "Social Media"
+  },
+  "gallery": {
+    "label": "Galerie",
+    "title": "Galerie",
+    "comingSoon": "Demnächst",
+    "description": "Die Galerie mit Fotos und Videos aus vergangenen Jahren wird in Kürze verfügbar sein. Bis dahin folge uns auf Instagram für aktuelle Bilder."
+  },
+  "results": {
+    "label": "Ergebnisse",
+    "title": "Ergebnisse",
+    "comingSoon": "Demnächst",
+    "description": "Die Ergebnisse der OETZ TROPHY und des Boater X werden nach dem Rennwochenende hier veröffentlicht."
   },
   "registration": {
     "label": "Anmeldung",
