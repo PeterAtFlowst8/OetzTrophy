@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
-
-const REGISTRATION_OPENS = new Date('2026-05-19T00:00:00');
+import { isRegistrationOpen } from '@/lib/registration';
 
 const experienceLevels = [
   { value: 'ww4', label: 'WW IV' },
@@ -14,7 +13,7 @@ const experienceLevels = [
 
 export default function RegistrationPage() {
   const t = useTranslations('registration');
-  const isOpen = new Date() >= REGISTRATION_OPENS;
+  const isOpen = isRegistrationOpen();
   const [form, setForm] = useState({
     name: '',
     email: '',
