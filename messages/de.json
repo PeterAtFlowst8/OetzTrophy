@@ -116,7 +116,7 @@
   "oetzTrophy": {
     "label": "Das Rennen",
     "title": "OETZ TROPHY",
-    "intro": "Die OETZ TROPHY ist eines der härtesten Kajakrennen der Welt. Auf der Ötztaler Ache — Wildwasser V — treten die weltbesten Paddler Kopf an Kopf gegeneinander an. Kein offener Start: Nur die 30 schnellsten Männer und 10 schnellsten Frauen aus den Qualifikationsläufen dürfen am Rennen teilnehmen.",
+    "intro": "Die OETZ TROPHY ist eines der härtesten Kajakrennen der Welt. Auf der Ötztaler Ache — Wildwasser V — treten die weltbesten Paddler Kopf an Kopf gegeneinander an. Kein offener Start: Nur die 40 schnellsten Männer und 15 schnellsten Frauen aus den Qualifikationsläufen dürfen am Rennen teilnehmen.",
     "dateLabel": "Datum",
     "dateValue": "19. Sept 2026",
     "formatLabel": "Format",
@@ -135,7 +135,7 @@
   "boaterX": {
     "label": "Boater Cross",
     "title": "Boater X",
-    "intro": "Im Anschluss an die Qualifikationsläufe am Freitagvormittag, bei denen sich die 30 schnellsten Männer und 10 schnellsten Frauen für das Hauptrennen am Samstag qualifizieren, findet der Boater X (Oetz Kayak Cross) auf der Slalomstrecke in Oetz statt. Nur wer sich nicht für das Hauptrennen qualifiziert hat, darf an diesem Event teilnehmen. Die Teilnehmerzahl beim Boater X ist auf 32 Männer und 16 Frauen begrenzt. Es lohnt sich also definitiv, in der Qualifikation alles zu geben.",
+    "intro": "Im Anschluss an die Qualifikationsläufe am Freitagvormittag, bei denen sich die 40 schnellsten Männer und 15 schnellsten Frauen für das Hauptrennen am Samstag qualifizieren, findet der Boater X (Oetz Kayak Cross) auf der Slalomstrecke in Oetz statt. Nur wer sich nicht für das Hauptrennen qualifiziert hat, darf an diesem Event teilnehmen. Die Teilnehmerzahl beim Boater X ist auf 32 Männer und 16 Frauen begrenzt. Es lohnt sich also definitiv, in der Qualifikation alles zu geben.",
     "dateLabel": "Datum",
     "dateValue": "18. Sept 2026",
     "formatLabel": "Format",
@@ -195,7 +195,7 @@
   "registration": {
     "label": "Anmeldung",
     "title": "Anmeldung",
-    "intro": "Melde dich für das OETZ TROPHY Rennwochenende an. Die Qualifikationsläufe am Freitagvormittag entscheiden alles: Die 30 schnellsten Männer und 10 schnellsten Frauen starten am Samstag in der OETZ TROPHY; die nächsten 32 Männer und 16 Frauen fahren am Freitagnachmittag den Boater X. Offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV). Die Anmeldegebühr sichert deinen Startplatz.",
+    "intro": "Melde dich für das OETZ TROPHY Rennwochenende an. Die Qualifikationsläufe am Freitagvormittag entscheiden alles: Die 40 schnellsten Männer und 15 schnellsten Frauen starten am Samstag in der OETZ TROPHY; die nächsten 32 Männer und 16 Frauen fahren am Freitagnachmittag den Boater X. Offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV). Die Anmeldegebühr sichert deinen Startplatz.",
     "nameLabel": "Vollständiger Name",
     "namePlaceholder": "Max Mustermann",
     "emailLabel": "E-Mail",
