@@ -31,7 +31,7 @@
     "stat2Label": "Austria",
     "stat3Value": "2019",
     "stat3Label": "Since",
-    "body": "The Ötztaler Ache. WW\u00a0V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
+    "body": "The Ötztaler Ache. WW V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
   },
   "festivalOverview": {
     "label": "17–20 September 2026",
@@ -211,7 +211,16 @@
     "submitting": "Processing...",
     "feeNote": "Registration fee: €50 — Payment via Stripe",
     "successTitle": "Registration confirmed",
-    "successText": "Your registration for Boater X 2026 has been received and payment confirmed. You will receive a confirmation email. See you on the Ötztaler Ache!",
-    "backHome": "Back to homepage"
+    "successText": "Your registration has been received and payment confirmed. You will receive a confirmation email. See you on the Ötztaler Ache!",
+    "backHome": "Back to homepage",
+    "eventTypeLabel": "What are you registering for?",
+    "eventOetzTrophy": "OETZ TROPHY qualification",
+    "eventOetzTrophyDescription": "I want to race the qualification and register for the OETZ TROPHY, or Boater X depending on my result.",
+    "eventBoaterX": "Boater X only",
+    "eventBoaterXDescription": "I only want to race Boater X / Oetz Kayak Cross.",
+    "waiverText": "I confirm that I have read the waiver, conditions and privacy policy, and I accept the",
+    "conditionsLink": "conditions of participation",
+    "privacyLink": "privacy policy",
+    "and": "and"
   }
 }

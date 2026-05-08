@@ -31,7 +31,7 @@
     "stat2Label": "Österreich",
     "stat3Value": "2019",
     "stat3Label": "Seit",
-    "body": "Die Ötztaler Ache. WW\u00a0V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
+    "body": "Die Ötztaler Ache. WW V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
   },
   "festivalOverview": {
     "label": "17.–20. September 2026",
@@ -211,7 +211,16 @@
     "submitting": "Wird verarbeitet...",
     "feeNote": "Anmeldegebühr: €50 — Zahlung via Stripe",
     "successTitle": "Anmeldung bestätigt",
-    "successText": "Deine Anmeldung für den Boater X 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
-    "backHome": "Zur Startseite"
+    "successText": "Deine Anmeldung ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
+    "backHome": "Zur Startseite",
+    "eventTypeLabel": "Wofür meldest du dich an?",
+    "eventOetzTrophy": "OETZ TROPHY Qualifikation",
+    "eventOetzTrophyDescription": "Ich will die Qualifikation fahren und mich für die OETZ TROPHY bzw. je nach Ergebnis für Boater X anmelden.",
+    "eventBoaterX": "Nur Boater X",
+    "eventBoaterXDescription": "Ich möchte nur beim Boater X / Oetz Kayak Cross starten.",
+    "waiverText": "Ich bestätige, dass ich die Haftungsfreistellung, Teilnahmebedingungen und Datenschutzerklärung gelesen habe und akzeptiere die",
+    "conditionsLink": "Teilnahmebedingungen",
+    "privacyLink": "Datenschutzerklärung",
+    "and": "und"
   }
 }

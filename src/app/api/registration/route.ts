@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
-import { isPreproductionRegistrationTestMode, isRegistrationOpen } from '@/lib/registration';
+import { getDb, initDb } from '@/lib/db';
+import { isPreproductionRegistrationTestMode, isRegistrationOpen, validateRegistrationInput } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
 
 export async function POST(request: NextRequest) {
@@ -15,15 +15,17 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, club, nationality, experienceLevel } = body;
+    const { name, email, club, nationality, experienceLevel, eventType, waiverAccepted } = body;
+    const validation = validateRegistrationInput({ name, email, experienceLevel, eventType, waiverAccepted });
 
-    if (!name || !email || !experienceLevel) {
+    if (!validation.valid) {
       return NextResponse.json(
-        { error: 'Name, email and experience level are required' },
+        { error: validation.error },
         { status: 400 }
       );
     }
 
+    await initDb();
     const sql = getDb();
 
     // Check for existing registration
@@ -42,14 +44,15 @@ export async function POST(request: NextRequest) {
       await sql`
         UPDATE registrations
         SET name = ${name}, club = ${club || null}, nationality = ${nationality || null},
-            experience_level = ${experienceLevel}, updated_at = NOW()
+            experience_level = ${experienceLevel}, event_type = ${eventType},
+            waiver_accepted = ${waiverAccepted}, waiver_accepted_at = NOW(), updated_at = NOW()
         WHERE email = ${email}
       `;
     } else {
       // Create new registration
       await sql`
-        INSERT INTO registrations (name, email, club, nationality, experience_level)
-        VALUES (${name}, ${email}, ${club || null}, ${nationality || null}, ${experienceLevel})
+        INSERT INTO registrations (name, email, club, nationality, experience_level, event_type, waiver_accepted, waiver_accepted_at)
+        VALUES (${name}, ${email}, ${club || null}, ${nationality || null}, ${experienceLevel}, ${eventType}, ${waiverAccepted}, NOW())
       `;
     }
 
@@ -79,8 +82,8 @@ export async function POST(request: NextRequest) {
             currency: 'eur',
             unit_amount: registrationFee,
             product_data: {
-              name: 'OETZ TROPHY Race Weekend Registration 2026',
-              description: `${name}${club ? ` (${club})` : ''} — ${experienceLevel.toUpperCase()}`,
+              name: `OETZ TROPHY 2026 Registration - ${eventType === 'oetz-trophy' ? 'OETZ TROPHY qualification' : 'Boater X only'}`,
+              description: `${name}${club ? ` (${club})` : ''} - ${experienceLevel.toUpperCase()}`,
             },
           },
           quantity: 1,
@@ -89,7 +92,8 @@ export async function POST(request: NextRequest) {
       metadata: {
         email,
         name,
-        type: 'boater-x-registration',
+        type: 'race-registration',
+        eventType,
       },
       success_url: `${process.env.NEXT_PUBLIC_URL || 'https://oetz-trophy.vercel.app'}/registration/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL || 'https://oetz-trophy.vercel.app'}/registration`,

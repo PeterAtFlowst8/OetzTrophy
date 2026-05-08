@@ -3,6 +3,7 @@ import {
   PREPRODUCTION_REGISTRATION_TEST_BRANCH,
   isPreproductionRegistrationTestMode,
   isRegistrationOpen,
+  validateRegistrationInput,
 } from './registration';
 
 describe('registration availability', () => {
@@ -37,5 +38,37 @@ describe('registration availability', () => {
     vi.stubEnv('NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF', PREPRODUCTION_REGISTRATION_TEST_BRANCH);
 
     expect(isPreproductionRegistrationTestMode()).toBe(false);
+  });
+});
+
+describe('validateRegistrationInput', () => {
+  const validInput = {
+    name: 'Jane Paddler',
+    email: 'jane@example.com',
+    experienceLevel: 'ww5',
+    eventType: 'oetz-trophy',
+    waiverAccepted: true,
+  };
+
+  it('accepts an OETZ TROPHY registration selection with waiver agreement', () => {
+    expect(validateRegistrationInput(validInput)).toEqual({ valid: true });
+  });
+
+  it('accepts a Boater X only registration selection with waiver agreement', () => {
+    expect(validateRegistrationInput({ ...validInput, eventType: 'boater-x' })).toEqual({ valid: true });
+  });
+
+  it('requires the participant to choose what they are registering for', () => {
+    expect(validateRegistrationInput({ ...validInput, eventType: '' })).toEqual({
+      valid: false,
+      error: 'Please choose OETZ TROPHY or Boater X',
+    });
+  });
+
+  it('requires waiver and conditions agreement', () => {
+    expect(validateRegistrationInput({ ...validInput, waiverAccepted: false })).toEqual({
+      valid: false,
+      error: 'You must accept the waiver, conditions and privacy policy',
+    });
   });
 });

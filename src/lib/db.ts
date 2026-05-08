@@ -22,4 +22,8 @@ export async function initDb() {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `;
+
+  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS event_type TEXT`;
+  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS waiver_accepted BOOLEAN NOT NULL DEFAULT FALSE`;
+  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS waiver_accepted_at TIMESTAMP WITH TIME ZONE`;
 }

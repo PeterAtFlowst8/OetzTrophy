@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 import { isPreproductionRegistrationTestMode, isRegistrationOpen } from '@/lib/registration';
@@ -9,6 +10,11 @@ import { isPreproductionRegistrationTestMode, isRegistrationOpen } from '@/lib/r
 const experienceLevels = [
   { value: 'ww4', label: 'WW IV' },
   { value: 'ww5', label: 'WW V+' },
+];
+
+const eventTypes = [
+  { value: 'oetz-trophy', labelKey: 'eventOetzTrophy', descriptionKey: 'eventOetzTrophyDescription' },
+  { value: 'boater-x', labelKey: 'eventBoaterX', descriptionKey: 'eventBoaterXDescription' },
 ];
 
 export default function RegistrationPage() {
@@ -21,6 +27,8 @@ export default function RegistrationPage() {
     club: '',
     nationality: '',
     experienceLevel: '',
+    eventType: '',
+    waiverAccepted: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -150,6 +158,48 @@ export default function RegistrationPage() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
               <div>
+                <label style={labelStyle}>{t('eventTypeLabel')} *</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {eventTypes.map((event) => (
+                    <button
+                      key={event.value}
+                      type="button"
+                      onClick={() => setForm({ ...form, eventType: event.value })}
+                      className="text-left p-4 transition-all duration-200"
+                      style={{
+                        border: '1px solid',
+                        borderColor: form.eventType === event.value ? 'var(--color-accent)' : 'var(--color-border)',
+                        backgroundColor: form.eventType === event.value ? '#FEF3C7' : 'var(--color-surface)',
+                        color: 'var(--color-ink)',
+                      }}
+                    >
+                      <span
+                        className="block uppercase mb-2"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '20px',
+                          fontWeight: 700,
+                        }}
+                      >
+                        {t(event.labelKey)}
+                      </span>
+                      <span
+                        className="block"
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '13px',
+                          lineHeight: 1.5,
+                          color: 'var(--color-body-text)',
+                        }}
+                      >
+                        {t(event.descriptionKey)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <label style={labelStyle}>{t('nameLabel')} *</label>
                 <input
                   type="text"
@@ -221,6 +271,37 @@ export default function RegistrationPage() {
                 </div>
               </div>
 
+              <div>
+                <label
+                  className="flex gap-3 items-start"
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '14px',
+                    lineHeight: 1.6,
+                    color: 'var(--color-body-text)',
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    required
+                    checked={form.waiverAccepted}
+                    onChange={(e) => setForm({ ...form, waiverAccepted: e.target.checked })}
+                    style={{ marginTop: '4px' }}
+                  />
+                  <span>
+                    {t('waiverText')}{' '}
+                    <Link href="/terms-and-conditions" className="underline">
+                      {t('conditionsLink')}
+                    </Link>{' '}
+                    {t('and')}{' '}
+                    <Link href="/datenschutz" className="underline">
+                      {t('privacyLink')}
+                    </Link>
+                    .
+                  </span>
+                </label>
+              </div>
+
               {error && (
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#dc2626' }}>
                   {error}
@@ -229,7 +310,7 @@ export default function RegistrationPage() {
 
               <button
                 type="submit"
-                disabled={submitting || !form.experienceLevel}
+                disabled={submitting || !form.experienceLevel || !form.eventType || !form.waiverAccepted}
                 className="mt-4 py-4 uppercase tracking-widest transition-all duration-200 hover:opacity-90 disabled:opacity-40"
                 style={{
                   fontFamily: 'var(--font-display)',
