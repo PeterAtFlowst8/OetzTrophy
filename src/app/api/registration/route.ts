@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
-import { isRegistrationOpen } from '@/lib/registration';
+import { isPreproductionRegistrationTestMode, isRegistrationOpen } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
 
 export async function POST(request: NextRequest) {
   try {
+    const testMode = isPreproductionRegistrationTestMode();
+
     if (!isRegistrationOpen()) {
       return NextResponse.json(
         { error: 'Registration is not open yet' },
@@ -49,6 +51,19 @@ export async function POST(request: NextRequest) {
         INSERT INTO registrations (name, email, club, nationality, experience_level)
         VALUES (${name}, ${email}, ${club || null}, ${nationality || null}, ${experienceLevel})
       `;
+    }
+
+    if (testMode) {
+      await sql`
+        UPDATE registrations
+        SET status = 'test_confirmed', stripe_session_id = 'preproduction-test', updated_at = NOW()
+        WHERE email = ${email}
+      `;
+
+      return NextResponse.json({
+        url: `${request.nextUrl.origin}/registration/success?test_registration=1`,
+        testMode: true,
+      });
     }
 
     // Create Stripe Checkout Session

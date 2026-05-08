@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
-import { isRegistrationOpen } from '@/lib/registration';
+import { isPreproductionRegistrationTestMode, isRegistrationOpen } from '@/lib/registration';
 
 const experienceLevels = [
   { value: 'ww4', label: 'WW IV' },
@@ -14,6 +14,7 @@ const experienceLevels = [
 export default function RegistrationPage() {
   const t = useTranslations('registration');
   const isOpen = isRegistrationOpen();
+  const testMode = isPreproductionRegistrationTestMode();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -114,6 +115,23 @@ export default function RegistrationPage() {
             </FadeIn>
           ) : (
           <>
+          {testMode && (
+            <FadeIn>
+              <div
+                className="mb-8 px-5 py-4"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '14px',
+                  lineHeight: 1.6,
+                  backgroundColor: '#FEF3C7',
+                  border: '1px solid #F59E0B',
+                  color: '#78350F',
+                }}
+              >
+                Pre-production test mode: registrations are saved for testing and no Stripe payment is taken.
+              </div>
+            </FadeIn>
+          )}
           <FadeIn>
             <p
               className="mb-10"
