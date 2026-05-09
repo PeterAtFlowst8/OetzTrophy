@@ -3,6 +3,7 @@ import {
   PREPRODUCTION_REGISTRATION_TEST_BRANCH,
   isPreproductionRegistrationTestMode,
   isRegistrationOpen,
+  normalizeRegistrationInput,
   validateRegistrationInput,
 } from './registration';
 
@@ -69,6 +70,33 @@ describe('validateRegistrationInput', () => {
     expect(validateRegistrationInput({ ...validInput, waiverAccepted: false })).toEqual({
       valid: false,
       error: 'You must accept the waiver, conditions and privacy policy',
+    });
+  });
+
+  it('normalizes registration input before saving', () => {
+    expect(normalizeRegistrationInput({
+      name: '  Jane Paddler ',
+      email: ' JANE@EXAMPLE.COM ',
+      club: ' River Club ',
+      nationality: '',
+      experienceLevel: ' ww5 ',
+      eventType: ' oetz-trophy ',
+      waiverAccepted: true,
+    })).toEqual({
+      name: 'Jane Paddler',
+      email: 'jane@example.com',
+      club: 'River Club',
+      nationality: null,
+      experienceLevel: 'ww5',
+      eventType: 'oetz-trophy',
+      waiverAccepted: true,
+    });
+  });
+
+  it('requires a valid email address', () => {
+    expect(validateRegistrationInput({ ...validInput, email: 'not-an-email' })).toEqual({
+      valid: false,
+      error: 'Please enter a valid email address',
     });
   });
 });

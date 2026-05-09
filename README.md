@@ -34,3 +34,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Registration Database and Admin
+
+Race registrations are stored in Neon Postgres through `DATABASE_URL`. The public registration route creates or updates a pending registration, stores the Stripe Checkout session ID, and the Stripe webhook marks the matching session as paid after signature verification.
+
+Required Vercel environment variables:
+
+```bash
+DATABASE_URL=postgresql://...
+STRIPE_SECRET_KEY=sk_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+ADMIN_PASSWORD=use-a-long-random-password
+ADMIN_SESSION_SECRET=use-another-long-random-string
+REGISTRATION_FEE_CENTS=5000
+NEXT_PUBLIC_URL=https://oetz-trophy.vercel.app
+```
+
+Admin tools:
+
+- `/admin` opens the password-protected registration dashboard.
+- `/api/admin/export` downloads registrations as CSV for authenticated admins.
+- The dashboard lets admins filter registrations, change status, add internal notes, mark check-in, and export the filtered list.

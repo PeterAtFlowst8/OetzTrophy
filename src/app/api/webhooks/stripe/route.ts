@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
-import { getDb } from '@/lib/db';
+import { confirmRegistrationPayment, recordStripeWebhookEvent } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -10,7 +11,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Missing signature or webhook secret' }, { status: 400 });
   }
 
-  let event;
+  let event: Stripe.Event;
   try {
     event = getStripe().webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
@@ -18,21 +19,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
+  const isNewEvent = await recordStripeWebhookEvent(event.id, event.type);
+  if (!isNewEvent) {
+    return NextResponse.json({ received: true, duplicate: true });
+  }
+
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const email = session.metadata?.email || session.customer_email;
-    const paymentId = session.payment_intent as string;
 
-    if (email) {
-      const sql = getDb();
-      await sql`
-        UPDATE registrations
-        SET status = 'paid',
-            stripe_payment_id = ${paymentId},
-            updated_at = NOW()
-        WHERE email = ${email}
-      `;
-      console.log(`Registration confirmed for ${email}`);
+    if (session.payment_status !== 'paid') {
+      return NextResponse.json({ received: true, ignored: 'payment_not_paid' });
+    }
+
+    const paymentId = typeof session.payment_intent === 'string' ? session.payment_intent : null;
+    const updated = await confirmRegistrationPayment(session.id, paymentId);
+
+    if (!updated) {
+      console.warn(`Stripe checkout session completed without matching registration: ${session.id}`);
     }
   }
 
