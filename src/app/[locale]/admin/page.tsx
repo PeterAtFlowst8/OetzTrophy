@@ -117,6 +117,11 @@ export default async function AdminPage({ params, searchParams }: Props) {
                   The password did not match.
                 </p>
               )}
+              {error === 'limited' && (
+                <p style={{ color: '#B91C1C', fontFamily: 'var(--font-body)', fontSize: 14 }}>
+                  Too many login attempts. Please try again later.
+                </p>
+              )}
               <button type="submit" style={buttonStyle}>Sign in</button>
             </form>
           )}

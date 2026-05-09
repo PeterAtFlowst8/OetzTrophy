@@ -86,9 +86,15 @@ export async function initDb() {
     CREATE TABLE IF NOT EXISTS stripe_webhook_events (
       id TEXT PRIMARY KEY,
       type TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'processing',
+      processed_at TIMESTAMP WITH TIME ZONE,
+      last_error TEXT,
       received_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `;
+  await sql`ALTER TABLE stripe_webhook_events ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'processing'`;
+  await sql`ALTER TABLE stripe_webhook_events ADD COLUMN IF NOT EXISTS processed_at TIMESTAMP WITH TIME ZONE`;
+  await sql`ALTER TABLE stripe_webhook_events ADD COLUMN IF NOT EXISTS last_error TEXT`;
 }
 
 function normalizeDate(value: unknown) {
@@ -210,17 +216,64 @@ export async function confirmTestRegistration(email: string) {
   `;
 }
 
-export async function recordStripeWebhookEvent(eventId: string, eventType: string) {
+export async function beginStripeWebhookEvent(eventId: string, eventType: string) {
   await initDb();
   const sql = getDb();
-  const rows = await sql`
+  const inserted = await sql`
     INSERT INTO stripe_webhook_events (id, type)
     VALUES (${eventId}, ${eventType})
     ON CONFLICT (id) DO NOTHING
     RETURNING id
   `;
 
-  return rows.length > 0;
+  if (inserted.length > 0) {
+    return true;
+  }
+
+  const existing = await sql`
+    SELECT status FROM stripe_webhook_events WHERE id = ${eventId} LIMIT 1
+  `;
+
+  if (existing[0]?.status === 'processed') {
+    return false;
+  }
+
+  await sql`
+    UPDATE stripe_webhook_events
+    SET type = ${eventType},
+        status = 'processing',
+        last_error = NULL,
+        received_at = NOW()
+    WHERE id = ${eventId}
+  `;
+
+  return true;
+}
+
+export async function markStripeWebhookEventProcessed(eventId: string) {
+  await initDb();
+  const sql = getDb();
+
+  await sql`
+    UPDATE stripe_webhook_events
+    SET status = 'processed',
+        processed_at = NOW(),
+        last_error = NULL
+    WHERE id = ${eventId}
+  `;
+}
+
+export async function markStripeWebhookEventFailed(eventId: string, error: unknown) {
+  await initDb();
+  const sql = getDb();
+  const message = error instanceof Error ? error.message : String(error);
+
+  await sql`
+    UPDATE stripe_webhook_events
+    SET status = 'failed',
+        last_error = ${message.slice(0, 500)}
+    WHERE id = ${eventId}
+  `;
 }
 
 export async function confirmRegistrationPayment(stripeSessionId: string, stripePaymentId: string | null) {

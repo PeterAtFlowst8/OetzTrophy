@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
-import { confirmRegistrationPayment, recordStripeWebhookEvent } from '@/lib/db';
+import {
+  beginStripeWebhookEvent,
+  confirmRegistrationPayment,
+  markStripeWebhookEventFailed,
+  markStripeWebhookEventProcessed,
+} from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -19,25 +24,33 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
-  const isNewEvent = await recordStripeWebhookEvent(event.id, event.type);
-  if (!isNewEvent) {
+  const shouldProcessEvent = await beginStripeWebhookEvent(event.id, event.type);
+  if (!shouldProcessEvent) {
     return NextResponse.json({ received: true, duplicate: true });
   }
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
+  try {
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
 
-    if (session.payment_status !== 'paid') {
-      return NextResponse.json({ received: true, ignored: 'payment_not_paid' });
+      if (session.payment_status !== 'paid') {
+        await markStripeWebhookEventProcessed(event.id);
+        return NextResponse.json({ received: true, ignored: 'payment_not_paid' });
+      }
+
+      const paymentId = typeof session.payment_intent === 'string' ? session.payment_intent : null;
+      const updated = await confirmRegistrationPayment(session.id, paymentId);
+
+      if (!updated) {
+        throw new Error(`Stripe checkout session completed without matching registration: ${session.id}`);
+      }
     }
 
-    const paymentId = typeof session.payment_intent === 'string' ? session.payment_intent : null;
-    const updated = await confirmRegistrationPayment(session.id, paymentId);
-
-    if (!updated) {
-      console.warn(`Stripe checkout session completed without matching registration: ${session.id}`);
-    }
+    await markStripeWebhookEventProcessed(event.id);
+    return NextResponse.json({ received: true });
+  } catch (error) {
+    await markStripeWebhookEventFailed(event.id, error);
+    console.error('Stripe webhook processing failed:', error);
+    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 });
   }
-
-  return NextResponse.json({ received: true });
 }

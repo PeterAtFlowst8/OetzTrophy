@@ -1,11 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { attachStripeSession, confirmTestRegistration, upsertPendingRegistration } from '@/lib/db';
+import { checkRateLimit, getClientIp, hashRateLimitValue, rateLimitHeaders } from '@/lib/rate-limit';
 import { isPreproductionRegistrationTestMode, isRegistrationOpen, normalizeRegistrationInput, validateRegistrationInput } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
+
+const REGISTRATION_IP_LIMIT = { limit: 20, windowMs: 15 * 60 * 1000 };
+const REGISTRATION_EMAIL_LIMIT = { limit: 4, windowMs: 60 * 60 * 1000 };
 
 export async function POST(request: NextRequest) {
   try {
     const testMode = isPreproductionRegistrationTestMode();
+    const clientIp = getClientIp(request.headers);
+    const ipLimit = checkRateLimit({
+      key: `registration:ip:${hashRateLimitValue(clientIp)}`,
+      ...REGISTRATION_IP_LIMIT,
+    });
+
+    if (ipLimit.limited) {
+      return NextResponse.json(
+        { error: 'Too many registration attempts. Please try again later.' },
+        { status: 429, headers: rateLimitHeaders(ipLimit.retryAfter) }
+      );
+    }
 
     if (!isRegistrationOpen()) {
       return NextResponse.json(
@@ -22,6 +38,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: validation.error },
         { status: 400 }
+      );
+    }
+
+    const emailLimit = checkRateLimit({
+      key: `registration:email:${hashRateLimitValue(normalized.email)}`,
+      ...REGISTRATION_EMAIL_LIMIT,
+    });
+
+    if (emailLimit.limited) {
+      return NextResponse.json(
+        { error: 'Too many registration attempts for this email. Please try again later.' },
+        { status: 429, headers: rateLimitHeaders(emailLimit.retryAfter) }
       );
     }
 
