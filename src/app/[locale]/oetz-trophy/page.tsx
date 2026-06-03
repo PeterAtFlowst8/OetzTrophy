@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
+import { registrationOpensLabel } from '@/lib/registration';
 import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
@@ -93,7 +94,9 @@ export default async function OetzTrophyPage() {
               }}
             >
               <span style={{ fontSize: '16px' }}>↗</span>
-              {t('regNote')}
+              {locale === 'de'
+                ? `Anmeldung öffnet am ${registrationOpensLabel(locale)}`
+                : `Registration opens ${registrationOpensLabel(locale)}`}
             </Link>
           </FadeIn>
 

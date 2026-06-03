@@ -84,7 +84,7 @@ const imagesSection = defineField({
   type: 'object',
   description:
     'Replace the main photos used across the site. Leave empty to keep the current built-in image.',
-  options: { collapsible: true, collapsed: true },
+  options: { collapsible: true, collapsed: false },
   fields: [
     imageField('hero', 'Homepage — Hero'),
     imageField('festivalOverview', 'Homepage — Festival Section'),

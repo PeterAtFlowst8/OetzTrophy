@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
-import { isRegistrationOpen } from '@/lib/registration';
+import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
 
 const experienceLevels = [
   { value: 'ww4', label: 'WW IV' },
@@ -13,7 +13,9 @@ const experienceLevels = [
 
 export default function RegistrationPage() {
   const t = useTranslations('registration');
+  const locale = useLocale();
   const isOpen = isRegistrationOpen();
+  const opensLabel = registrationOpensLabel(locale);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -108,7 +110,9 @@ export default function RegistrationPage() {
                     color: 'var(--color-body-text)',
                   }}
                 >
-                  {t('closedText')}
+                  {locale === 'de'
+                    ? `Die Anmeldung für das OETZ TROPHY Rennwochenende 2026 öffnet am ${opensLabel}. Komm dann wieder!`
+                    : `Registration for the OETZ TROPHY race weekend 2026 opens on ${opensLabel}. Check back then!`}
                 </p>
               </div>
             </FadeIn>
