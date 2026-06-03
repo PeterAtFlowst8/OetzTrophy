@@ -10,7 +10,7 @@ import { sanityClient, urlFor } from './sanity';
  * rather than breaking the page. Result is cached per request via React cache().
  */
 
-const QUERY = `*[_id == "siteContent"][0]`;
+const QUERY = `*[_type == "siteContent"][0]`;
 
 type Leaf = { de?: string; en?: string };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

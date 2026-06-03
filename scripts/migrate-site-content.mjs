@@ -43,8 +43,15 @@ async function main() {
   const de = load('de');
   const en = load('en');
 
+  // Reuse the existing siteContent document if there is one (its id may have
+  // been auto-generated), otherwise fall back to a stable id.
+  const existing = await client.fetch(
+    '*[_type == "siteContent"][0]{ _id, images }',
+  );
+  const id = existing?._id?.replace(/^drafts\./, '') || 'siteContent';
+
   // Build { namespace: { key: { de, en } } } from the two message files.
-  const doc = { _id: 'siteContent', _type: 'siteContent' };
+  const doc = { _id: id, _type: 'siteContent' };
   for (const namespace of Object.keys(en)) {
     const section = {};
     for (const key of Object.keys(en[namespace])) {
@@ -56,10 +63,7 @@ async function main() {
     doc[namespace] = section;
   }
 
-  // createOrReplace keeps the fixed id the singleton + frontend query expect.
-  // Note: this overwrites text fields, but leaves uploaded images untouched
-  // only if you merge — here we preserve existing images explicitly.
-  const existing = await client.getDocument('siteContent').catch(() => null);
+  // Preserve any images already uploaded in Studio.
   if (existing?.images) doc.images = existing.images;
 
   await client.createOrReplace(doc);
