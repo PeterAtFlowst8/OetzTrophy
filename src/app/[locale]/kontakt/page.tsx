@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getSiteImage } from '@/lib/siteContent';
 import FadeIn from '@/components/motion/FadeIn';
 
 const pageMeta = {
@@ -54,11 +55,13 @@ const socialLinks = [
 export default async function KontaktPage() {
   const t = await getTranslations('kontakt');
 
+  const headerImage = await getSiteImage('kontakt', '/images/page-contact.jpg', { width: 2000 });
+
   return (
     <main>
       <PageHeader
         title={t('title')}
-        image="/images/page-contact.jpg"
+        image={headerImage}
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>

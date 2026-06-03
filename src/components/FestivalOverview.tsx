@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import FadeIn from '@/components/motion/FadeIn';
 import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
+import { getSiteImage } from '@/lib/siteContent';
 
 const TOPO_PATTERN = `url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 200 Q100 160 200 200 T400 200' fill='none' stroke='%23F59E0B' stroke-width='0.5' opacity='0.08'/%3E%3Cpath d='M0 220 Q100 180 200 220 T400 220' fill='none' stroke='%23F59E0B' stroke-width='0.5' opacity='0.06'/%3E%3Cpath d='M0 180 Q100 140 200 180 T400 180' fill='none' stroke='%23F59E0B' stroke-width='0.5' opacity='0.05'/%3E%3Cpath d='M0 240 Q100 200 200 240 T400 240' fill='none' stroke='%23F59E0B' stroke-width='0.5' opacity='0.04'/%3E%3Cpath d='M0 160 Q100 120 200 160 T400 160' fill='none' stroke='%23F59E0B' stroke-width='0.5' opacity='0.03'/%3E%3C/svg%3E")`;
 
@@ -9,6 +10,11 @@ const dayDates = ['17', '18', '19', '20'];
 
 export default async function FestivalOverview() {
   const t = await getTranslations('festivalOverview');
+  const sectionImage = await getSiteImage(
+    'festivalOverview',
+    '/images/event-festival-2.jpg',
+    { width: 1000 },
+  );
 
   const days = [0, 1, 2, 3].map((i) => ({
     label: t(`day${i}Label` as Parameters<typeof t>[0]),
@@ -87,7 +93,7 @@ export default async function FestivalOverview() {
           <FadeIn delay={0.15}>
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                src="/images/event-festival-2.jpg"
+                src={sectionImage}
                 alt={t('imageAlt')}
                 fill
                 className="object-cover"

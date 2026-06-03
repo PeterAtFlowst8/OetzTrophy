@@ -6,16 +6,28 @@ import {
   StarIcon,
   BoltIcon,
   ImagesIcon,
+  EditIcon,
 } from '@sanity/icons';
 
 // Singletons are enforced via the structure (fixed document id), not the schema.
-const SINGLETONS = ['siteSettings'];
+const SINGLETONS = ['siteSettings', 'siteContent'];
 const LISTED = ['post', 'event', 'result', 'galleryItem', 'sponsor'];
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('OETZ TROPHY')
     .items([
+      // Singleton: all editable page text + images
+      S.listItem()
+        .title('Website Text & Images')
+        .icon(EditIcon)
+        .child(
+          S.document()
+            .schemaType('siteContent')
+            .documentId('siteContent')
+            .title('Website Text & Images'),
+        ),
+
       // Singleton: site-wide settings (dates, registration)
       S.listItem()
         .title('Site Settings')

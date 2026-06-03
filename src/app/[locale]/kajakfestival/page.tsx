@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
+import { getSiteImage } from '@/lib/siteContent';
 import FadeIn from '@/components/motion/FadeIn';
 import { getEventBySlug, localizedField } from '@/lib/events';
 
@@ -37,12 +38,14 @@ export default async function KajakfestivalPage() {
     { day: t('day4Day'), date: t('day4Date'), desc: t('day4Desc') },
   ];
 
+  const headerImage = await getSiteImage('kajakfestival', '/images/page-kajakfestival.jpg', { width: 2000 });
+
   return (
     <main>
       <PageHeader
         label="Kajakfestival"
         title={title}
-        image="/images/page-kajakfestival.jpg"
+        image={headerImage}
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>

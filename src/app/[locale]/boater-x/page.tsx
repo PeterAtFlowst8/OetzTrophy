@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
+import { getSiteImage } from '@/lib/siteContent';
 import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
@@ -32,12 +33,14 @@ export default async function BoaterXPage() {
   const body = localizedField(event.body, locale);
   const rules = event.rules || [];
 
+  const headerImage = await getSiteImage('boaterX', '/images/event-boaterx.jpg', { width: 2000 });
+
   return (
     <main>
       <PageHeader
         label="Boater X"
         title={title}
-        image="/images/event-boaterx.jpg"
+        image={headerImage}
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>

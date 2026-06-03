@@ -7,6 +7,7 @@ import { sponsor } from './sponsor';
 import { result } from './result';
 import { galleryItem } from './galleryItem';
 import { siteSettings } from './siteSettings';
+import { siteContent } from './siteContent';
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
@@ -16,6 +17,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   result,
   galleryItem,
   siteSettings,
+  siteContent,
   // Objects
   blockContent,
 ];
