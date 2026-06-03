@@ -7,17 +7,21 @@ import LatestNews from '@/components/LatestNews';
 import Sponsors from '@/components/Sponsors';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
+import { getSiteImage } from '@/lib/siteContent';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const settings = await getSiteSettings();
+  const [settings, heroImage] = await Promise.all([
+    getSiteSettings(),
+    getSiteImage('hero', '/images/hero.jpg', { width: 2000 }),
+  ]);
 
   return (
     <main>
       <JsonLd data={organizationSchema} />
       <JsonLd data={festivalEventSchema} />
-      <Hero festivalDate={settings.festivalDate} />
+      <Hero festivalDate={settings.festivalDate} imageSrc={heroImage} />
       <MarqueeBanner />
       <FestivalOverview />
       <Events />

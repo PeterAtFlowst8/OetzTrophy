@@ -9,9 +9,10 @@ const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http:
 
 type Props = {
   festivalDate?: string | null;
+  imageSrc?: string;
 };
 
-export default function Hero({ festivalDate }: Props) {
+export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Props) {
   const [state, setState] = useState<CountdownState | null>(null);
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
@@ -43,7 +44,7 @@ export default function Hero({ festivalDate }: Props) {
 
       {/* Background photo */}
       <Image
-        src="/images/hero.jpg"
+        src={imageSrc}
         alt={t('imageAlt')}
         fill
         className="object-cover object-center"

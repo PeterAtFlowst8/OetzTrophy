@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
+import { getSiteImage } from '@/lib/siteContent';
 import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
@@ -32,12 +33,14 @@ export default async function OetzTrophyPage() {
   const body = localizedField(event.body, locale);
   const rules = event.rules || [];
 
+  const headerImage = await getSiteImage('oetzTrophy', '/images/hero.jpg', { width: 2000 });
+
   return (
     <main>
       <PageHeader
         label="OETZ TROPHY"
         title={title}
-        image="/images/hero.jpg"
+        image={headerImage}
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
