@@ -22,7 +22,7 @@ export const structure: StructureResolver = (S, context) =>
       // Resolve the existing document by type (its id may be auto-generated),
       // falling back to a fixed id when none exists yet.
       S.listItem()
-        .title('Website Text & Images')
+        .title('Main Website Text & Images')
         .icon(EditIcon)
         .child(() =>
           context
@@ -32,7 +32,7 @@ export const structure: StructureResolver = (S, context) =>
               S.document()
                 .schemaType('siteContent')
                 .documentId((id || 'siteContent').replace(/^drafts\./, ''))
-                .title('Website Text & Images'),
+                .title('Main Website Text & Images'),
             ),
         ),
 
@@ -50,7 +50,7 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
 
       S.documentTypeListItem('post').title('Blog Posts').icon(DocumentTextIcon),
-      S.documentTypeListItem('event').title('Race & Festival Pages').icon(CalendarIcon),
+      S.documentTypeListItem('event').title('Race & Festival Page Text').icon(CalendarIcon),
       S.documentTypeListItem('result').title('Race Results').icon(BoltIcon),
       S.documentTypeListItem('galleryItem').title('Gallery').icon(ImagesIcon),
       S.documentTypeListItem('sponsor').title('Sponsors').icon(StarIcon),

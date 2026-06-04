@@ -23,10 +23,10 @@ type ContentGroup =
   | 'legal';
 
 const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
-  { name: 'photos', title: 'Images' },
   { name: 'homepage', title: 'Homepage' },
-  { name: 'racePages', title: 'Other Pages' },
+  { name: 'photos', title: 'Images' },
   { name: 'registration', title: 'Registration' },
+  { name: 'racePages', title: 'Other Pages' },
   { name: 'navigation', title: 'Navigation & Footer' },
   { name: 'legal', title: 'Legal Pages' },
 ];
@@ -330,7 +330,7 @@ function fieldDescription(sample: string) {
   return notes.join(' ');
 }
 
-/** One translatable key -> a collapsible `{ de, en }` pair. */
+/** One translatable key -> a visible `{ de, en }` pair. */
 function localizedLeaf(namespace: string, key: string, sample: string) {
   const multiline = sample.length > 60 || sample.includes('\n');
   const langField = (name: 'de' | 'en', title: string) =>
@@ -342,7 +342,7 @@ function localizedLeaf(namespace: string, key: string, sample: string) {
     name: key,
     title: fieldTitle(namespace, key),
     type: 'object',
-    options: { columns: 2, collapsible: true, collapsed: true },
+    options: { columns: 2 },
     description: fieldDescription(sample),
     fields: [langField('de', 'German'), langField('en', 'English')],
   });
@@ -438,6 +438,8 @@ export const siteContent = defineType({
   title: 'Website Text & Images',
   type: 'document',
   icon: EditIcon,
+  description:
+    'Simple editable website copy and main image slots. Open a section, change German or English text, then publish.',
   groups: FIELD_GROUPS,
   fields: [imagesSection, ...textSections],
   preview: {
