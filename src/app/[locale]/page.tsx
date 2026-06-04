@@ -23,7 +23,7 @@ export default async function Home() {
       <JsonLd data={festivalEventSchema} />
       <Hero festivalDate={settings.festivalDate} imageSrc={heroImage} />
       <MarqueeBanner />
-      <FestivalOverview />
+      <FestivalOverview festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />
       <Events />
       <DasRennen />
       <LatestNews />

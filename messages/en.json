@@ -58,6 +58,13 @@
     "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualification · Sat 19 Sept"
   },
+  "calendar": {
+    "label": "Festival calendar",
+    "eyebrow": "Calendar",
+    "download": "Save dates",
+    "google": "Google Calendar",
+    "hint": "{range} · Oetz, Tyrol"
+  },
   "news": {
     "label": "News",
     "headline": "Latest",

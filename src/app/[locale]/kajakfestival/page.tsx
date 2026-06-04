@@ -5,7 +5,9 @@ import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
 import FadeIn from '@/components/motion/FadeIn';
+import CalendarActions from '@/components/CalendarActions';
 import { getEventBySlug, localizedField } from '@/lib/events';
+import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
   de: { title: 'Kajakfestival — 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Musik. Die Paddel-Community trifft sich in Oetz, Tirol.' },
@@ -24,7 +26,10 @@ export const revalidate = 60;
 
 export default async function KajakfestivalPage() {
   const locale = await getLocale();
-  const event = await getEventBySlug('kajakfestival');
+  const [event, settings] = await Promise.all([
+    getEventBySlug('kajakfestival'),
+    getSiteSettings(),
+  ]);
   if (!event) notFound();
 
   const t = await getTranslations('kajakfestival');
@@ -67,9 +72,11 @@ export default async function KajakfestivalPage() {
 
           <FadeIn delay={0.1}>
             <div className="mb-16 md:mb-20">
-              <h2 className="uppercase mb-8" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
-                {t('scheduleHeading')}
-              </h2>
+              <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <h2 className="uppercase" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
+                  {t('scheduleHeading')}
+                </h2>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {schedule.map((item) => (
                   <div key={item.day} className="p-5 md:p-6" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
@@ -85,6 +92,7 @@ export default async function KajakfestivalPage() {
                   </div>
                 ))}
               </div>
+              <CalendarActions festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />
             </div>
           </FadeIn>
 
