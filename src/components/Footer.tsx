@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { getSponsors } from '@/lib/sponsors';
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
@@ -37,7 +38,11 @@ const socialLinks = [
 ];
 
 export default async function Footer() {
-  const t = await getTranslations('footer');
+  const [t, ts, sponsors] = await Promise.all([
+    getTranslations('footer'),
+    getTranslations('sponsors'),
+    getSponsors(),
+  ]);
 
   const footerLinks = [
     { label: t('impressum'), href: '/impressum' as const },
@@ -45,6 +50,7 @@ export default async function Footer() {
     { label: t('kontakt'), href: '/kontakt' as const },
     { label: t('datenschutz'), href: '/datenschutz' as const },
   ];
+  const visibleSponsors = sponsors.filter((sponsor) => sponsor.logoUrl);
 
   return (
     <footer className="relative" style={{ backgroundColor: 'var(--color-ink)' }}>
@@ -87,10 +93,61 @@ export default async function Footer() {
         </p>
       </div>
 
-      <div
-        className="relative max-w-7xl mx-auto px-6 md:px-12"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
-      />
+      {visibleSponsors.length > 0 ? (
+        <section
+          aria-label={ts('label')}
+          className="relative max-w-7xl mx-auto px-6 md:px-12 py-9 md:py-11"
+          style={{
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+            <div className="flex w-full items-center gap-4">
+              <span className="h-px flex-1 bg-white/10" aria-hidden="true" />
+              <p
+                className="uppercase"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '11px',
+                  letterSpacing: '0.18em',
+                  color: 'rgba(255,255,255,0.42)',
+                }}
+              >
+                {ts('label')}
+              </p>
+              <span className="h-px flex-1 bg-white/10" aria-hidden="true" />
+            </div>
+
+            <div className="grid w-full grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+              {visibleSponsors.map((sponsor) => (
+                <a
+                  key={sponsor.name}
+                  href={sponsor.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={sponsor.name}
+                  className="group flex h-16 items-center justify-center border border-white/10 bg-white px-5 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)] sm:w-44"
+                  style={{ borderRadius: '6px' }}
+                >
+                  <Image
+                    src={sponsor.logoUrl}
+                    alt={sponsor.name}
+                    width={144}
+                    height={64}
+                    className="max-h-10 w-auto max-w-[132px] object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <div
+          className="relative max-w-7xl mx-auto px-6 md:px-12"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
+        />
+      )}
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-7 flex flex-col md:flex-row items-center justify-between gap-5">
 

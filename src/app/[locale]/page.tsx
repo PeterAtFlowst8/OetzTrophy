@@ -4,7 +4,6 @@ import FestivalOverview from '@/components/FestivalOverview';
 import Events from '@/components/Events';
 import DasRennen from '@/components/DasRennen';
 import LatestNews from '@/components/LatestNews';
-import Sponsors from '@/components/Sponsors';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
 import { getSiteImage } from '@/lib/siteContent';
@@ -27,7 +26,6 @@ export default async function Home() {
       <Events />
       <DasRennen />
       <LatestNews />
-      <Sponsors />
     </main>
   );
 }
