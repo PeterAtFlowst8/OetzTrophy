@@ -11,18 +11,14 @@ export type SanityEvent = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: { de: any[]; en: any[] };
   rules: Array<{ de: string; en: string }>;
-  image?: { asset: { _ref: string } };
-  imageUrl?: string;
 };
 
 const eventBySlugQuery = `*[_type == "event" && (slug.de.current == $slug || slug.en.current == $slug)][0] {
-  _id, title, slug, date, entryType, format, excerpt, body, rules,
-  image, "imageUrl": image.asset->url
+  _id, title, slug, date, entryType, format, excerpt, body, rules
 }`;
 
 const allEventsQuery = `*[_type == "event"] | order(date asc) {
-  _id, title, slug, date, entryType, format, excerpt,
-  image, "imageUrl": image.asset->url
+  _id, title, slug, date, entryType, format, excerpt
 }`;
 
 export async function getEventBySlug(slug: string): Promise<SanityEvent | null> {
@@ -58,7 +54,8 @@ export function formatShortDate(dateString: string, locale: string): string {
 export function entryTypeLabel(entryType: string, locale: string): string {
   const labels: Record<string, { de: string; en: string }> = {
     'qualification': { de: 'Qualifikation', en: 'Qualification' },
-    'open': { de: 'Offene Anmeldung', en: 'Open Entry' },
+    'invite-only': { de: 'Qualifikation', en: 'Qualification' },
+    'open': { de: 'Rennwochenende-Anmeldung', en: 'Race weekend registration' },
     'free': { de: 'Freier Eintritt', en: 'Free Entry' },
   };
   return locale === 'en' ? labels[entryType]?.en || entryType : labels[entryType]?.de || entryType;

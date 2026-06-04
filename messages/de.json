@@ -56,7 +56,7 @@
     "item0Title": "Kajakfestival",
     "item0Subtitle": "17.–20. September 2026",
     "item1Title": "Boater X",
-    "item1Subtitle": "Offene Anmeldung · Fr 18. Sept",
+    "item1Subtitle": "Kayak-Cross-Rennen · Fr 18. Sept",
     "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualifikation · Sa 19. Sept"
   },
@@ -166,8 +166,8 @@
     "formatLabel": "Format",
     "formatValue": "Head-to-Head",
     "entryLabel": "Teilnahme",
-    "entryValue": "Offene Anmeldung",
-    "regNote": "Anmeldung öffnet am 17.06.2026",
+    "entryValue": "Rennwochenende-Anmeldung",
+    "regNote": "Rennwochenende-Anmeldung öffnet am 17.06.2026",
     "formatHeading": "Das Format",
     "formatText": "Vier Paddler starten gleichzeitig auf einer vorgegebenen Strecke. Die ersten Zwei kommen weiter — Runde für Runde, bis nur noch vier Finalisten übrig sind. Spannung pur für Zuschauer und Athleten. Schnelle Entscheidungen, enge Duelle, voller Körpereinsatz.",
     "rulesHeading": "Regeln",
@@ -251,7 +251,6 @@
     "feeNote": "Anmeldegebühr: €135. Zahlung via Stripe.",
     "paymentNote": "Anmeldegebühr: €135. Zahlung via Stripe.",
     "successTitle": "Anmeldung bestätigt",
-    "successText": "Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
     "successRaceText": "Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
     "backHome": "Zur Startseite"
   }

@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { sanityClient, urlFor } from './sanity';
+import { EDITABLE_SITE_CONTENT_KEYS } from './siteContentFields';
 
 /**
  * Reads the `siteContent` singleton (managed in Studio) and exposes:
@@ -36,12 +37,11 @@ export async function getMessageOverrides(
   if (!doc) return {};
 
   const overrides: Record<string, Record<string, string>> = {};
-  for (const namespace of Object.keys(doc)) {
-    if (namespace.startsWith('_') || namespace === 'images') continue;
+  for (const namespace of Object.keys(EDITABLE_SITE_CONTENT_KEYS)) {
     const section = doc[namespace];
     if (!section || typeof section !== 'object') continue;
 
-    for (const key of Object.keys(section)) {
+    for (const key of EDITABLE_SITE_CONTENT_KEYS[namespace]) {
       if (STATIC_MESSAGE_KEYS.has(`${namespace}.${key}`)) continue;
 
       const leaf = section[key] as Leaf | undefined;

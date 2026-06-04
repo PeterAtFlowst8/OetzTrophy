@@ -56,7 +56,7 @@
     "item0Title": "Kayak Festival",
     "item0Subtitle": "17–20 September 2026",
     "item1Title": "Boater X",
-    "item1Subtitle": "Open Entry · Fri 18 Sept",
+    "item1Subtitle": "Kayak Cross race · Fri 18 Sept",
     "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualification · Sat 19 Sept"
   },
@@ -166,8 +166,8 @@
     "formatLabel": "Format",
     "formatValue": "Head-to-Head",
     "entryLabel": "Entry",
-    "entryValue": "Open Entry",
-    "regNote": "Registration opens 17 June 2026",
+    "entryValue": "Race weekend registration",
+    "regNote": "Race weekend registration opens 17 June 2026",
     "formatHeading": "The Format",
     "formatText": "Four paddlers start simultaneously on a set course. The first two advance — round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.",
     "rulesHeading": "Rules",
@@ -251,7 +251,6 @@
     "feeNote": "Registration fee: €135. Payment via Stripe.",
     "paymentNote": "Registration fee: €135. Payment via Stripe.",
     "successTitle": "Registration confirmed",
-    "successText": "Your registration for the OETZ TROPHY race weekend 2026 has been received and payment confirmed. You will receive a confirmation email. See you on the Ötztaler Ache!",
     "successRaceText": "Your registration for the OETZ TROPHY race weekend 2026 has been received and payment confirmed. You will receive a confirmation email. See you on the Ötztaler Ache!",
     "backHome": "Back to homepage"
   }

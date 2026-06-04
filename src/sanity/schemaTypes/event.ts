@@ -5,37 +5,61 @@ import {
   localizedText,
   localizedBlockContent,
   localizedSlug,
-  seoField,
 } from './shared';
 
 export const event = defineType({
   name: 'event',
-  title: 'Event',
+  title: 'Race / Festival Page',
   type: 'document',
   icon: CalendarIcon,
   fields: [
-    localizedString('title', 'Title'),
-    localizedSlug('slug'),
-    defineField({ name: 'date', title: 'Event Date', type: 'datetime' }),
-    localizedText('excerpt', 'Short Description'),
-    localizedBlockContent('body', 'Full Description'),
+    localizedString(
+      'title',
+      'Page Title',
+      'Shown as the main heading on the public race/festival page.',
+    ),
+    localizedSlug('slug', 'Page URL Slug'),
+    defineField({
+      name: 'date',
+      title: 'Event Date',
+      type: 'datetime',
+      description: 'Shown in the event facts on the public page.',
+    }),
+    localizedText(
+      'excerpt',
+      'Short Fallback Description',
+      'Used as a fallback if the full page text is empty.',
+    ),
+    localizedBlockContent(
+      'body',
+      'Main Page Text',
+      'Main editable text shown below the page header.',
+    ),
     defineField({
       name: 'entryType',
-      title: 'Entry Type',
+      title: 'Entry / Registration Path',
       type: 'string',
+      description:
+        'This controls the participation label only. Boater X remains its own race, but paid race participation uses one shared race-weekend registration.',
       options: {
         list: [
           { title: 'Qualification', value: 'qualification' },
-          { title: 'Open Entry', value: 'open' },
-          { title: 'Free', value: 'free' },
+          { title: 'Race Weekend Registration', value: 'open' },
+          { title: 'Free Festival Access', value: 'free' },
         ],
       },
     }),
-    defineField({ name: 'format', title: 'Race Format', type: 'string' }),
+    defineField({
+      name: 'format',
+      title: 'Format Label',
+      type: 'string',
+      description: 'Shown in the event facts, for example Time Trial, Head-to-Head, or Festival.',
+    }),
     defineField({
       name: 'rules',
-      title: 'Rules',
+      title: 'Rules List',
       type: 'array',
+      description: 'Optional numbered rules shown underneath the race facts.',
       of: [
         defineArrayMember({
           type: 'object',
@@ -47,14 +71,6 @@ export const event = defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'image',
-      title: 'Event Image',
-      type: 'image',
-      options: { hotspot: true },
-      fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
-    }),
-    seoField,
   ],
   orderings: [
     {
@@ -64,6 +80,12 @@ export const event = defineType({
     },
   ],
   preview: {
-    select: { title: 'title.de', subtitle: 'title.en', media: 'image' },
+    select: { title: 'title.de', subtitle: 'format' },
+    prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+      return {
+        title,
+        subtitle,
+      };
+    },
   },
 });

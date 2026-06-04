@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
   de: {
@@ -23,8 +22,5 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export const revalidate = 60;
 
 export default async function RegistrationLayout({ children }: Props) {
-  // Fetch settings to check if registration is open
-  // This data is available to child pages via the Sanity API
-  // The client component will check the date independently
   return <>{children}</>;
 }

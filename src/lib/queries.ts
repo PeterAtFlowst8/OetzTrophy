@@ -3,12 +3,7 @@
 
 export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   festivalDate,
-  raceDate,
-  festivalEndDate,
-  registrationOpen,
-  registrationDeadline,
-  registrationFee,
-  stripeProductId
+  festivalEndDate
 }`;
 
 export const postsQuery = `*[_type == "post"] | order(publishedAt desc){
@@ -17,9 +12,7 @@ export const postsQuery = `*[_type == "post"] | order(publishedAt desc){
   slug,
   excerpt,
   publishedAt,
-  categories,
-  coverImage,
-  "imageUrl": coverImage.asset->url
+  categories
 }`;
 
 export const postBySlugQuery = `*[_type == "post" && (slug.de.current == $slug || slug.en.current == $slug)][0]{
@@ -29,9 +22,7 @@ export const postBySlugQuery = `*[_type == "post" && (slug.de.current == $slug |
   excerpt,
   body,
   publishedAt,
-  categories,
-  coverImage,
-  "imageUrl": coverImage.asset->url
+  categories
 }`;
 
 export const sponsorsQuery = `*[_type == "sponsor"] | order(order asc){
@@ -50,9 +41,7 @@ export const eventsQuery = `*[_type == "event"] | order(date asc){
   date,
   excerpt,
   entryType,
-  format,
-  image,
-  "imageUrl": image.asset->url
+  format
 }`;
 
 export const resultsQuery = `*[_type == "result"] | order(year desc){

@@ -5,7 +5,6 @@ import {
   localizedText,
   localizedBlockContent,
   localizedSlug,
-  seoField,
 } from './shared';
 
 export const post = defineType({
@@ -18,13 +17,6 @@ export const post = defineType({
     localizedSlug('slug'),
     localizedText('excerpt', 'Excerpt'),
     localizedBlockContent('body', 'Body'),
-    defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
-      type: 'image',
-      options: { hotspot: true },
-      fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
-    }),
     defineField({
       name: 'publishedAt',
       title: 'Published At',
@@ -45,7 +37,6 @@ export const post = defineType({
         ],
       },
     }),
-    seoField,
   ],
   orderings: [
     {
@@ -55,6 +46,6 @@ export const post = defineType({
     },
   ],
   preview: {
-    select: { title: 'title.de', subtitle: 'title.en', media: 'coverImage' },
+    select: { title: 'title.de', subtitle: 'publishedAt' },
   },
 });

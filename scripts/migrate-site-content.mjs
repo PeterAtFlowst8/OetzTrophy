@@ -19,6 +19,19 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const editableFieldsSource = readFileSync(
+  resolve(__dirname, '../src/lib/siteContentFields.ts'),
+  'utf8',
+);
+const editableFieldsMatch = editableFieldsSource.match(
+  /EDITABLE_SITE_CONTENT_KEYS[^=]*= (\{[\s\S]*?\n\});/,
+);
+if (!editableFieldsMatch) {
+  throw new Error('Could not read editable site content keys.');
+}
+const EDITABLE_SITE_CONTENT_KEYS = Function(
+  `return ${editableFieldsMatch[1]}`,
+)();
 
 const client = createClient({
   projectId: 'mnazp3qy',
@@ -52,9 +65,10 @@ async function main() {
 
   // Build { namespace: { key: { de, en } } } from the two message files.
   const doc = { _id: id, _type: 'siteContent' };
-  for (const namespace of Object.keys(en)) {
+  for (const namespace of Object.keys(EDITABLE_SITE_CONTENT_KEYS)) {
     const section = {};
-    for (const key of Object.keys(en[namespace])) {
+    for (const key of EDITABLE_SITE_CONTENT_KEYS[namespace]) {
+      if (!en[namespace]?.[key]) continue;
       section[key] = {
         de: de[namespace]?.[key] ?? en[namespace][key],
         en: en[namespace][key],
@@ -67,7 +81,11 @@ async function main() {
   if (existing?.images) doc.images = existing.images;
 
   await client.createOrReplace(doc);
-  console.log('Seeded siteContent with', Object.keys(en).length, 'sections.');
+  console.log(
+    'Seeded siteContent with',
+    Object.keys(EDITABLE_SITE_CONTENT_KEYS).length,
+    'active sections.',
+  );
 }
 
 main().catch((err) => {

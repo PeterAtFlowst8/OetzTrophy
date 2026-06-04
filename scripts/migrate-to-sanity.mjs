@@ -142,10 +142,7 @@ async function migrateSiteSettings() {
     _type: 'siteSettings',
     _id: 'siteSettings',
     festivalDate: '2026-09-17T09:00:00Z',
-    raceDate: '2026-09-19T09:00:00Z',
     festivalEndDate: '2026-09-20T18:00:00Z',
-    registrationOpen: false,
-    registrationFee: 135,
   });
 
   console.log('Migrated site settings to Sanity');

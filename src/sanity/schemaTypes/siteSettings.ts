@@ -3,7 +3,7 @@ import { CogIcon } from '@sanity/icons';
 
 export const siteSettings = defineType({
   name: 'siteSettings',
-  title: 'Site Settings',
+  title: 'Festival Dates',
   type: 'document',
   icon: CogIcon,
   fields: [
@@ -11,37 +11,18 @@ export const siteSettings = defineType({
       name: 'festivalDate',
       title: 'Festival Start Date',
       type: 'datetime',
+      description: 'First public day of the festival. Used by the homepage countdown and calendar download.',
     }),
-    defineField({ name: 'raceDate', title: 'Race Date', type: 'datetime' }),
     defineField({
       name: 'festivalEndDate',
       title: 'Festival End Date',
       type: 'datetime',
-    }),
-    defineField({
-      name: 'registrationOpen',
-      title: 'Registration Open',
-      type: 'boolean',
-    }),
-    defineField({
-      name: 'registrationDeadline',
-      title: 'Registration Deadline',
-      type: 'datetime',
-    }),
-    defineField({
-      name: 'registrationFee',
-      title: 'Registration Fee (EUR)',
-      type: 'number',
-    }),
-    defineField({
-      name: 'stripeProductId',
-      title: 'Stripe Product ID',
-      type: 'string',
+      description: 'Final day of the festival. Used by the calendar download.',
     }),
   ],
   preview: {
     prepare() {
-      return { title: 'Site Settings' };
+      return { title: 'Festival Dates' };
     },
   },
 });

@@ -9,10 +9,11 @@ import { defineField } from 'sanity';
  * German is the default locale, so the DE field is required.
  */
 
-export function localizedString(name: string, title?: string) {
+export function localizedString(name: string, title?: string, description?: string) {
   return defineField({
     name,
     title,
+    description,
     type: 'object',
     options: { columns: 2 },
     fields: [
@@ -27,10 +28,11 @@ export function localizedString(name: string, title?: string) {
   });
 }
 
-export function localizedText(name: string, title?: string) {
+export function localizedText(name: string, title?: string, description?: string) {
   return defineField({
     name,
     title,
+    description,
     type: 'object',
     options: { columns: 2 },
     fields: [
@@ -46,10 +48,11 @@ export function localizedText(name: string, title?: string) {
   });
 }
 
-export function localizedBlockContent(name: string, title?: string) {
+export function localizedBlockContent(name: string, title?: string, description?: string) {
   return defineField({
     name,
     title,
+    description,
     type: 'object',
     fields: [
       defineField({ name: 'de', title: '🇩🇪 Deutsch', type: 'blockContent' }),
@@ -59,9 +62,10 @@ export function localizedBlockContent(name: string, title?: string) {
 }
 
 /** A `{ de, en }` slug object, auto-derived from the matching title field. */
-export function localizedSlug(name = 'slug') {
+export function localizedSlug(name = 'slug', title = 'URL Slug') {
   return defineField({
     name,
+    title,
     type: 'object',
     options: { columns: 2 },
     fields: [
@@ -83,20 +87,3 @@ export function localizedSlug(name = 'slug') {
     ],
   });
 }
-
-/** Reusable SEO object (localized meta title/description + social image). */
-export const seoField = defineField({
-  name: 'seo',
-  title: 'SEO',
-  type: 'object',
-  options: { collapsible: true, collapsed: true },
-  fields: [
-    localizedString('metaTitle', 'Meta Title'),
-    localizedText('metaDescription', 'Meta Description'),
-    defineField({
-      name: 'ogImage',
-      title: 'Social Share Image (OG Image)',
-      type: 'image',
-    }),
-  ],
-});

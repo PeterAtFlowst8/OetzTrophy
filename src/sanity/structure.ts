@@ -38,19 +38,19 @@ export const structure: StructureResolver = (S, context) =>
 
       // Singleton: site-wide settings (dates, registration)
       S.listItem()
-        .title('Site Settings')
+        .title('Festival Dates')
         .icon(CogIcon)
         .child(
           S.document()
             .schemaType('siteSettings')
             .documentId('siteSettings')
-            .title('Site Settings'),
+            .title('Festival Dates'),
         ),
 
       S.divider(),
 
       S.documentTypeListItem('post').title('Blog Posts').icon(DocumentTextIcon),
-      S.documentTypeListItem('event').title('Events').icon(CalendarIcon),
+      S.documentTypeListItem('event').title('Race & Festival Pages').icon(CalendarIcon),
       S.documentTypeListItem('result').title('Race Results').icon(BoltIcon),
       S.documentTypeListItem('galleryItem').title('Gallery').icon(ImagesIcon),
       S.documentTypeListItem('sponsor').title('Sponsors').icon(StarIcon),

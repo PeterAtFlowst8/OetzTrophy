@@ -33,7 +33,7 @@ const events = [
       en: { _type: 'slug', current: 'oetz-trophy' },
     },
     date: '2026-09-19T09:00:00Z',
-    entryType: 'invite-only',
+    entryType: 'qualification',
     format: 'Time Trial',
     excerpt: {
       de: 'Die OETZ TROPHY ist eines der härtesten Kajakrennen der Alpen. Auf der Ötztaler Ache — Wildwasser V — treten die besten Paddler der Welt gegeneinander an.',
@@ -69,21 +69,21 @@ const events = [
     entryType: 'open',
     format: 'Head-to-Head',
     excerpt: {
-      de: 'Der Oetz Kayak Cross — genannt Boater X — ist das offene Rennen am Freitag vor der OETZ TROPHY.',
-      en: 'The Oetz Kayak Cross — known as Boater X — is the open race on the Friday before the OETZ TROPHY.',
+      de: 'Der Oetz Kayak Cross, genannt Boater X, ist das Head-to-Head-Rennen am Freitagnachmittag und nutzt die gemeinsame Rennwochenende-Anmeldung.',
+      en: 'The Oetz Kayak Cross, known as Boater X, is the head-to-head race on Friday afternoon and uses the shared race-weekend registration.',
     },
     body: {
       de: [
-        textBlock('Der Oetz Kayak Cross — genannt Boater X — ist das offene Rennen am Freitag vor der OETZ TROPHY. Hier kann jeder mit ausreichender Wildwassererfahrung teilnehmen. Vier Paddler starten gleichzeitig, Kopf an Kopf durch die Stromschnellen.'),
+        textBlock('Der Oetz Kayak Cross, genannt Boater X, bleibt das Head-to-Head-Rennen am Freitagnachmittag. Wer sich nicht für das Hauptrennen qualifiziert, kann mit ausreichender Wildwassererfahrung im Boater X starten. Die Teilnahme läuft über die gemeinsame Rennwochenende-Anmeldung.'),
         textBlock('Vier Paddler starten gleichzeitig auf einer vorgegebenen Strecke. Die ersten Zwei kommen weiter — Runde für Runde, bis nur noch vier Finalisten übrig sind. Spannung pur für Zuschauer und Athleten. Schnelle Entscheidungen, enge Duelle, voller Körpereinsatz.'),
       ],
       en: [
-        textBlock('The Oetz Kayak Cross — known as Boater X — is the open race on the Friday before the OETZ TROPHY. Anyone with sufficient whitewater experience can enter. Four paddlers start simultaneously, racing head to head through the rapids.'),
+        textBlock('The Oetz Kayak Cross, known as Boater X, remains the head-to-head race on Friday afternoon. Paddlers who do not qualify for the main race can start in Boater X if they have sufficient whitewater experience. Participation runs through the shared race-weekend registration.'),
         textBlock('Four paddlers start simultaneously on a set course. The first two advance — round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.'),
       ],
     },
     rules: [
-      { de: 'Offene Anmeldung für alle Paddler mit Wildwasser-Erfahrung (min. WW III).', en: 'Open entry for all paddlers with whitewater experience (min. class III).' },
+      { de: 'Teilnahme über die gemeinsame Rennwochenende-Anmeldung für Paddler mit Wildwasser-Erfahrung (min. WW IV).', en: 'Participation through the shared race-weekend registration for paddlers with whitewater experience (min. class IV).' },
       { de: 'Komplette Sicherheitsausrüstung ist Pflicht.', en: 'Full safety equipment is mandatory.' },
       { de: 'Vier Paddler pro Lauf — die ersten Zwei kommen in die nächste Runde.', en: 'Four paddlers per heat — the first two advance to the next round.' },
       { de: 'Absichtlicher Körperkontakt und Behinderung anderer Paddler führen zur Disqualifikation.', en: 'Intentional body contact and obstruction of other paddlers leads to disqualification.' },
