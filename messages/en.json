@@ -5,6 +5,8 @@
     "line2": "Kayak Championships",
     "location": "Oetz · Tyrol · Austria",
     "static": "Coming September 2026",
+    "registrationCtaOpen": "Register race weekend",
+    "registrationCtaClosed": "Registration opens {opens}",
     "imageAlt": "Kayakers racing through whitewater rapids on the Ötztaler Ache"
   },
   "countdown": {
@@ -88,6 +90,7 @@
     "boaterX": "Boater X",
     "festival": "Festival",
     "news": "News",
+    "registration": "Registration",
     "contact": "Contact",
     "menuLabel": "Menu"
   },
@@ -164,7 +167,7 @@
     "formatValue": "Head-to-Head",
     "entryLabel": "Entry",
     "entryValue": "Open Entry",
-    "regNote": "Registration opens 1 June 2026",
+    "regNote": "Registration opens 17 June 2026",
     "formatHeading": "The Format",
     "formatText": "Four paddlers start simultaneously on a set course. The first two advance — round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.",
     "rulesHeading": "Rules",

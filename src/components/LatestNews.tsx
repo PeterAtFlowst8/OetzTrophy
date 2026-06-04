@@ -17,7 +17,7 @@ export default async function LatestNews() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-10 md:pb-12">
         <FadeIn>
-          <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p
                 className="uppercase mb-3"

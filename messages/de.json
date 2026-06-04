@@ -5,6 +5,8 @@
     "line2": "Kayak Championships",
     "location": "Oetz · Tirol · Österreich",
     "static": "Coming September 2026",
+    "registrationCtaOpen": "Rennwochenende anmelden",
+    "registrationCtaClosed": "Anmeldung öffnet am {opens}",
     "imageAlt": "Kajakfahrer im Wildwasser auf der Ötztaler Ache"
   },
   "countdown": {
@@ -88,6 +90,7 @@
     "boaterX": "Boater X",
     "festival": "Festival",
     "news": "News",
+    "registration": "Anmeldung",
     "contact": "Kontakt",
     "menuLabel": "Menü"
   },
@@ -164,7 +167,7 @@
     "formatValue": "Head-to-Head",
     "entryLabel": "Teilnahme",
     "entryValue": "Offene Anmeldung",
-    "regNote": "Anmeldung öffnet am 01.06.2026",
+    "regNote": "Anmeldung öffnet am 17.06.2026",
     "formatHeading": "Das Format",
     "formatText": "Vier Paddler starten gleichzeitig auf einer vorgegebenen Strecke. Die ersten Zwei kommen weiter — Runde für Runde, bis nur noch vier Finalisten übrig sind. Spannung pur für Zuschauer und Athleten. Schnelle Entscheidungen, enge Duelle, voller Körpereinsatz.",
     "rulesHeading": "Regeln",

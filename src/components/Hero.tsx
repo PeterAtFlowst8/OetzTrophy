@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { getCountdownState, type CountdownState } from '@/lib/countdown';
+import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
@@ -16,8 +18,11 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
   const [state, setState] = useState<CountdownState | null>(null);
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
+  const locale = useLocale();
 
   const targetDate = festivalDate ? new Date(festivalDate) : new Date('2026-09-17T09:00:00Z');
+  const registrationOpen = isRegistrationOpen();
+  const opensLabel = registrationOpensLabel(locale);
 
   useEffect(() => {
     setState(getCountdownState(new Date(), targetDate));
@@ -187,6 +192,24 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
         >
           {t('location')}
         </p>
+
+        <div className="mt-7 flex max-w-xl flex-col gap-3 sm:flex-row sm:items-center hero-actions">
+          <Link
+            href="/registration"
+            className="inline-flex min-h-12 items-center justify-center px-5 py-3 uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            style={{
+              backgroundColor: 'var(--color-accent)',
+              color: 'var(--color-ink)',
+              fontFamily: 'var(--font-display)',
+              fontSize: '22px',
+              fontWeight: 700,
+              lineHeight: 1,
+              letterSpacing: '0.01em',
+            }}
+          >
+            {registrationOpen ? t('registrationCtaOpen') : t('registrationCtaClosed', { opens: opensLabel })}
+          </Link>
+        </div>
       </div>
 
     </section>

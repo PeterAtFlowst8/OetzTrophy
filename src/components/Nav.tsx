@@ -13,6 +13,7 @@ const desktopLinks = [
 ];
 
 const mobileLinks = [
+  { href: '/registration', labelKey: 'registration' },
   ...desktopLinks,
   { href: '/kontakt', labelKey: 'contact' },
 ];
@@ -56,6 +57,7 @@ export default function Nav() {
               height={81}
               className="h-6 md:h-8 w-auto object-contain transition-opacity duration-300"
               style={{ opacity: showSolidBg ? 1 : 0 }}
+              loading="eager"
               priority
             />
             {/* White logo for transparent hero nav */}
@@ -66,6 +68,7 @@ export default function Nav() {
               height={81}
               className="absolute inset-0 h-6 md:h-8 w-auto object-contain transition-opacity duration-300"
               style={{ opacity: showSolidBg ? 0 : 1 }}
+              loading="eager"
               priority
             />
           </Link>
@@ -88,6 +91,22 @@ export default function Nav() {
                 {t(labelKey as Parameters<typeof t>[0])}
               </Link>
             ))}
+
+            <Link
+              href="/registration"
+              className="uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              style={{
+                backgroundColor: 'var(--color-accent)',
+                color: 'var(--color-ink)',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 700,
+                fontSize: '11px',
+                letterSpacing: '0.13em',
+                padding: '0.7rem 0.85rem',
+              }}
+            >
+              {t('registration')}
+            </Link>
 
             <Link
               href={pathname}
@@ -168,7 +187,7 @@ export default function Nav() {
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
                 fontSize: '28px',
-                color: 'white',
+                color: href === '/registration' ? 'var(--color-accent)' : 'white',
                 letterSpacing: '0.02em',
               }}
             >
