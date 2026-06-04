@@ -9,7 +9,7 @@ export const EDITABLE_SITE_CONTENT_KEYS: Record<string, readonly string[]> = {
     'registrationCtaClosed',
     'imageAlt',
   ],
-  countdown: ['launch', 'festival', 'days', 'hours', 'minutes', 'seconds'],
+  countdown: ['festival', 'days', 'hours', 'minutes', 'seconds'],
   marquee: ['item0', 'item1', 'item2', 'item3'],
   calendar: ['label', 'eyebrow', 'download', 'google', 'hint'],
   dasRennen: [

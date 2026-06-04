@@ -110,7 +110,6 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     imageAlt: 'Hero image alt text',
   },
   countdown: {
-    launch: 'Countdown label before launch',
     festival: 'Countdown label before festival',
     days: 'Days label',
     hours: 'Hours label',

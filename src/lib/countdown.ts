@@ -1,5 +1,4 @@
 export type CountdownState =
-  | { phase: 'launch'; delta: TimeDelta }
   | { phase: 'festival'; delta: TimeDelta }
   | { phase: 'static' };
 
@@ -10,7 +9,6 @@ export type TimeDelta = {
   seconds: number;
 };
 
-const LAUNCH_DATE = new Date('2026-03-15T00:00:00');
 export const FESTIVAL_DATE = new Date('2026-09-17T09:00:00');
 export const RACE_DATE = new Date('2026-09-19T09:00:00');
 
@@ -26,10 +24,6 @@ function getDelta(target: Date, now: Date): TimeDelta | null {
 }
 
 export function getCountdownState(now: Date, festivalDate: Date | null): CountdownState {
-  const launchDelta = getDelta(LAUNCH_DATE, now);
-  if (launchDelta) {
-    return { phase: 'launch', delta: launchDelta };
-  }
   if (festivalDate) {
     const festDelta = getDelta(festivalDate, now);
     if (festDelta) {
