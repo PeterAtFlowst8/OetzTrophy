@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
@@ -29,7 +29,6 @@ export default async function OetzTrophyPage() {
   const event = await getEventBySlug('oetz-trophy');
   if (!event) notFound();
 
-  const t = await getTranslations('boaterX');
   const title = localizedField(event.title, locale);
   const body = localizedField(event.body, locale);
   const rules = event.rules || [];

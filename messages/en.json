@@ -8,7 +8,6 @@
     "imageAlt": "Kayakers racing through whitewater rapids on the Ötztaler Ache"
   },
   "countdown": {
-    "launch": "Website launch in",
     "festival": "Festival starts in",
     "days": "Days",
     "hours": "Hrs",
@@ -31,7 +30,7 @@
     "stat2Label": "Austria",
     "stat3Value": "2019",
     "stat3Label": "Since",
-    "body": "The Ötztaler Ache. WW\u00a0V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
+    "body": "The Ötztaler Ache. WW V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
   },
   "festivalOverview": {
     "label": "17–20 September 2026",
@@ -61,7 +60,6 @@
   "news": {
     "label": "News",
     "headline": "Latest",
-    "readMore": "Read more",
     "viewAll": "All articles"
   },
   "sponsors": {
@@ -113,48 +111,7 @@
     "s8Heading": "Cookies & Analytics",
     "s8Text": "Our website only uses cookies that are necessary for the operation of the site, unless you give us further permission. Our website uses Google Analytics with the extension 'anonymizeIp' to ensure anonymisation of the IP address."
   },
-  "oetzTrophy": {
-    "label": "The Race",
-    "title": "OETZ TROPHY",
-    "intro": "The OETZ TROPHY is one of the hardest kayak races in the world. On the Ötztaler Ache — whitewater class V — the world's best paddlers compete head to head. No open entry: only the fastest 40 men and 15 women from the qualifying heats will be allowed to compete in the race.",
-    "dateLabel": "Date",
-    "dateValue": "19 Sept 2026",
-    "formatLabel": "Format",
-    "formatValue": "Time Trial",
-    "entryLabel": "Entry",
-    "entryValue": "Qualification",
-    "courseHeading": "The Course",
-    "courseText": "The race course covers the most demanding sections of the Ötztaler Ache. Class V whitewater with technical passages, powerful hydraulics and fast currents. The course demands experience, technique, and the willingness to push your limits. Only those who know and respect the river stand a chance here.",
-    "rulesHeading": "Rules",
-    "rule1": "Participation is only possible after successful qualification on Friday.",
-    "rule2": "All participants must have proven experience in class V whitewater.",
-    "rule3": "Full safety equipment is mandatory: helmet, PFD, spray skirt, throw bag.",
-    "rule4": "Instructions from safety personnel must be followed at all times.",
-    "rule5": "Acceptance of the terms & conditions and privacy policy at bib number distribution."
-  },
-  "boaterX": {
-    "label": "Boater Cross",
-    "title": "Boater X",
-    "intro": "Following the qualifying heats on Friday morning, in which the fastest 40 men and 15 women qualify for the main competition on Saturday, the Boater X (Oetz Kayak Cross) will take place on the slalom course in Oetz. Only those who have not qualified for the main competition will be allowed to participate in this event. The number of participants in the Boater X is limited to 32 men and 16 women. So it's definitely worth giving it your all in the qualifiers.",
-    "dateLabel": "Date",
-    "dateValue": "18 Sept 2026",
-    "formatLabel": "Format",
-    "formatValue": "Head-to-Head",
-    "entryLabel": "Entry",
-    "entryValue": "Open Entry",
-    "regNote": "Registration opens 17 June 2026",
-    "formatHeading": "The Format",
-    "formatText": "Four paddlers start simultaneously on a set course. The first two advance — round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.",
-    "rulesHeading": "Rules",
-    "rule1": "Qualification is open for all paddlers with whitewater experience (min. class IV).",
-    "rule2": "Full safety equipment is mandatory.",
-    "rule3": "Four paddlers per heat — the first two advance to the next round.",
-    "rule4": "Intentional body contact and obstruction of other paddlers leads to disqualification."
-  },
   "kajakfestival": {
-    "label": "Festival",
-    "title": "Kayak Festival",
-    "intro": "The Ötztal Kayak Festival is the heart of the weekend. For four days, paddlers from across Europe gather in Oetz — to paddle, celebrate and connect. Beyond the races, there are demo boats, film screenings, workshops and live music.",
     "scheduleHeading": "Schedule",
     "day1Day": "Thursday",
     "day1Date": "17 September",
@@ -172,12 +129,10 @@
     "locationText": "The festival takes place in Oetz in the Ötztal valley, Tyrol. Camping is available directly at the festival grounds. For accommodation, we recommend the Ötztal Tourism portal. From Innsbruck, it's approximately 45 minutes by car."
   },
   "kontakt": {
-    "label": "Contact",
     "title": "Contact",
     "country": "Austria",
     "phone": "Phone",
     "orgHeading": "Organiser",
-    "contactHeading": "Get in Touch",
     "socialHeading": "Social Media"
   },
   "gallery": {
@@ -206,7 +161,6 @@
     "nationalityPlaceholder": "e.g. Austria",
     "experienceLabel": "Whitewater Experience",
     "closedTitle": "Registration not yet open",
-    "closedText": "Registration for the OETZ TROPHY race weekend 2026 opens on 17 June 2026. Check back then!",
     "submit": "Register & Pay",
     "submitting": "Processing...",
     "feeNote": "Registration fee: €50 — Payment via Stripe",

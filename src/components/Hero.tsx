@@ -35,9 +35,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
         ]
       : null;
 
-  const countdownLabel =
-    state?.phase === 'launch' ? tc('launch') :
-    state?.phase === 'festival' ? tc('festival') : '';
+  const countdownLabel = state?.phase === 'festival' ? tc('festival') : '';
 
   return (
     <section className="relative w-full h-screen min-h-[680px] overflow-hidden">

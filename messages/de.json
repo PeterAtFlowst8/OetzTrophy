@@ -8,7 +8,6 @@
     "imageAlt": "Kajakfahrer im Wildwasser auf der Ötztaler Ache"
   },
   "countdown": {
-    "launch": "Website Launch in",
     "festival": "Festival startet in",
     "days": "Tage",
     "hours": "Std",
@@ -31,7 +30,7 @@
     "stat2Label": "Österreich",
     "stat3Value": "2019",
     "stat3Label": "Seit",
-    "body": "Die Ötztaler Ache. WW\u00a0V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
+    "body": "Die Ötztaler Ache. WW V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
   },
   "festivalOverview": {
     "label": "17.–20. September 2026",
@@ -61,7 +60,6 @@
   "news": {
     "label": "Neuigkeiten",
     "headline": "Aktuelles",
-    "readMore": "Weiterlesen",
     "viewAll": "Alle Beiträge"
   },
   "sponsors": {
@@ -113,48 +111,7 @@
     "s8Heading": "Cookies & Webanalyse",
     "s8Text": "Unsere Website verwendet nur Cookies, die für den Betrieb der Website notwendig sind, sofern du keine weitergehende Erlaubnis erteilst. Unsere Website verwendet Google Analytics mit der Erweiterung 'anonymizeIp' zur Anonymisierung der IP-Adresse."
   },
-  "oetzTrophy": {
-    "label": "Das Rennen",
-    "title": "OETZ TROPHY",
-    "intro": "Die OETZ TROPHY ist eines der härtesten Kajakrennen der Welt. Auf der Ötztaler Ache — Wildwasser V — treten die weltbesten Paddler Kopf an Kopf gegeneinander an. Kein offener Start: Nur die 40 schnellsten Männer und 15 schnellsten Frauen aus den Qualifikationsläufen dürfen am Rennen teilnehmen.",
-    "dateLabel": "Datum",
-    "dateValue": "19. Sept 2026",
-    "formatLabel": "Format",
-    "formatValue": "Zeitfahren",
-    "entryLabel": "Teilnahme",
-    "entryValue": "Qualifikation",
-    "courseHeading": "Die Strecke",
-    "courseText": "Die Rennstrecke führt über die anspruchsvollsten Abschnitte der Ötztaler Ache. Wildwasser V mit technischen Passagen, wuchtigen Walzen und schnellen Strömungen. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen. Nur wer den Fluss kennt und respektiert, hat hier eine Chance.",
-    "rulesHeading": "Regeln",
-    "rule1": "Teilnahme nur nach erfolgreicher Qualifikation am Freitag.",
-    "rule2": "Alle Teilnehmer müssen über nachweisbare Erfahrung im Wildwasser V verfügen.",
-    "rule3": "Komplette Sicherheitsausrüstung ist Pflicht: Helm, Schwimmweste, Spritzdecke, Wurfsack.",
-    "rule4": "Die Anweisungen der Sicherheitsposten sind jederzeit zu befolgen.",
-    "rule5": "Akzeptanz der Teilnahmebedingungen und Datenschutzerklärung bei der Startnummernausgabe."
-  },
-  "boaterX": {
-    "label": "Boater Cross",
-    "title": "Boater X",
-    "intro": "Im Anschluss an die Qualifikationsläufe am Freitagvormittag, bei denen sich die 40 schnellsten Männer und 15 schnellsten Frauen für das Hauptrennen am Samstag qualifizieren, findet der Boater X (Oetz Kayak Cross) auf der Slalomstrecke in Oetz statt. Nur wer sich nicht für das Hauptrennen qualifiziert hat, darf an diesem Event teilnehmen. Die Teilnehmerzahl beim Boater X ist auf 32 Männer und 16 Frauen begrenzt. Es lohnt sich also definitiv, in der Qualifikation alles zu geben.",
-    "dateLabel": "Datum",
-    "dateValue": "18. Sept 2026",
-    "formatLabel": "Format",
-    "formatValue": "Head-to-Head",
-    "entryLabel": "Teilnahme",
-    "entryValue": "Offene Anmeldung",
-    "regNote": "Anmeldung öffnet am 17.06.2026",
-    "formatHeading": "Das Format",
-    "formatText": "Vier Paddler starten gleichzeitig auf einer vorgegebenen Strecke. Die ersten Zwei kommen weiter — Runde für Runde, bis nur noch vier Finalisten übrig sind. Spannung pur für Zuschauer und Athleten. Schnelle Entscheidungen, enge Duelle, voller Körpereinsatz.",
-    "rulesHeading": "Regeln",
-    "rule1": "Die Qualifikation ist offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV).",
-    "rule2": "Komplette Sicherheitsausrüstung ist Pflicht.",
-    "rule3": "Vier Paddler pro Lauf — die ersten Zwei kommen in die nächste Runde.",
-    "rule4": "Absichtlicher Körperkontakt und Behinderung anderer Paddler führen zur Disqualifikation."
-  },
   "kajakfestival": {
-    "label": "Festival",
-    "title": "Kajakfestival",
-    "intro": "Das Ötztaler Kajakfestival ist das Herzstück des Wochenendes. Vier Tage lang treffen sich Paddler aus ganz Europa in Oetz — zum Fahren, Feiern und Austauschen. Neben den Rennen gibt es Testboote, Filmvorführungen, Workshops und Livemusik.",
     "scheduleHeading": "Programm",
     "day1Day": "Donnerstag",
     "day1Date": "17. September",
@@ -172,12 +129,10 @@
     "locationText": "Das Festival findet in Oetz im Ötztal, Tirol statt. Camping direkt am Festivalgelände ist möglich. Für Unterkünfte empfehlen wir das Ötztal Tourismus Portal. Von Innsbruck sind es ca. 45 Minuten mit dem Auto."
   },
   "kontakt": {
-    "label": "Kontakt",
     "title": "Kontakt",
     "country": "Österreich",
     "phone": "Telefon",
     "orgHeading": "Veranstalter",
-    "contactHeading": "Kontakt",
     "socialHeading": "Social Media"
   },
   "gallery": {
@@ -206,7 +161,6 @@
     "nationalityPlaceholder": "z.B. Österreich",
     "experienceLabel": "Wildwasser-Erfahrung",
     "closedTitle": "Anmeldung noch nicht geöffnet",
-    "closedText": "Die Anmeldung für das OETZ TROPHY Rennwochenende 2026 öffnet am 17. Juni 2026. Komm dann wieder!",
     "submit": "Anmelden & Bezahlen",
     "submitting": "Wird verarbeitet...",
     "feeNote": "Anmeldegebühr: €50 — Zahlung via Stripe",
