@@ -48,7 +48,7 @@ export default async function FestivalOverview() {
           color: 'var(--color-accent)',
           opacity: 0.04,
           lineHeight: 1,
-          letterSpacing: '-0.05em',
+          letterSpacing: '-0.03em',
         }}
       >
         4
@@ -76,7 +76,7 @@ export default async function FestivalOverview() {
             className="uppercase mb-12 md:mb-16"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(48px, 8vw, 110px)',
+              fontSize: 'clamp(48px, 8vw, 96px)',
               fontWeight: 700,
               color: 'var(--color-ink)',
               lineHeight: 0.88,

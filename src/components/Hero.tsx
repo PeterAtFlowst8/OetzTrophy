@@ -173,7 +173,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
             letterSpacing: '-0.02em',
           }}
         >
-          <span className="block hero-line-1" style={{ fontSize: 'clamp(44px, 8vw, 100px)', lineHeight: 0.9 }}>{t('line1')}</span>
+          <span className="block hero-line-1" style={{ fontSize: 'clamp(44px, 8vw, 96px)', lineHeight: 0.9 }}>{t('line1')}</span>
           <span className="block hero-line-2 mt-1 md:mt-2" style={{ fontSize: 'clamp(26px, 5vw, 64px)', lineHeight: 0.95 }}>{t('line2')}</span>
         </h1>
 

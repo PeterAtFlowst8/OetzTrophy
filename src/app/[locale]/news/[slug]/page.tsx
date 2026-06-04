@@ -69,11 +69,12 @@ const portableTextComponents = {
     ),
     blockquote: ({ children }: { children?: React.ReactNode }) => (
       <blockquote
-        className="my-6 pl-5"
+        className="my-8 py-5"
         style={{
-          borderLeft: '3px solid var(--color-accent)',
+          borderTop: '3px solid var(--color-accent)',
+          borderBottom: '1px solid var(--color-border)',
           fontStyle: 'italic',
-          color: 'var(--color-muted)',
+          color: 'var(--color-body-text)',
         }}
       >
         {children}

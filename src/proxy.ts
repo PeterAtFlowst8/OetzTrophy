@@ -4,6 +4,6 @@ import { routing } from './i18n/routing';
 export default createMiddleware(routing);
 
 export const config = {
-  // Exclude the embedded Sanity Studio (/studio) so it isn't locale-prefixed.
-  matcher: ['/((?!_next|_vercel|studio|.*\\..*).*)'],
+  // Exclude API routes and embedded Sanity Studio so they are not locale-prefixed.
+  matcher: ['/((?!api|_next|_vercel|studio|.*\\..*).*)'],
 };

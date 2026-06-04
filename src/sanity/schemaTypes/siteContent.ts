@@ -29,6 +29,7 @@ const SECTION_TITLES: Record<string, string> = {
   nav: 'Navigation',
   impressum: 'Legal Notice Page',
   datenschutz: 'Privacy Policy Page',
+  terms: 'Terms & Conditions Page',
   oetzTrophy: 'OETZ TROPHY Page',
   boaterX: 'Boater X Page',
   kajakfestival: 'Kayak Festival Page',

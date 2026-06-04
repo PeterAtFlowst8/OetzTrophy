@@ -65,7 +65,7 @@ export default async function RegistrationSuccessPage() {
                 color: 'rgba(255,255,255,0.6)',
               }}
             >
-              {t('successText')}
+              {t('successRaceText')}
             </p>
 
             <Link

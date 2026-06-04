@@ -49,7 +49,7 @@ export default async function DasRennen() {
           lineHeight: 1,
           userSelect: 'none',
           pointerEvents: 'none',
-          letterSpacing: '-0.05em',
+          letterSpacing: '-0.03em',
         }}
       >
         V
@@ -78,7 +78,7 @@ export default async function DasRennen() {
             className="uppercase mb-14 md:mb-20"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(56px, 9.5vw, 128px)',
+              fontSize: 'clamp(48px, 8vw, 96px)',
               fontWeight: 700,
               color: '#FAFAF7',
               lineHeight: 0.88,
@@ -137,12 +137,14 @@ export default async function DasRennen() {
           {stats.map(({ value, label, icon }) => (
             <StaggerItem key={value}>
               <div
-                className="py-5 pl-4 flex items-start gap-4"
-                style={{
-                  borderBottom: DIVIDER,
-                  borderLeft: '3px solid var(--color-accent)',
-                }}
+                className="relative py-5 flex items-start gap-4"
+                style={{ borderBottom: DIVIDER }}
               >
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 h-[3px] w-12"
+                  style={{ backgroundColor: 'var(--color-accent)' }}
+                />
                 <span className="shrink-0 mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
                   {icon}
                 </span>

@@ -92,7 +92,8 @@ export default async function KontaktPage() {
                 <div
                   className="mt-8 p-5"
                   style={{
-                    borderLeft: '3px solid var(--color-accent)',
+                    border: '1px solid var(--color-border)',
+                    borderTop: '3px solid var(--color-accent)',
                     backgroundColor: 'var(--color-surface)',
                   }}
                 >

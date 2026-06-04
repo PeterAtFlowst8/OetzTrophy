@@ -51,9 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: m.description,
     metadataBase: new URL(BASE_URL),
     alternates: {
-      canonical: locale === 'de' ? BASE_URL : `${BASE_URL}/en`,
+      canonical: `${BASE_URL}/${locale}`,
       languages: {
-        de: BASE_URL,
+        de: `${BASE_URL}/de`,
         en: `${BASE_URL}/en`,
       },
     },
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'OETZ TROPHY',
       type: 'website',
       locale: locale === 'de' ? 'de_AT' : 'en_GB',
-      url: locale === 'de' ? BASE_URL : `${BASE_URL}/en`,
+      url: `${BASE_URL}/${locale}`,
       images: [{ url: '/images/hero.jpg', width: 1200, height: 630 }],
     },
     twitter: {
@@ -93,7 +93,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="overflow-x-hidden">
+    <html lang={locale} data-scroll-behavior="smooth" className="overflow-x-hidden">
       <body className={`${agdasima.variable} ${inter.variable} overflow-x-hidden`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Nav />

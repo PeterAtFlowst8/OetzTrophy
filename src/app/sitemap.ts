@@ -11,6 +11,7 @@ const staticPages = [
   '/kontakt',
   '/registration',
   '/impressum',
+  '/terms-and-conditions',
   '/datenschutz',
 ];
 
@@ -18,15 +19,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const page of staticPages) {
-    // German (default, no prefix)
+    // German
     entries.push({
-      url: `${BASE_URL}${page}`,
+      url: `${BASE_URL}/de${page}`,
       lastModified: new Date(),
       changeFrequency: page === '' ? 'weekly' : 'monthly',
       priority: page === '' ? 1.0 : 0.8,
       alternates: {
         languages: {
-          de: `${BASE_URL}${page}`,
+          de: `${BASE_URL}/de${page}`,
           en: `${BASE_URL}/en${page}`,
         },
       },

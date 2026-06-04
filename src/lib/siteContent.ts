@@ -16,6 +16,11 @@ type Leaf = { de?: string; en?: string };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SiteContentDoc = Record<string, any> | null;
 
+const STATIC_MESSAGE_KEYS = new Set([
+  'registration.feeNote',
+  'registration.paymentNote',
+]);
+
 const getSiteContentDoc = cache(async (): Promise<SiteContentDoc> => {
   try {
     return await sanityClient.fetch(QUERY);
@@ -37,6 +42,8 @@ export async function getMessageOverrides(
     if (!section || typeof section !== 'object') continue;
 
     for (const key of Object.keys(section)) {
+      if (STATIC_MESSAGE_KEYS.has(`${namespace}.${key}`)) continue;
+
       const leaf = section[key] as Leaf | undefined;
       const value = leaf?.[locale as 'de' | 'en'];
       if (typeof value === 'string' && value.trim() !== '') {

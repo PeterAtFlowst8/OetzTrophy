@@ -25,7 +25,7 @@ const defaults: SiteSettings = {
   festivalEndDate: '2026-09-20T18:00:00Z',
   registrationOpen: false,
   registrationDeadline: null,
-  registrationFee: 50,
+  registrationFee: 135,
 };
 
 export async function getSiteSettings(): Promise<SiteSettings> {

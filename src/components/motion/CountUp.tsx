@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
+import { useInView, useReducedMotion } from 'framer-motion';
 
 type Props = {
   value: string;
@@ -12,6 +12,7 @@ type Props = {
 export default function CountUp({ value, className = '', style }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const prefersReducedMotion = useReducedMotion();
   const [display, setDisplay] = useState(value);
 
   // Check if value is a pure number
@@ -19,6 +20,11 @@ export default function CountUp({ value, className = '', style }: Props) {
   const isNumeric = !isNaN(numericValue) && String(numericValue) === value.trim();
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setDisplay(value);
+      return;
+    }
+
     if (!isInView || !isNumeric) {
       if (isInView) setDisplay(value);
       return;
@@ -42,11 +48,11 @@ export default function CountUp({ value, className = '', style }: Props) {
     }
 
     requestAnimationFrame(tick);
-  }, [isInView, isNumeric, numericValue, value]);
+  }, [isInView, isNumeric, numericValue, prefersReducedMotion, value]);
 
   return (
     <span ref={ref} className={className} style={style}>
-      {isInView ? display : isNumeric ? '0' : value}
+      {prefersReducedMotion ? value : isInView ? display : isNumeric ? '0' : value}
     </span>
   );
 }

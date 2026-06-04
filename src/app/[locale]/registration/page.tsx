@@ -1,33 +1,58 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
 import FadeIn from '@/components/motion/FadeIn';
 import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
 
-const experienceLevels = [
-  { value: 'ww4', label: 'WW IV' },
-  { value: 'ww5', label: 'WW V+' },
-];
+const tshirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 export default function RegistrationPage() {
   const t = useTranslations('registration');
   const locale = useLocale();
   const isOpen = isRegistrationOpen();
   const opensLabel = registrationOpensLabel(locale);
+  const [previewMode, setPreviewMode] = useState(false);
   const [form, setForm] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    club: '',
     nationality: '',
-    experienceLevel: '',
+    tshirtSize: '',
+    acceptedTerms: false,
+    acceptedAwpRules: false,
+    confirmedOver18: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    setPreviewMode(new URLSearchParams(window.location.search).get('preview') === 'form');
+  }, []);
+
+  const showForm = isOpen || previewMode;
+  const canSubmit = Boolean(
+    isOpen &&
+    form.firstName &&
+    form.lastName &&
+    form.email &&
+    form.nationality &&
+    form.tshirtSize &&
+    form.acceptedTerms &&
+    form.acceptedAwpRules &&
+    form.confirmedOver18 &&
+    !submitting,
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isOpen) {
+      setError(t('previewNotice', { opens: opensLabel }));
+      return;
+    }
+
     setSubmitting(true);
     setError('');
 
@@ -55,26 +80,18 @@ export default function RegistrationPage() {
     }
   };
 
-  const inputStyle: React.CSSProperties = {
-    fontFamily: 'var(--font-body)',
-    fontSize: '15px',
-    padding: '12px 16px',
-    border: '1px solid var(--color-border)',
-    backgroundColor: 'var(--color-surface)',
-    color: 'var(--color-ink)',
-    width: '100%',
-    outline: 'none',
-  };
-
   const labelStyle: React.CSSProperties = {
     fontFamily: 'var(--font-body)',
-    fontSize: '11px',
-    letterSpacing: '0.15em',
+    fontSize: '12px',
     textTransform: 'uppercase' as const,
-    color: 'var(--color-muted)',
-    marginBottom: '6px',
+    color: 'var(--color-ink)',
+    marginBottom: '8px',
     display: 'block',
+    fontWeight: 700,
   };
+
+  const fieldClass =
+    'w-full border border-[var(--color-border)] bg-white px-4 py-3.5 outline-none placeholder:text-[var(--color-muted)] transition-colors duration-200 focus:border-[var(--color-accent)] focus:ring-2 focus:ring-amber-500/20';
 
   return (
     <main>
@@ -85,11 +102,11 @@ export default function RegistrationPage() {
       />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
-        <div className="max-w-2xl mx-auto px-6 md:px-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
 
-          {!isOpen ? (
+          {!showForm ? (
             <FadeIn>
-              <div className="text-center py-12">
+              <div className="max-w-2xl mx-auto text-center py-12">
                 <p
                   className="uppercase mb-4"
                   style={{
@@ -103,147 +120,382 @@ export default function RegistrationPage() {
                   {t('closedTitle')}
                 </p>
                 <p
+                  className="mx-auto"
                   style={{
                     fontFamily: 'var(--font-body)',
                     fontSize: '16px',
                     lineHeight: 1.7,
                     color: 'var(--color-body-text)',
+                    maxWidth: '56ch',
                   }}
                 >
-                  {locale === 'de'
-                    ? `Die Anmeldung für das OETZ TROPHY Rennwochenende 2026 öffnet am ${opensLabel}. Komm dann wieder!`
-                    : `Registration for the OETZ TROPHY race weekend 2026 opens on ${opensLabel}. Check back then!`}
+                  {t('closedText', { opens: opensLabel })}
                 </p>
               </div>
             </FadeIn>
           ) : (
-          <>
-          <FadeIn>
-            <p
-              className="mb-10"
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '17px',
-                lineHeight: 1.8,
-                color: 'var(--color-body-text)',
-              }}
-            >
-              {t('intro')}
-            </p>
-          </FadeIn>
+            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <FadeIn>
+                <div className="lg:sticky lg:top-28">
+                  <p
+                    className="mb-7"
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '17px',
+                      lineHeight: 1.8,
+                      color: 'var(--color-body-text)',
+                      maxWidth: '62ch',
+                    }}
+                  >
+                    {t('intro')}
+                  </p>
 
-          <FadeIn delay={0.1}>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <dl
+                    className="grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-6"
+                    style={{ borderColor: 'var(--color-border)' }}
+                  >
+                    <div>
+                      <dt
+                        className="uppercase"
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '11px',
+                          color: 'var(--color-muted)',
+                        }}
+                      >
+                        {t('raceLabel')}
+                      </dt>
+                      <dd
+                        className="mt-1 uppercase"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '26px',
+                          fontWeight: 700,
+                          lineHeight: 1,
+                          color: 'var(--color-ink)',
+                        }}
+                      >
+                        OETZ TROPHY
+                      </dd>
+                    </div>
+                    <div>
+                      <dt
+                        className="uppercase"
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '11px',
+                          color: 'var(--color-muted)',
+                        }}
+                      >
+                        {t('feeLabel')}
+                      </dt>
+                      <dd
+                        className="mt-1 uppercase"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '26px',
+                          fontWeight: 700,
+                          lineHeight: 1,
+                          color: 'var(--color-ink)',
+                        }}
+                      >
+                        €135
+                      </dd>
+                    </div>
+                  </dl>
 
-              <div>
-                <label style={labelStyle}>{t('nameLabel')} *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder={t('namePlaceholder')}
-                  style={inputStyle}
-                />
-              </div>
-
-              <div>
-                <label style={labelStyle}>{t('emailLabel')} *</label>
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder={t('emailPlaceholder')}
-                  style={inputStyle}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <label style={labelStyle}>{t('clubLabel')}</label>
-                  <input
-                    type="text"
-                    value={form.club}
-                    onChange={(e) => setForm({ ...form, club: e.target.value })}
-                    placeholder={t('clubPlaceholder')}
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>{t('nationalityLabel')}</label>
-                  <input
-                    type="text"
-                    value={form.nationality}
-                    onChange={(e) => setForm({ ...form, nationality: e.target.value })}
-                    placeholder={t('nationalityPlaceholder')}
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label style={labelStyle}>{t('experienceLabel')} *</label>
-                <div className="flex gap-3">
-                  {experienceLevels.map((level) => (
-                    <button
-                      key={level.value}
-                      type="button"
-                      onClick={() => setForm({ ...form, experienceLevel: level.value })}
-                      className="flex-1 py-3 px-4 text-center uppercase transition-all duration-200"
+                  {previewMode && !isOpen && (
+                    <p
+                      className="mt-7 p-4"
                       style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '18px',
-                        fontWeight: 700,
-                        border: '1px solid',
-                        borderColor: form.experienceLevel === level.value ? 'var(--color-accent)' : 'var(--color-border)',
-                        backgroundColor: form.experienceLevel === level.value ? 'var(--color-accent)' : 'var(--color-surface)',
-                        color: form.experienceLevel === level.value ? '#111' : 'var(--color-ink)',
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '14px',
+                        lineHeight: 1.6,
+                        color: 'var(--color-ink)',
+                        backgroundColor: 'rgba(245, 158, 11, 0.14)',
+                        border: '1px solid rgba(245, 158, 11, 0.45)',
                       }}
                     >
-                      {level.label}
-                    </button>
-                  ))}
+                      {t('previewNotice', { opens: opensLabel })}
+                    </p>
+                  )}
                 </div>
-              </div>
+              </FadeIn>
 
-              {error && (
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#dc2626' }}>
-                  {error}
-                </p>
-              )}
+              <FadeIn delay={0.1}>
+                <form
+                  onSubmit={handleSubmit}
+                  className="bg-white p-5 sm:p-7 md:p-9"
+                  style={{ border: '1px solid var(--color-border)' }}
+                >
+                  <div className="mb-8">
+                    <h2
+                      className="uppercase mb-2"
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        fontSize: 'clamp(30px, 5vw, 46px)',
+                        fontWeight: 700,
+                        lineHeight: 0.95,
+                        color: 'var(--color-ink)',
+                      }}
+                    >
+                      {t('formTitle')}
+                    </h2>
+                    <p
+                      style={{
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '14px',
+                        lineHeight: 1.7,
+                        color: 'var(--color-body-text)',
+                      }}
+                    >
+                      {t('formIntro')}
+                    </p>
+                  </div>
 
-              <button
-                type="submit"
-                disabled={submitting || !form.experienceLevel}
-                className="mt-4 py-4 uppercase tracking-widest transition-all duration-200 hover:opacity-90 disabled:opacity-40"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '20px',
-                  fontWeight: 700,
-                  backgroundColor: 'var(--color-ink)',
-                  color: 'white',
-                  border: 'none',
-                  cursor: submitting ? 'wait' : 'pointer',
-                }}
-              >
-                {submitting ? t('submitting') : t('submit')}
-              </button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="firstName" style={labelStyle}>
+                        {t('firstNameLabel')} *
+                      </label>
+                      <input
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        autoComplete="given-name"
+                        required
+                        value={form.firstName}
+                        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                        placeholder={t('firstNamePlaceholder')}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: 'var(--color-ink)',
+                        }}
+                      />
+                    </div>
 
-              <p
-                className="text-center mt-2"
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '12px',
-                  color: 'var(--color-muted)',
-                }}
-              >
-                {t('feeNote')}
-              </p>
+                    <div>
+                      <label htmlFor="lastName" style={labelStyle}>
+                        {t('lastNameLabel')} *
+                      </label>
+                      <input
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                        autoComplete="family-name"
+                        required
+                        value={form.lastName}
+                        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                        placeholder={t('lastNamePlaceholder')}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: 'var(--color-ink)',
+                        }}
+                      />
+                    </div>
 
-            </form>
-          </FadeIn>
-          </>
+                    <div>
+                      <label htmlFor="email" style={labelStyle}>
+                        {t('emailLabel')} *
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        placeholder={t('emailPlaceholder')}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: 'var(--color-ink)',
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="nationality" style={labelStyle}>
+                        {t('nationalityLabel')} *
+                      </label>
+                      <input
+                        id="nationality"
+                        name="nationality"
+                        type="text"
+                        autoComplete="country-name"
+                        required
+                        value={form.nationality}
+                        onChange={(e) => setForm({ ...form, nationality: e.target.value })}
+                        placeholder={t('nationalityPlaceholder')}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: 'var(--color-ink)',
+                        }}
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label htmlFor="tshirtSize" style={labelStyle}>
+                        {t('tshirtLabel')} *
+                      </label>
+                      <select
+                        id="tshirtSize"
+                        name="tshirtSize"
+                        required
+                        value={form.tshirtSize}
+                        onChange={(e) => setForm({ ...form, tshirtSize: e.target.value })}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: form.tshirtSize ? 'var(--color-ink)' : 'var(--color-muted)',
+                        }}
+                      >
+                        <option value="">{t('tshirtPlaceholder')}</option>
+                        {tshirtSizes.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <fieldset
+                    className="mt-8 flex flex-col gap-4 border-t pt-6"
+                    style={{ borderColor: 'var(--color-border)' }}
+                  >
+                    <legend
+                      className="sr-only"
+                    >
+                      {t('requiredNote')}
+                    </legend>
+
+                    <label className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        name="acceptedTerms"
+                        required
+                        checked={form.acceptedTerms}
+                        onChange={(e) => setForm({ ...form, acceptedTerms: e.target.checked })}
+                        className="mt-1 size-5 shrink-0"
+                        style={{ accentColor: 'var(--color-accent)' }}
+                      />
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '14px',
+                          lineHeight: 1.6,
+                          color: 'var(--color-body-text)',
+                        }}
+                      >
+                        {t('termsPrefix')}{' '}
+                        <Link
+                          href="/terms-and-conditions"
+                          className="text-[var(--color-ink)] underline underline-offset-4 hover:text-[var(--color-accent-dark)]"
+                        >
+                          {t('termsLink')}
+                        </Link>
+                        {t('termsSuffix')}
+                      </span>
+                    </label>
+
+                    <label className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        name="acceptedAwpRules"
+                        required
+                        checked={form.acceptedAwpRules}
+                        onChange={(e) => setForm({ ...form, acceptedAwpRules: e.target.checked })}
+                        className="mt-1 size-5 shrink-0"
+                        style={{ accentColor: 'var(--color-accent)' }}
+                      />
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '14px',
+                          lineHeight: 1.6,
+                          color: 'var(--color-body-text)',
+                        }}
+                      >
+                        {t('awpPrefix')}{' '}
+                        <a
+                          href="https://awpkayak.org/kayak-rules"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--color-ink)] underline underline-offset-4 hover:text-[var(--color-accent-dark)]"
+                        >
+                          {t('awpLink')}
+                        </a>
+                        {t('awpSuffix')}
+                      </span>
+                    </label>
+
+                    <label className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        name="confirmedOver18"
+                        required
+                        checked={form.confirmedOver18}
+                        onChange={(e) => setForm({ ...form, confirmedOver18: e.target.checked })}
+                        className="mt-1 size-5 shrink-0"
+                        style={{ accentColor: 'var(--color-accent)' }}
+                      />
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '14px',
+                          lineHeight: 1.6,
+                          color: 'var(--color-body-text)',
+                        }}
+                      >
+                        {t('ageConfirmation')}
+                      </span>
+                    </label>
+                  </fieldset>
+
+                  {error && (
+                    <p
+                      className="mt-5"
+                      style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#b91c1c' }}
+                    >
+                      {error}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={!canSubmit}
+                    className="mt-7 w-full py-4 uppercase transition-colors duration-200 disabled:opacity-45"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '22px',
+                      fontWeight: 700,
+                      backgroundColor: 'var(--color-ink)',
+                      color: 'white',
+                      border: 'none',
+                      cursor: submitting ? 'wait' : canSubmit ? 'pointer' : 'not-allowed',
+                    }}
+                  >
+                    {submitting ? t('submitting') : t('submit')}
+                  </button>
+
+                  <p
+                    className="text-center mt-3"
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '12px',
+                      color: 'var(--color-muted)',
+                    }}
+                  >
+                    {t('paymentNote')}
+                  </p>
+                </form>
+              </FadeIn>
+            </div>
           )}
 
         </div>

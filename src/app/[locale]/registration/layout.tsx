@@ -3,12 +3,12 @@ import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
   de: {
-    title: 'Anmeldung — Boater X & OETZ TROPHY 2026',
-    description: 'Melde dich für den Boater X an — gleichzeitig Qualifikation für die OETZ TROPHY. Offene Anmeldung für alle Paddler mit Wildwassererfahrung ab WW III. 18.–19. September 2026 auf der Ötztaler Ache in Tirol.',
+    title: 'Anmeldung — OETZ TROPHY Rennwochenende 2026',
+    description: 'Melde dich für das OETZ TROPHY Rennwochenende 2026 an. Qualifikation, Boater X und OETZ TROPHY auf der Ötztaler Ache in Tirol.',
   },
   en: {
-    title: 'Registration — Boater X & OETZ TROPHY 2026',
-    description: 'Register for the Boater X — also the qualifier for the OETZ TROPHY. Open entry for all paddlers with whitewater experience from class III. 18–19 September 2026 on the Ötztaler Ache in Tyrol, Austria.',
+    title: 'Registration — OETZ TROPHY Race Weekend 2026',
+    description: 'Register for the OETZ TROPHY race weekend 2026. Qualification, Boater X and OETZ TROPHY on the Ötztaler Ache in Tyrol, Austria.',
   },
 };
 

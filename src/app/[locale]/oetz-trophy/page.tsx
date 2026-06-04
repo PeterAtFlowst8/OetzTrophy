@@ -68,7 +68,7 @@ export default async function OetzTrophyPage() {
                 { label: 'Format', value: event.format },
                 { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryTypeLabel(event.entryType, locale) },
               ].map((item) => (
-                <div key={item.label} style={{ borderLeft: '3px solid var(--color-accent)', paddingLeft: '1.25rem' }}>
+                <div key={item.label} style={{ borderTop: '3px solid var(--color-accent)', paddingTop: '1rem' }}>
                   <p className="uppercase mb-2" style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.2em', color: 'var(--color-muted)' }}>
                     {item.label}
                   </p>
