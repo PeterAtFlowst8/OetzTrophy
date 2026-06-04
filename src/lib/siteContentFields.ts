@@ -130,7 +130,7 @@ export const EDITABLE_SITE_CONTENT_KEYS: Record<string, readonly string[]> = {
     'contact',
     'menuLabel',
   ],
-  footer: ['tagline', 'impressum', 'kontakt', 'datenschutz', 'terms', 'copyright'],
+  footer: ['followUs', 'tagline', 'impressum', 'kontakt', 'datenschutz', 'terms', 'copyright'],
   impressum: [
     'label',
     'title',

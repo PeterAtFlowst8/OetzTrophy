@@ -41,7 +41,7 @@ const SECTION_GROUPS: Record<string, ContentGroup> = {
   festivalOverview: 'homepage',
   events: 'homepage',
   news: 'homepage',
-  sponsors: 'homepage',
+  sponsors: 'navigation',
   kajakfestival: 'racePages',
   kontakt: 'racePages',
   gallery: 'racePages',
@@ -63,7 +63,7 @@ const SECTION_TITLES: Record<string, string> = {
   festivalOverview: 'Homepage Festival Overview',
   events: 'Homepage Programme Cards',
   news: 'Homepage News Preview',
-  sponsors: 'Homepage Sponsors Strip',
+  sponsors: 'Footer Sponsors',
   footer: 'Footer',
   nav: 'Navigation',
   impressum: 'Legal Notice Page',
@@ -85,7 +85,7 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   festivalOverview: 'Homepage section describing the four festival days.',
   events: 'Programme cards on the homepage.',
   news: 'Headings and button labels for the homepage news preview.',
-  sponsors: 'Heading for the sponsors area on the homepage.',
+  sponsors: 'Heading for the sponsor logos in the footer.',
   nav: 'Top navigation and mobile menu labels.',
   footer: 'Footer tagline and legal/contact links.',
   kajakfestival: 'Schedule and location labels on the Kayak Festival page. The main title and intro are edited in Race & Festival Pages.',
@@ -167,7 +167,7 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     viewAll: 'All articles button',
   },
   sponsors: {
-    label: 'Section label',
+    label: 'Footer sponsor heading',
   },
   nav: {
     switchTo: 'Language switch label',
@@ -180,6 +180,7 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     menuLabel: 'Mobile menu label',
   },
   footer: {
+    followUs: 'Social media heading',
     tagline: 'Footer tagline',
     impressum: 'Legal notice link',
     kontakt: 'Contact link',

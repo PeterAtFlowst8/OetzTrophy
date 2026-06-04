@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { getSponsors } from '@/lib/sponsors';
-
-const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
+import { getSponsors, type SponsorLink } from '@/lib/sponsors';
 
 const socialLinks = [
   {
@@ -37,6 +35,60 @@ const socialLinks = [
   },
 ];
 
+function SponsorLogo({
+  sponsor,
+  size = 'standard',
+}: {
+  sponsor: SponsorLink;
+  size?: 'featured' | 'standard' | 'compact';
+}) {
+  const isFeatured = size === 'featured';
+  const isCompact = size === 'compact';
+  const className = [
+    'group flex min-h-12 items-center justify-center transition duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent-dark)]',
+    isFeatured ? 'px-1.5' : 'px-1',
+  ].join(' ');
+
+  const logo = (
+    <Image
+      src={sponsor.logoUrl}
+      alt={sponsor.name}
+      width={isFeatured ? 190 : 150}
+      height={isFeatured ? 80 : 60}
+      sizes={isFeatured ? '(min-width: 1024px) 190px, 150px' : '150px'}
+      className={[
+        'w-auto object-contain transition duration-200',
+        isFeatured
+          ? 'max-h-14 max-w-[190px]'
+          : isCompact
+            ? 'max-h-8 max-w-[118px]'
+            : 'max-h-11 max-w-[152px]',
+      ].join(' ')}
+    />
+  );
+
+  if (!sponsor.href) {
+    return (
+      <div title={sponsor.name} className="flex min-h-12 items-center justify-center px-0.5">
+        {logo}
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={sponsor.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open ${sponsor.name} website in a new tab`}
+      title={sponsor.name}
+      className={className}
+    >
+      {logo}
+    </a>
+  );
+}
+
 export default async function Footer() {
   const [t, ts, sponsors] = await Promise.all([
     getTranslations('footer'),
@@ -53,171 +105,166 @@ export default async function Footer() {
   const visibleSponsors = sponsors.filter((sponsor) => sponsor.logoUrl);
 
   return (
-    <footer className="relative" style={{ backgroundColor: 'var(--color-ink)' }}>
-      {/* Grain texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: GRAIN,
-          backgroundSize: '200px 200px',
-          opacity: 0.04,
-          mixBlendMode: 'overlay',
-        }}
-      />
+    <footer className="relative bg-[var(--color-ink)] text-white">
+      <div className="h-1 bg-[var(--color-accent)]" aria-hidden="true" />
 
-      <div className="relative" style={{ height: '4px', backgroundColor: 'var(--color-accent)' }} />
+      <section className="relative" aria-label={`${t('followUs')} ${ts('label')}`}>
+        <div className="mx-auto max-w-7xl px-6 py-12 md:px-12 md:py-16">
+          <div className="grid overflow-hidden border border-white/10 lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)]">
+            <div className="flex flex-col justify-between gap-10 bg-[var(--color-ink)] p-7 md:p-10">
+              <div className="flex flex-col items-start gap-6 text-left">
+                <Image
+                  src="/images/logo-white.webp"
+                  alt="OETZ TROPHY"
+                  width={260}
+                  height={48}
+                  style={{ width: '220px', height: 'auto', opacity: 0.92 }}
+                />
 
-      <div className="relative text-center px-6 pt-16 md:pt-24 pb-10 md:pb-14">
-        <Image
-          src="/images/logo-white.webp"
-          alt="OETZ TROPHY"
-          width={440}
-          height={81}
-          className="mx-auto"
-          style={{
-            width: 'clamp(220px, 40vw, 440px)',
-            height: 'auto',
-            opacity: 0.92,
-          }}
-        />
-        <p
-          className="mt-4 uppercase"
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px',
-            letterSpacing: '0.28em',
-            color: 'rgba(255,255,255,0.25)',
-          }}
-        >
-          {t('tagline')}
-        </p>
-      </div>
-
-      {visibleSponsors.length > 0 ? (
-        <section
-          aria-label={ts('label')}
-          className="relative max-w-7xl mx-auto px-6 md:px-12 py-9 md:py-11"
-          style={{
-            borderTop: '1px solid rgba(255,255,255,0.08)',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-          }}
-        >
-          <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
-            <div className="flex w-full items-center gap-4">
-              <span className="h-px flex-1 bg-white/10" aria-hidden="true" />
-              <p
-                className="uppercase"
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '11px',
-                  letterSpacing: '0.18em',
-                  color: 'rgba(255,255,255,0.42)',
-                }}
-              >
-                {ts('label')}
-              </p>
-              <span className="h-px flex-1 bg-white/10" aria-hidden="true" />
-            </div>
-
-            <div className="grid w-full grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
-              {visibleSponsors.map((sponsor) => (
-                <a
-                  key={sponsor.name}
-                  href={sponsor.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={sponsor.name}
-                  className="group flex h-16 items-center justify-center border border-white/10 bg-white px-5 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)] sm:w-44"
-                  style={{ borderRadius: '6px' }}
+                <p
+                  className="max-w-xs uppercase"
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '11px',
+                    lineHeight: 1.7,
+                    letterSpacing: '0.18em',
+                    color: 'rgba(255,255,255,0.36)',
+                  }}
                 >
-                  <Image
-                    src={sponsor.logoUrl}
-                    alt={sponsor.name}
-                    width={144}
-                    height={64}
-                    className="max-h-10 w-auto max-w-[132px] object-contain transition-transform duration-200 group-hover:scale-[1.03]"
-                  />
-                </a>
-              ))}
+                  {t('tagline')}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <p
+                  className="uppercase"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(28px, 2.4vw, 36px)',
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    color: 'rgba(255,255,255,0.92)',
+                  }}
+                >
+                  {t('followUs')}
+                </p>
+
+                <div className="flex items-center gap-3">
+                  {socialLinks.map(({ label, href, icon }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="flex h-11 w-11 items-center justify-center border border-white/15 text-white/60 transition duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)] [&_svg]:h-6 [&_svg]:w-6"
+                      style={{ borderRadius: '4px' }}
+                    >
+                      {icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            {visibleSponsors.length > 0 && (
+              <div className="relative bg-[var(--color-background)] p-7 text-left text-[var(--color-ink)] md:p-10">
+                <div className="absolute inset-x-0 top-0 h-1 bg-[var(--color-accent)]" aria-hidden="true" />
+
+                <div className="mb-7 flex w-full items-end justify-between gap-6">
+                  <p
+                    className="uppercase"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(34px, 3vw, 48px)',
+                      fontWeight: 700,
+                      lineHeight: 0.95,
+                      color: 'var(--color-ink)',
+                    }}
+                  >
+                    {ts('label')}
+                  </p>
+
+                  <span
+                    className="hidden uppercase sm:block"
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '10px',
+                      letterSpacing: '0.18em',
+                      color: 'var(--color-accent-dark)',
+                    }}
+                  >
+                    OETZ TROPHY
+                  </span>
+                </div>
+
+                <div className="flex w-full flex-wrap items-center justify-start gap-x-7 gap-y-6 sm:gap-x-9 xl:gap-x-11">
+                  {visibleSponsors.map((sponsor) => (
+                    <SponsorLogo
+                      key={sponsor.name}
+                      sponsor={sponsor}
+                      size={sponsor.tier === 'gold' ? 'featured' : sponsor.tier === 'bronze' ? 'compact' : 'standard'}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </section>
-      ) : (
-        <div
-          className="relative max-w-7xl mx-auto px-6 md:px-12"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
-        />
-      )}
+        </div>
+      </section>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-7 flex flex-col md:flex-row items-center justify-between gap-5">
+      <div
+        className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 py-7 text-center md:flex-row md:px-12 md:text-left"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
+      >
+        <div className="flex flex-col items-center gap-3 md:items-start">
+          <span
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '11px',
+              letterSpacing: '0.08em',
+              color: 'rgba(255,255,255,0.34)',
+            }}
+          >
+            {t('copyright')}
+          </span>
 
-        <nav className="flex gap-7" aria-label="Footer Navigation">
+          <span
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '10px',
+              letterSpacing: '0.1em',
+              color: 'rgba(255,255,255,0.18)',
+            }}
+          >
+            Design &amp; Entwicklung{' '}
+            <a
+              href="https://www.flowst8.eu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/30 transition-colors duration-200 hover:text-white/55"
+            >
+              FlowSt8 Digital
+            </a>
+          </span>
+        </div>
+
+        <nav className="flex flex-wrap justify-center gap-x-6 gap-y-3 md:justify-end" aria-label="Footer Legal Navigation">
           {footerLinks.map(({ label, href }) => (
             <Link
               key={href}
               href={href}
-              className="uppercase transition-colors duration-200 hover:text-white/70"
+              className="text-white/35 uppercase transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
               style={{
                 fontFamily: 'var(--font-body)',
-                fontSize: '11px',
-                letterSpacing: '0.18em',
-                color: 'rgba(255,255,255,0.35)',
+                fontSize: '10px',
+                letterSpacing: '0.14em',
               }}
             >
               {label}
             </Link>
           ))}
         </nav>
-
-        <div className="flex items-center gap-5">
-          {socialLinks.map(({ label, href, icon }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="transition-colors duration-200 hover:text-[var(--color-accent)]"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
-
-        <span
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px',
-            letterSpacing: '0.12em',
-            color: 'rgba(255,255,255,0.18)',
-          }}
-        >
-          {t('copyright')}
-        </span>
-
-      </div>
-
-      {/* Credit */}
-      <div
-        className="relative text-center pb-5"
-        style={{
-          fontFamily: 'var(--font-body)',
-          fontSize: '10px',
-          letterSpacing: '0.1em',
-          color: 'rgba(255,255,255,0.12)',
-        }}
-      >
-        Design &amp; Entwicklung{' '}
-        <a
-          href="https://www.flowst8.eu"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors duration-200 hover:text-white/30"
-          style={{ color: 'rgba(255,255,255,0.2)' }}
-        >
-          FlowSt8 Digital
-        </a>
       </div>
     </footer>
   );
