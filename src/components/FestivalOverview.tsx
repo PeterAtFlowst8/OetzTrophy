@@ -29,7 +29,7 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
   }));
 
   return (
-    <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--color-background)' }}>
+    <section className="relative overflow-hidden overflow-x-clip" style={{ backgroundColor: 'var(--color-background)' }}>
 
       {/* Topographic river-line texture */}
       <div
@@ -39,26 +39,6 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
           backgroundSize: '400px 400px',
         }}
       />
-
-      {/* Large decorative "4" watermark */}
-      <div
-        aria-hidden="true"
-        className="absolute pointer-events-none select-none hidden md:block"
-        style={{
-          right: '-2%',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          fontFamily: 'var(--font-display)',
-          fontWeight: 700,
-          fontSize: 'clamp(300px, 35vw, 500px)',
-          color: 'var(--color-accent)',
-          opacity: 0.04,
-          lineHeight: 1,
-          letterSpacing: '-0.03em',
-        }}
-      >
-        4
-      </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36">
 
@@ -70,7 +50,7 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
               fontFamily: 'var(--font-body)',
               fontSize: '11px',
               letterSpacing: '0.25em',
-              color: 'var(--color-accent)',
+              color: 'var(--color-accent-text)',
             }}
           >
             {t('label')}
@@ -183,7 +163,7 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
                     fontFamily: 'var(--font-body)',
                     fontSize: '12px',
                     lineHeight: 1.5,
-                    color: 'rgba(255,255,255,0.5)',
+                    color: 'rgba(255,255,255,0.72)',
                   }}
                 >
                   {day.desc}

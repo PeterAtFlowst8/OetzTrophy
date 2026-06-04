@@ -25,7 +25,7 @@ export default async function LatestNews() {
                   fontFamily: 'var(--font-body)',
                   fontSize: '11px',
                   letterSpacing: '0.25em',
-                  color: 'var(--color-accent)',
+                  color: 'var(--color-accent-text)',
                 }}
               >
                 {t('label')}
@@ -68,26 +68,8 @@ export default async function LatestNews() {
             >
               <Link
                 href={`/news/${localizedSlug(post, locale)}` as '/news/regeln-zur-teilnahme'}
-                className="block py-8 md:py-10 md:flex md:gap-14 md:items-center"
+                className="block min-w-0 py-8 md:flex md:items-center md:gap-10 md:py-10"
               >
-                {/* Large accent number */}
-                <div className="hidden md:block shrink-0 relative" style={{ width: '100px' }}>
-                  <span
-                    className="block leading-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
-                      fontSize: '72px',
-                      color: 'var(--color-accent)',
-                      letterSpacing: '-0.03em',
-                      opacity: 0.15,
-                    }}
-                    aria-hidden="true"
-                  >
-                    0{i + 1}
-                  </span>
-                </div>
-
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                   <time

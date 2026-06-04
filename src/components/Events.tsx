@@ -37,21 +37,6 @@ function EventCard({
         {/* Gradient — stronger, more dramatic */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10 transition-opacity duration-500 group-hover:opacity-80" />
 
-        {/* Large index number — top left */}
-        <span
-          aria-hidden="true"
-          className="absolute top-4 left-6 md:top-6 md:left-8 transition-transform duration-500 group-hover:translate-y-1"
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontWeight: 700,
-            fontSize: 'clamp(48px, 6vw, 72px)',
-            color: 'rgba(255,255,255,0.08)',
-            lineHeight: 1,
-          }}
-        >
-          0{index + 1}
-        </span>
-
         {/* Accent bar — bottom, slides up */}
         <div
           className="absolute bottom-0 left-0 right-0 h-1 translate-y-full transition-transform duration-300 group-hover:translate-y-0"
@@ -62,7 +47,7 @@ function EventCard({
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
           <p
             className="uppercase mb-2 tracking-[0.2em] transition-colors duration-300 group-hover:text-[var(--color-accent)]"
-            style={{ fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(255,255,255,0.45)' }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(255,255,255,0.74)' }}
           >
             {event.subtitle}
           </p>

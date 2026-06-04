@@ -90,7 +90,7 @@ export default async function CalendarActions({ festivalDate, festivalEndDate }:
         <a
           href={calendarHref}
           download="oetz-trophy-race-weekend-2026.ics"
-          className="inline-flex min-h-11 items-center justify-center gap-2 px-5 py-3 uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+          className="inline-flex min-h-11 max-w-full items-center justify-center gap-2 px-5 py-3 text-center uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           style={{
             backgroundColor: 'var(--color-accent)',
             color: 'var(--color-ink)',
@@ -108,7 +108,7 @@ export default async function CalendarActions({ festivalDate, festivalEndDate }:
           href={googleUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center justify-center gap-2 border px-5 py-3 uppercase transition-colors duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+          className="inline-flex min-h-11 max-w-full items-center justify-center gap-2 border px-5 py-3 text-center uppercase transition-colors duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           style={{
             borderColor: 'var(--color-border)',
             color: 'var(--color-ink)',

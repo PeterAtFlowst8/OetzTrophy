@@ -13,6 +13,7 @@
   --color-muted: #6B6B6B;
   --color-accent: #F59E0B;
   --color-accent-dark: #D97706;
+  --color-accent-text: #8A4700;
   --color-border: #E5E5E0;
 }
 
@@ -26,6 +27,7 @@ body {
   color: var(--color-body-text);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 

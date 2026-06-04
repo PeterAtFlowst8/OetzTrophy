@@ -15,20 +15,22 @@ type Props = {
 };
 
 export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Props) {
-  const [state, setState] = useState<CountdownState | null>(null);
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
   const locale = useLocale();
 
   const targetDate = festivalDate ? new Date(festivalDate) : new Date('2026-09-17T09:00:00Z');
+  const targetTimestamp = targetDate.getTime();
+  const [state, setState] = useState<CountdownState>(() => getCountdownState(new Date(), targetDate));
   const registrationOpen = isRegistrationOpen();
   const opensLabel = registrationOpensLabel(locale);
 
   useEffect(() => {
-    setState(getCountdownState(new Date(), targetDate));
-    const id = setInterval(() => setState(getCountdownState(new Date(), targetDate)), 1000);
+    const updateCountdown = () => setState(getCountdownState(new Date(), new Date(targetTimestamp)));
+    updateCountdown();
+    const id = setInterval(updateCountdown, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [targetTimestamp]);
 
   const units =
     state && state.phase !== 'static'
@@ -43,7 +45,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
   const countdownLabel = state?.phase === 'festival' ? tc('festival') : '';
 
   return (
-    <section className="relative w-full h-screen min-h-[680px] overflow-hidden">
+    <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden">
 
       {/* Background photo */}
       <Image
@@ -71,11 +73,10 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
       {/* Countdown — dead center */}
-      {state && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center pb-40 md:pb-64 hero-countdown">
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 pb-48 md:pb-64 hero-countdown">
           {units ? (
             <div
-              className="text-center px-6 py-8 md:px-10 md:py-10"
+              className="max-w-full text-center px-5 py-7 md:px-10 md:py-10"
               style={{
                 background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 60%, transparent 100%)',
               }}
@@ -99,7 +100,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
                   <div key={l} className="flex items-end">
                     {i > 0 && (
                       <span
-                        className="text-white/30 self-start mt-2"
+                        className="self-start mt-2 text-white/45"
                         style={{
                           fontFamily: 'var(--font-display)',
                           fontSize: 'clamp(20px, 2.5vw, 36px)',
@@ -125,7 +126,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
                         {v}
                       </div>
                       <div
-                        className="text-white/65 uppercase mt-2 tracking-[0.2em]"
+                        className="mt-2 uppercase tracking-[0.18em] text-white/80"
                         style={{ fontFamily: 'var(--font-body)', fontSize: '10px' }}
                       >
                         {l}
@@ -149,11 +150,10 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
               {t('static')}
             </p>
           )}
-        </div>
-      )}
+      </div>
 
       {/* Race title — pinned bottom-left */}
-      <div className="absolute bottom-0 left-0 right-0 px-6 pb-14 md:px-12 md:pb-20">
+      <div className="absolute bottom-0 left-0 right-0 max-w-full px-6 pb-10 md:px-12 md:pb-20">
         <span
           className="inline-block mb-5 md:mb-6 px-[12px] py-[6px] text-[11px] font-bold uppercase tracking-widest hero-badge"
           style={{
@@ -181,11 +181,12 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
         </h1>
 
         <p
-          className="mt-4 md:mt-5 uppercase text-white/45 hero-location"
+          className="mt-4 md:mt-5 uppercase text-white/75 hero-location"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '11px',
             letterSpacing: '0.28em',
+            textShadow: '0 1px 10px rgba(0,0,0,0.7)',
           }}
         >
           {t('location')}
@@ -194,15 +195,16 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
         <div className="mt-7 flex max-w-xl flex-col gap-3 sm:flex-row sm:items-center hero-actions">
           <Link
             href="/registration"
-            className="inline-flex min-h-12 items-center justify-center px-5 py-3 uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            className="inline-flex min-h-12 w-full max-w-sm items-center justify-center px-5 py-3 text-center uppercase transition-colors duration-200 hover:bg-[var(--color-accent-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:w-auto"
             style={{
               backgroundColor: 'var(--color-accent)',
               color: 'var(--color-ink)',
               fontFamily: 'var(--font-display)',
               fontSize: '22px',
               fontWeight: 700,
-              lineHeight: 1,
+              lineHeight: 1.05,
               letterSpacing: '0.01em',
+              textWrap: 'balance',
             }}
           >
             {registrationOpen ? t('registrationCtaOpen') : t('registrationCtaClosed', { opens: opensLabel })}

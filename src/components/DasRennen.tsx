@@ -102,7 +102,7 @@ export default async function DasRennen() {
                   borderLeft: i === 0 ? 'none' : DIVIDER,
                 }}
               >
-                <span className="block mb-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                <span className="block mb-3" style={{ color: 'rgba(255,255,255,0.52)' }}>
                   {icon}
                 </span>
                 <CountUp
@@ -122,7 +122,7 @@ export default async function DasRennen() {
                     fontFamily: 'var(--font-body)',
                     fontSize: '11px',
                     letterSpacing: '0.15em',
-                    color: 'rgba(255,255,255,0.35)',
+                    color: 'rgba(255,255,255,0.72)',
                   }}
                 >
                   {label}
@@ -145,7 +145,7 @@ export default async function DasRennen() {
                   className="absolute left-0 top-0 h-[3px] w-12"
                   style={{ backgroundColor: 'var(--color-accent)' }}
                 />
-                <span className="shrink-0 mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                <span className="shrink-0 mt-1" style={{ color: 'rgba(255,255,255,0.52)' }}>
                   {icon}
                 </span>
                 <div>
@@ -166,7 +166,7 @@ export default async function DasRennen() {
                     fontFamily: 'var(--font-body)',
                     fontSize: '11px',
                     letterSpacing: '0.15em',
-                    color: 'rgba(255,255,255,0.35)',
+                    color: 'rgba(255,255,255,0.72)',
                   }}
                 >
                   {label}
@@ -184,7 +184,7 @@ export default async function DasRennen() {
               fontFamily: 'var(--font-body)',
               fontSize: '16px',
               lineHeight: 1.8,
-              color: 'rgba(255,255,255,0.45)',
+              color: 'rgba(255,255,255,0.72)',
             }}
           >
             {t('body')}

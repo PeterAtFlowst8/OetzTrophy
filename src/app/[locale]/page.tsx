@@ -17,7 +17,7 @@ export default async function Home() {
   ]);
 
   return (
-    <main>
+    <main className="overflow-x-clip">
       <JsonLd data={organizationSchema} />
       <JsonLd data={festivalEventSchema} />
       <Hero festivalDate={settings.festivalDate} imageSrc={heroImage} />
