@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import FadeIn from '@/components/motion/FadeIn';
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
 
@@ -19,7 +18,7 @@ function EventCard({
   index: number;
 }) {
   return (
-    <FadeIn direction="scale" delay={index * 0.15}>
+    <div>
       <Link
         href={event.href as '/oetz-trophy' | '/boater-x' | '/kajakfestival'}
         className="group relative overflow-hidden block cursor-pointer"
@@ -73,7 +72,7 @@ function EventCard({
           </div>
         </div>
       </Link>
-    </FadeIn>
+    </div>
   );
 }
 
@@ -96,7 +95,7 @@ export default async function Events() {
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
 
-        <FadeIn>
+        <div>
           <div className="mb-12 md:mb-16">
             <p
               className="uppercase mb-4"
@@ -123,7 +122,7 @@ export default async function Events() {
               {t('headline')}
             </h2>
           </div>
-        </FadeIn>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {events.map((event, i) => (

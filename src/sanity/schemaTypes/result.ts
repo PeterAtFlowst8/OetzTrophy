@@ -75,7 +75,7 @@ export const result = defineType({
     select: { year: 'year', event: 'event', category: 'category' },
     prepare({ year, event, category }) {
       return {
-        title: `${year ?? ''} — ${event ?? ''}`.trim(),
+        title: `${year ?? ''} - ${event ?? ''}`.trim(),
         subtitle: category,
       };
     },

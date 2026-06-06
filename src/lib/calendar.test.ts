@@ -33,10 +33,10 @@ describe('calendar helpers', () => {
 
   it('formats localized festival date ranges', () => {
     expect(formatFestivalDateRange(settings.festivalDate, settings.festivalEndDate, 'en')).toBe(
-      '17–20 September 2026',
+      '17-20 September 2026',
     );
     expect(formatFestivalDateRange(settings.festivalDate, settings.festivalEndDate, 'de')).toBe(
-      '17.–20. September 2026',
+      '17.-20. September 2026',
     );
   });
 });

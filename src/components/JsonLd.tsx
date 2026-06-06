@@ -63,7 +63,7 @@ export const festivalEventSchema = {
     },
     {
       '@type': 'SportsEvent',
-      name: 'Boater X — Oetz Kayak Cross',
+      name: 'Boater X - Oetz Kayak Cross',
       startDate: '2026-09-18',
       description: 'Open entry kayak cross race. Four paddlers, head-to-head.',
     },

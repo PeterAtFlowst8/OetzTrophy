@@ -1,7 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import FadeIn from '@/components/motion/FadeIn';
 import CountUp from '@/components/motion/CountUp';
-import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
 
 const DIVIDER = '1px solid rgba(255,255,255,0.1)';
 
@@ -59,7 +57,7 @@ export default async function DasRennen() {
         className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28"
         style={{ paddingTop: 'calc(4rem + 40px)' }}
       >
-        <FadeIn>
+        <div>
           <p
             className="uppercase mb-6"
             style={{
@@ -71,9 +69,9 @@ export default async function DasRennen() {
           >
             {t('label')}
           </p>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.15}>
+        <div>
           <h2
             className="uppercase mb-14 md:mb-20"
             style={{
@@ -87,12 +85,12 @@ export default async function DasRennen() {
           >
             {t('headline1')}<br />{t('headline2')}
           </h2>
-        </FadeIn>
+        </div>
 
         {/* Stat strip — desktop */}
-        <StaggerContainer className="hidden md:flex" style={{ borderTop: DIVIDER }} stagger={0.12}>
+        <div className="hidden md:flex" style={{ borderTop: DIVIDER }}>
           {stats.map(({ value, label, icon }, i) => (
-            <StaggerItem
+            <div
               key={value}
               className="flex-1 py-8 pr-8"
             >
@@ -128,14 +126,14 @@ export default async function DasRennen() {
                   {label}
                 </p>
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
 
-        {/* Stat strip — mobile */}
-        <StaggerContainer className="md:hidden" style={{ borderTop: DIVIDER }} stagger={0.08}>
+        {/* Stat strip - mobile */}
+        <div className="md:hidden" style={{ borderTop: DIVIDER }}>
           {stats.map(({ value, label, icon }) => (
-            <StaggerItem key={value}>
+            <div key={value}>
               <div
                 className="relative py-5 flex items-start gap-4"
                 style={{ borderBottom: DIVIDER }}
@@ -173,11 +171,11 @@ export default async function DasRennen() {
                 </p>
                 </div>
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
 
-        <FadeIn delay={0.3}>
+        <div>
           <p
             className="mt-12 max-w-xl"
             style={{
@@ -189,7 +187,7 @@ export default async function DasRennen() {
           >
             {t('body')}
           </p>
-        </FadeIn>
+        </div>
       </div>
     </section>
   );

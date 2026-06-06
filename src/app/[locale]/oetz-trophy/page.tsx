@@ -5,13 +5,12 @@ import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
 import { registrationOpensLabel } from '@/lib/registration';
-import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
-  de: { title: 'OETZ TROPHY — Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
-  en: { title: 'OETZ TROPHY — The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
+  de: { title: 'OETZ TROPHY - Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
+  en: { title: 'OETZ TROPHY - The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -47,7 +46,7 @@ export default async function OetzTrophyPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12">
 
-          <FadeIn>
+          <div>
             <div className="max-w-3xl mb-16 md:mb-20">
               {body && body.length > 0 ? (
                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
@@ -59,9 +58,9 @@ export default async function OetzTrophyPage() {
                 </p>
               )}
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.1}>
+          <div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
                 { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(event.date, locale) },
@@ -79,7 +78,7 @@ export default async function OetzTrophyPage() {
               ))}
             </div>
 
-            {/* Registration CTA — shared registration with Boater X */}
+            {/* Registration CTA - shared registration with Boater X */}
             <Link
               href="/registration"
               className="inline-flex items-center gap-3 px-6 py-4 mb-16 md:mb-20 transition-opacity duration-200 hover:opacity-90"
@@ -98,10 +97,10 @@ export default async function OetzTrophyPage() {
                 ? `Anmeldung öffnet am ${registrationOpensLabel(locale)}`
                 : `Registration opens ${registrationOpensLabel(locale)}`}
             </Link>
-          </FadeIn>
+          </div>
 
           {rules.length > 0 && (
-            <FadeIn delay={0.15}>
+            <div>
               <div className="max-w-3xl">
                 <h2
                   className="uppercase mb-6"
@@ -124,7 +123,7 @@ export default async function OetzTrophyPage() {
                   ))}
                 </ul>
               </div>
-            </FadeIn>
+            </div>
           )}
 
         </div>

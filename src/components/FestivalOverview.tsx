@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import FadeIn from '@/components/motion/FadeIn';
-import { StaggerContainer, StaggerItem } from '@/components/motion/StaggerChildren';
 import CalendarActions from '@/components/CalendarActions';
 import { getSiteImage } from '@/lib/siteContent';
 
@@ -42,8 +40,8 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36">
 
-        {/* Headline — full width above everything */}
-        <FadeIn>
+        {/* Headline - full width above everything */}
+        <div>
           <p
             className="uppercase mb-4"
             style={{
@@ -55,9 +53,9 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
           >
             {t('label')}
           </p>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.1}>
+        <div>
           <h2
             className="uppercase mb-12 md:mb-16"
             style={{
@@ -71,12 +69,12 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
           >
             {t('headline1')}<br />{t('headline2')}
           </h2>
-        </FadeIn>
+        </div>
 
         {/* Photo + body text */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-16 md:mb-24 items-start">
 
-          <FadeIn delay={0.15}>
+          <div>
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src={sectionImage}
@@ -93,9 +91,9 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
                 }}
               />
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.2}>
+          <div>
             <div className="max-w-md">
               <p
                 style={{
@@ -109,14 +107,14 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
               </p>
               <CalendarActions festivalDate={festivalDate} festivalEndDate={festivalEndDate} />
             </div>
-          </FadeIn>
+          </div>
 
         </div>
 
         {/* Schedule grid — styled as event passes */}
-        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" stagger={0.08}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {days.map((day) => (
-            <StaggerItem key={day.label}>
+            <div key={day.label}>
               <div
                 className="relative p-5 md:p-6 h-full group transition-all duration-300 hover:-translate-y-1"
                 style={{
@@ -169,9 +167,9 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
                   {day.desc}
                 </p>
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
 
       </div>
     </section>

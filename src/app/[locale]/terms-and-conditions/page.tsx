@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import FadeIn from '@/components/motion/FadeIn';
 import PageHeader from '@/components/PageHeader';
 
 const meta = {
@@ -38,7 +37,7 @@ export default async function TermsPage() {
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12">
-          <FadeIn>
+          <div>
             <p
               className="mb-12"
               style={{
@@ -50,11 +49,11 @@ export default async function TermsPage() {
             >
               {t('intro')}
             </p>
-          </FadeIn>
+          </div>
 
           <div className="flex flex-col gap-9">
             {sections.map((section, index) => (
-              <FadeIn key={section.heading} delay={index * 0.05}>
+              <div key={section.heading}>
                 <section
                   className="pt-8"
                   style={{ borderTop: '1px solid var(--color-border)' }}
@@ -82,11 +81,11 @@ export default async function TermsPage() {
                     {section.text}
                   </p>
                 </section>
-              </FadeIn>
+              </div>
             ))}
           </div>
 
-          <FadeIn delay={0.25}>
+          <div>
             <p
               className="mt-12 p-5"
               style={{
@@ -100,7 +99,7 @@ export default async function TermsPage() {
             >
               {t('reviewNote')}
             </p>
-          </FadeIn>
+          </div>
         </div>
       </section>
     </main>

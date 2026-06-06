@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
-import FadeIn from '@/components/motion/FadeIn';
 import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
 
 const tshirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -105,7 +104,7 @@ export default function RegistrationPage() {
         <div className="max-w-6xl mx-auto px-6 md:px-12">
 
           {!showForm ? (
-            <FadeIn>
+            <div>
               <div className="max-w-2xl mx-auto text-center py-12">
                 <p
                   className="uppercase mb-4"
@@ -132,10 +131,10 @@ export default function RegistrationPage() {
                   {t('closedText', { opens: opensLabel })}
                 </p>
               </div>
-            </FadeIn>
+            </div>
           ) : (
             <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-              <FadeIn>
+              <div>
                 <div className="lg:sticky lg:top-28">
                   <p
                     className="mb-7"
@@ -220,9 +219,9 @@ export default function RegistrationPage() {
                     </p>
                   )}
                 </div>
-              </FadeIn>
+              </div>
 
-              <FadeIn delay={0.1}>
+              <div>
                 <form
                   onSubmit={handleSubmit}
                   className="bg-white p-5 sm:p-7 md:p-9"
@@ -494,7 +493,7 @@ export default function RegistrationPage() {
                     {t('paymentNote')}
                   </p>
                 </form>
-              </FadeIn>
+              </div>
             </div>
           )}
 

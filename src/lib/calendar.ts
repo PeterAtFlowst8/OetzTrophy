@@ -135,8 +135,8 @@ export function formatFestivalDateRange(
 
   if (startMonth === endMonth && startYear === endYear) {
     return normalizedLocale === 'de'
-      ? `${startDay}.–${endDay}. ${endMonth} ${endYear}`
-      : `${startDay}–${endDay} ${endMonth} ${endYear}`;
+      ? `${startDay}.-${endDay}. ${endMonth} ${endYear}`
+      : `${startDay}-${endDay} ${endMonth} ${endYear}`;
   }
 
   const formatter = new Intl.DateTimeFormat(intlLocale, {
@@ -146,5 +146,5 @@ export function formatFestivalDateRange(
     timeZone: TIME_ZONE,
   });
 
-  return `${formatter.format(start)} – ${formatter.format(end)}`;
+  return `${formatter.format(start)} - ${formatter.format(end)}`;
 }

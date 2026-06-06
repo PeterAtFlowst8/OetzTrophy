@@ -5,8 +5,8 @@ import { Link } from '@/i18n/navigation';
 import { getAllPosts, localizedTitle, localizedSlug, localizedExcerpt, formatDate } from '@/lib/news';
 
 const meta = {
-  de: { title: 'News & Berichte — OETZ TROPHY Kajakfestival Ötztal', description: 'Aktuelle Neuigkeiten, Rennberichte und Ergebnisse rund um die OETZ TROPHY, den Boater X und das Kajakfestival auf der Ötztaler Ache in Tirol, Österreich.' },
-  en: { title: 'News & Reports — OETZ TROPHY Kayak Festival Ötztal', description: 'Latest news, race reports and results from the OETZ TROPHY, the Boater X and the Kayak Festival on the Ötztaler Ache in Tyrol, Austria. Updated regularly.' },
+  de: { title: 'News & Berichte - OETZ TROPHY Kajakfestival Ötztal', description: 'Aktuelle Neuigkeiten, Rennberichte und Ergebnisse rund um die OETZ TROPHY, den Boater X und das Kajakfestival auf der Ötztaler Ache in Tirol, Österreich.' },
+  en: { title: 'News & Reports - OETZ TROPHY Kayak Festival Ötztal', description: 'Latest news, race reports and results from the OETZ TROPHY, the Boater X and the Kayak Festival on the Ötztaler Ache in Tyrol, Austria. Updated regularly.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };

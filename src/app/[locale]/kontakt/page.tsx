@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
-import FadeIn from '@/components/motion/FadeIn';
 
 const pageMeta = {
-  de: { title: 'Kontakt — OETZ TROPHY Veranstalter Source To Sea', description: 'Kontakt zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol. Telefon, E-Mail und Social Media. Wir freuen uns auf deine Nachricht.' },
-  en: { title: 'Contact — OETZ TROPHY Organiser Source To Sea', description: 'Contact OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Phone, email, and social media. We look forward to hearing from you.' },
+  de: { title: 'Kontakt - OETZ TROPHY Veranstalter Source To Sea', description: 'Kontakt zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol. Telefon, E-Mail und Social Media. Wir freuen uns auf deine Nachricht.' },
+  en: { title: 'Contact - OETZ TROPHY Organiser Source To Sea', description: 'Contact OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Phone, email, and social media. We look forward to hearing from you.' },
 };
 
 type MetaProps = { params: Promise<{ locale: string }> };
@@ -69,7 +68,7 @@ export default async function KontaktPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
 
-            <FadeIn>
+            <div>
               <div>
                 <h2
                   className="uppercase mb-6"
@@ -109,9 +108,9 @@ export default async function KontaktPage() {
                   </p>
                 </div>
               </div>
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.15}>
+            <div>
               <div>
                 <h2
                   className="uppercase mb-6"
@@ -174,7 +173,7 @@ export default async function KontaktPage() {
                   ))}
                 </div>
               </div>
-            </FadeIn>
+            </div>
 
           </div>
 

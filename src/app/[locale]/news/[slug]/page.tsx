@@ -3,7 +3,6 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
-import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getPostBySlug, localizedTitle, localizedExcerpt, localizedBody, formatDate } from '@/lib/news';
 
@@ -101,7 +100,7 @@ export default async function NewsArticlePage({ params }: Props) {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12">
 
-          <FadeIn>
+          <div>
             <time
               className="block uppercase mb-8"
               style={{
@@ -128,9 +127,9 @@ export default async function NewsArticlePage({ params }: Props) {
                 {localizedExcerpt(post, locale)}
               </p>
             )}
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.1}>
+          <div>
             <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--color-border)' }}>
               <Link
                 href="/news"
@@ -145,7 +144,7 @@ export default async function NewsArticlePage({ params }: Props) {
                 ← {t('viewAll')}
               </Link>
             </div>
-          </FadeIn>
+          </div>
 
         </div>
       </section>

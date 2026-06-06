@@ -3,8 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 
 const meta = {
-  de: { title: 'Datenschutz — OETZ TROPHY Datenschutzerklärung DSGVO', description: 'Datenschutzerklärung der OETZ TROPHY: Informationen zur Erhebung, Verarbeitung und Nutzung personenbezogener Daten gemäß DSGVO. Source To Sea GmbH, Natters.' },
-  en: { title: 'Privacy Policy — OETZ TROPHY Data Protection GDPR', description: 'Privacy policy for OETZ TROPHY: Information on the collection, processing and use of personal data in accordance with GDPR. Source To Sea GmbH, Natters, Austria.' },
+  de: { title: 'Datenschutz - OETZ TROPHY Datenschutzerklärung DSGVO', description: 'Datenschutzerklärung der OETZ TROPHY: Informationen zur Erhebung, Verarbeitung und Nutzung personenbezogener Daten gemäß DSGVO. Source To Sea GmbH, Natters.' },
+  en: { title: 'Privacy Policy - OETZ TROPHY Data Protection GDPR', description: 'Privacy policy for OETZ TROPHY: Information on the collection, processing and use of personal data in accordance with GDPR. Source To Sea GmbH, Natters, Austria.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };

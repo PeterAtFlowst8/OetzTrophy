@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import FadeIn from '@/components/motion/FadeIn';
 
 const meta = {
-  de: { title: 'Galerie — OETZ TROPHY Fotos & Videos', description: 'Fotos und Videos von der OETZ TROPHY, dem Boater X und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.' },
-  en: { title: 'Gallery — OETZ TROPHY Photos & Videos', description: 'Photos and videos from the OETZ TROPHY, Boater X and the Ötztal Kayak Festival. Impressions from the Ötztaler Ache in Tyrol, Austria.' },
+  de: { title: 'Galerie - OETZ TROPHY Fotos & Videos', description: 'Fotos und Videos von der OETZ TROPHY, dem Boater X und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.' },
+  en: { title: 'Gallery - OETZ TROPHY Photos & Videos', description: 'Photos and videos from the OETZ TROPHY, Boater X and the Ötztal Kayak Festival. Impressions from the Ötztaler Ache in Tyrol, Austria.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -25,7 +24,7 @@ export default async function GalleryPage() {
 
       <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
-          <FadeIn>
+          <div>
             <p
               className="uppercase mb-6"
               style={{
@@ -47,7 +46,7 @@ export default async function GalleryPage() {
             >
               {t('description')}
             </p>
-          </FadeIn>
+          </div>
         </div>
       </section>
     </main>

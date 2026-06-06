@@ -1,6 +1,6 @@
 {
   "hero": {
-    "badge": "17–20 Sept · Ötztal",
+    "badge": "17-20 Sept · Ötztal",
     "line1": "Extreme",
     "line2": "Kayak Championships",
     "location": "Oetz · Tyrol · Austria",
@@ -19,7 +19,7 @@
   "marquee": {
     "item0": "OETZ TROPHY · 19 Sept",
     "item1": "Boater X · 18 Sept",
-    "item2": "Kayak Festival · 17–20 Sept",
+    "item2": "Kayak Festival · 17-20 Sept",
     "item3": "Ötztaler Ache · WW V"
   },
   "dasRennen": {
@@ -35,16 +35,16 @@
     "body": "The Ötztaler Ache. WW\u00a0V. One of the hardest kayak races in the Alps. Only those who make it through the qualifying rounds will be allowed to compete in the main event. The course demands experience, technique, and the willingness to push your limit."
   },
   "festivalOverview": {
-    "label": "17–20 September 2026",
+    "label": "17-20 September 2026",
     "headline1": "4 Days of",
     "headline2": "Whitewater.",
-    "body": "The Ötztal Kayak Festival brings the paddling community together for four days in Oetz. Racing, demo boats, film screenings, music — and of course, the Ötztaler Ache.",
+    "body": "The Ötztal Kayak Festival brings the paddling community together for four days in Oetz. Racing, demo boats, film screenings, music, and of course the Ötztaler Ache.",
     "day0Label": "Thu",
     "day0": "Opening & welcome party",
     "day1Label": "Fri",
     "day1": "Qualifying heats & Boater X",
     "day2Label": "Sat",
-    "day2": "OETZ TROPHY — main race",
+    "day2": "OETZ TROPHY: main race",
     "day3Label": "Sun",
     "day3": "Community paddling & farewell",
     "imageAlt": "Kayak Festival atmosphere"
@@ -53,7 +53,7 @@
     "label": "Events 2026",
     "headline": "The Programme",
     "item0Title": "Kayak Festival",
-    "item0Subtitle": "17–20 September 2026",
+    "item0Subtitle": "17-20 September 2026",
     "item1Title": "Boater X",
     "item1Subtitle": "Kayak Cross race · Fri 18 Sept",
     "item2Title": "OETZ TROPHY",
@@ -118,7 +118,7 @@
     "s5Heading": "Transfer to Third Parties",
     "s5Text": "Your personal data will be processed by us and, under certain circumstances, by third parties. We share your data (in particular name, gender, age, nationality, club/association, placement, photos and video recordings) with online and print media, clubs/associations and other persons who have an interest in the OETZ TROPHY.",
     "s6Heading": "Data Breaches",
-    "s6Text": "We strive to ensure that data breaches are identified at an early stage and — should you be affected — reported to you or the competent supervisory authority, indicating the respective categories of data affected.",
+    "s6Text": "We strive to ensure that data breaches are identified at an early stage and, should you be affected, reported to you or the competent supervisory authority, indicating the respective categories of data affected.",
     "s7Heading": "Data Retention",
     "s7Text": "We will not retain your personal data for longer than is necessary to fulfil our contractual or legal obligations and to defend against any liability claims.",
     "s8Heading": "Cookies & Analytics",
@@ -141,7 +141,7 @@
   "oetzTrophy": {
     "label": "The Race",
     "title": "OETZ TROPHY",
-    "intro": "The OETZ TROPHY is one of the hardest kayak races in the world. On the Ötztaler Ache — whitewater class V — the world's best paddlers compete head to head. No open entry: only the fastest 40 men and 15 women from the qualifying heats will be allowed to compete in the race.",
+    "intro": "The OETZ TROPHY is one of the hardest kayak races in the world. On the Ötztaler Ache (whitewater class V), the world's best paddlers compete head to head. No open entry: only the fastest 40 men and 15 women from the qualifying heats will be allowed to compete in the race.",
     "dateLabel": "Date",
     "dateValue": "19 Sept 2026",
     "formatLabel": "Format",
@@ -169,17 +169,17 @@
     "entryValue": "Race weekend registration",
     "regNote": "Race weekend registration opens 17 June 2026",
     "formatHeading": "The Format",
-    "formatText": "Four paddlers start simultaneously on a set course. The first two advance — round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.",
+    "formatText": "Four paddlers start simultaneously on a set course. The first two advance, round after round, until only four finalists remain. Pure excitement for spectators and athletes alike. Fast decisions, close duels, full commitment.",
     "rulesHeading": "Rules",
     "rule1": "Qualification is open for all paddlers with whitewater experience (min. class IV).",
     "rule2": "Full safety equipment is mandatory.",
-    "rule3": "Four paddlers per heat — the first two advance to the next round.",
+    "rule3": "Four paddlers per heat: the first two advance to the next round.",
     "rule4": "Intentional body contact and obstruction of other paddlers leads to disqualification."
   },
   "kajakfestival": {
     "label": "Festival",
     "title": "Kayak Festival",
-    "intro": "The Ötztal Kayak Festival is the heart of the weekend. For four days, paddlers from across Europe gather in Oetz — to paddle, celebrate and connect. Beyond the races, there are demo boats, film screenings, workshops and live music.",
+    "intro": "The Ötztal Kayak Festival is the heart of the weekend. For four days, paddlers from across Europe gather in Oetz to paddle, celebrate and connect. Beyond the races, there are demo boats, film screenings, workshops and live music.",
     "scheduleHeading": "Schedule",
     "day1Day": "Thursday",
     "day1Date": "17 September",
@@ -189,7 +189,7 @@
     "day2Desc": "Qualifying heats in the morning; Boater X (Oetz Kayak Cross) on the slalom course in the afternoon. Demo boats from sponsors. Film screenings and live music in the evening.",
     "day3Day": "Saturday",
     "day3Date": "19 September",
-    "day3Desc": "OETZ TROPHY — the main race (qualification required). Award ceremony and evening programme.",
+    "day3Desc": "OETZ TROPHY: the main race (qualification required). Award ceremony and evening programme.",
     "day4Day": "Sunday",
     "day4Date": "20 September",
     "day4Desc": "Free paddling, community runs on the Ötztaler Ache. Group farewell paddle and departures.",

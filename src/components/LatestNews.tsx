@@ -1,7 +1,6 @@
 import { getTranslations, getLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getLatestPosts, localizedTitle, localizedSlug, localizedExcerpt, formatDate } from '@/lib/news';
-import FadeIn from '@/components/motion/FadeIn';
 
 export const revalidate = 60;
 
@@ -16,7 +15,7 @@ export default async function LatestNews() {
     <section style={{ backgroundColor: 'var(--color-background)' }}>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-10 md:pb-12">
-        <FadeIn>
+        <div>
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p
@@ -56,12 +55,12 @@ export default async function LatestNews() {
               {t('viewAll')} →
             </Link>
           </div>
-        </FadeIn>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
         {posts.map((post, i) => (
-          <FadeIn key={post._id} direction={i % 2 === 0 ? 'left' : 'right'} delay={i * 0.1}>
+          <div key={post._id}>
             <article
               className="group"
               style={{ borderTop: i === 0 ? '1px solid var(--color-border)' : 'none', borderBottom: '1px solid var(--color-border)' }}
@@ -126,7 +125,7 @@ export default async function LatestNews() {
                 </span>
               </Link>
             </article>
-          </FadeIn>
+          </div>
         ))}
       </div>
 

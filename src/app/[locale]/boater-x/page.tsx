@@ -5,13 +5,12 @@ import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
 import { registrationOpensLabel } from '@/lib/registration';
-import FadeIn from '@/components/motion/FadeIn';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 const meta = {
-  de: { title: 'Boater X — Kajak Cross auf der Slalomstrecke in Oetz', description: 'Der Boater X (Oetz Kayak Cross) am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.' },
-  en: { title: 'Boater X — Kayak Cross on the Slalom Course in Oetz', description: 'Boater X (Oetz Kayak Cross) on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.' },
+  de: { title: 'Boater X - Kajak Cross auf der Slalomstrecke in Oetz', description: 'Der Boater X (Oetz Kayak Cross) am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.' },
+  en: { title: 'Boater X - Kayak Cross on the Slalom Course in Oetz', description: 'Boater X (Oetz Kayak Cross) on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -47,7 +46,7 @@ export default async function BoaterXPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12">
 
-          <FadeIn>
+          <div>
             <div className="max-w-3xl mb-16 md:mb-20">
               {body && body.length > 0 ? (
                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
@@ -59,9 +58,9 @@ export default async function BoaterXPage() {
                 </p>
               )}
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.1}>
+          <div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
                 { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(event.date, locale) },
@@ -98,10 +97,10 @@ export default async function BoaterXPage() {
                 ? `Anmeldung öffnet am ${registrationOpensLabel(locale)}`
                 : `Registration opens ${registrationOpensLabel(locale)}`}
             </Link>
-          </FadeIn>
+          </div>
 
           {rules.length > 0 && (
-            <FadeIn delay={0.15}>
+            <div>
               <div className="max-w-3xl">
                 <h2
                   className="uppercase mb-6"
@@ -124,7 +123,7 @@ export default async function BoaterXPage() {
                   ))}
                 </ul>
               </div>
-            </FadeIn>
+            </div>
           )}
 
         </div>

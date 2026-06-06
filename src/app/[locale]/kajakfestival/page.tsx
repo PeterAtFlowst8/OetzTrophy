@@ -4,14 +4,13 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
-import FadeIn from '@/components/motion/FadeIn';
 import CalendarActions from '@/components/CalendarActions';
 import { getEventBySlug, localizedField } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
 
 const meta = {
-  de: { title: 'Kajakfestival — 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Musik. Die Paddel-Community trifft sich in Oetz, Tirol.' },
-  en: { title: 'Kayak Festival — 4 Days of Whitewater in Ötztal 2026', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and music. The paddling community gathers in Oetz, Tyrol, Austria.' },
+  de: { title: 'Kajakfestival - 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Musik. Die Paddel-Community trifft sich in Oetz, Tirol.' },
+  en: { title: 'Kayak Festival - 4 Days of Whitewater in Ötztal 2026', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and music. The paddling community gathers in Oetz, Tyrol, Austria.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -56,7 +55,7 @@ export default async function KajakfestivalPage() {
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12">
 
-          <FadeIn>
+          <div>
             <div className="max-w-3xl mb-16 md:mb-20">
               {body && body.length > 0 ? (
                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
@@ -68,9 +67,9 @@ export default async function KajakfestivalPage() {
                 </p>
               )}
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.1}>
+          <div>
             <div className="mb-16 md:mb-20">
               <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <h2 className="uppercase" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
@@ -94,9 +93,9 @@ export default async function KajakfestivalPage() {
               </div>
               <CalendarActions festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.05}>
+          <div>
             <div className="max-w-3xl">
               <h2 className="uppercase mb-6" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}>
                 {t('locationHeading')}
@@ -105,7 +104,7 @@ export default async function KajakfestivalPage() {
                 {t('locationText')}
               </p>
             </div>
-          </FadeIn>
+          </div>
 
         </div>
       </section>

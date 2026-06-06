@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 // <html>/<body> (the root layout is intentionally minimal). The Studio
 // renders its own full-screen UI without the site nav/footer.
 export const metadata = {
-  title: 'OETZ TROPHY — Studio',
+  title: 'OETZ TROPHY - Studio',
   robots: { index: false, follow: false },
 };
 

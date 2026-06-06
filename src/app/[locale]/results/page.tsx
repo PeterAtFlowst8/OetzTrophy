@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import FadeIn from '@/components/motion/FadeIn';
 
 const meta = {
-  de: { title: 'Ergebnisse — OETZ TROPHY & Boater X', description: 'Ergebnisse der OETZ TROPHY und des Boater X. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.' },
-  en: { title: 'Results — OETZ TROPHY & Boater X', description: 'Results from the OETZ TROPHY and Boater X. Time trial and head-to-head racing on the Ötztaler Ache in Oetz, Tyrol, Austria.' },
+  de: { title: 'Ergebnisse - OETZ TROPHY & Boater X', description: 'Ergebnisse der OETZ TROPHY und des Boater X. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.' },
+  en: { title: 'Results - OETZ TROPHY & Boater X', description: 'Results from the OETZ TROPHY and Boater X. Time trial and head-to-head racing on the Ötztaler Ache in Oetz, Tyrol, Austria.' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -25,7 +24,7 @@ export default async function ResultsPage() {
 
       <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
-          <FadeIn>
+          <div>
             <p
               className="uppercase mb-6"
               style={{
@@ -47,7 +46,7 @@ export default async function ResultsPage() {
             >
               {t('description')}
             </p>
-          </FadeIn>
+          </div>
         </div>
       </section>
     </main>

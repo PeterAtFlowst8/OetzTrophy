@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import FadeIn from '@/components/motion/FadeIn';
 
 const meta = {
-  de: { title: 'Anmeldung bestätigt — OETZ TROPHY Rennwochenende 2026', description: 'Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 wurde bestätigt. Zahlung eingegangen. Wir sehen uns auf der Ötztaler Ache!' },
-  en: { title: 'Registration Confirmed — OETZ TROPHY Race Weekend 2026', description: 'Your registration for the OETZ TROPHY race weekend 2026 has been confirmed. Payment received. See you on the Ötztaler Ache in Tyrol!' },
+  de: { title: 'Anmeldung bestätigt - OETZ TROPHY Rennwochenende 2026', description: 'Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 wurde bestätigt. Zahlung eingegangen. Wir sehen uns auf der Ötztaler Ache!' },
+  en: { title: 'Registration Confirmed - OETZ TROPHY Race Weekend 2026', description: 'Your registration for the OETZ TROPHY race weekend 2026 has been confirmed. Payment received. See you on the Ötztaler Ache in Tyrol!' },
 };
 
 type Props = { params: Promise<{ locale: string }> };
@@ -25,7 +24,7 @@ export default async function RegistrationSuccessPage() {
         className="min-h-screen flex items-center justify-center px-6"
         style={{ backgroundColor: 'var(--color-ink)' }}
       >
-        <FadeIn>
+        <div>
           <div className="text-center max-w-lg">
             <div
               className="mx-auto mb-8"
@@ -83,7 +82,7 @@ export default async function RegistrationSuccessPage() {
               {t('backHome')}
             </Link>
           </div>
-        </FadeIn>
+        </div>
       </section>
     </main>
   );
