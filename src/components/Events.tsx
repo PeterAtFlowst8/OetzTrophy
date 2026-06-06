@@ -2,8 +2,6 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 
-const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`;
-
 const eventConfigs = [
   { image: '/images/event-festival-2.jpg', href: '/kajakfestival' },
   { image: '/images/event-boaterx.jpg', href: '/boater-x' },
@@ -87,12 +85,6 @@ export default async function Events() {
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--color-ink)' }}>
-      {/* Grain texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: GRAIN, backgroundSize: '200px 200px', opacity: 0.04, mixBlendMode: 'overlay' }}
-      />
-
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
 
         <div>

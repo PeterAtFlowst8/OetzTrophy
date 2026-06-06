@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import GrainOverlay from '@/components/GrainOverlay';
 import '@/app/globals.css';
 
 const BASE_URL = 'https://oetz-trophy.vercel.app';
@@ -99,6 +100,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <Nav />
           {children}
           <Footer />
+          <GrainOverlay />
         </NextIntlClientProvider>
       </body>
     </html>
