@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getSponsors, type SponsorLink } from '@/lib/sponsors';
+import { getSiteImage } from '@/lib/siteContent';
 
 const socialLinks = [
   {
@@ -90,10 +91,11 @@ function SponsorLogo({
 }
 
 export default async function Footer() {
-  const [t, ts, sponsors] = await Promise.all([
+  const [t, ts, sponsors, logo] = await Promise.all([
     getTranslations('footer'),
     getTranslations('sponsors'),
     getSponsors(),
+    getSiteImage('logo', '/images/logo-white.webp'),
   ]);
 
   const footerLinks = [
@@ -114,7 +116,7 @@ export default async function Footer() {
             <div className="flex flex-col justify-between gap-10 bg-[var(--color-ink)] p-7 md:p-10">
               <div className="flex flex-col items-start gap-6 text-left">
                 <Image
-                  src="/images/logo-white.webp"
+                  src={logo}
                   alt="OETZ TROPHY"
                   width={260}
                   height={48}

@@ -18,7 +18,15 @@ const mobileLinks = [
   { href: '/kontakt', labelKey: 'contact' },
 ];
 
-export default function Nav() {
+type Props = {
+  logoSolid?: string;
+  logoTransparent?: string;
+};
+
+export default function Nav({
+  logoSolid = '/images/logo-dark.webp',
+  logoTransparent = '/images/logo-white.webp',
+}: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const t = useTranslations('nav');
@@ -49,9 +57,9 @@ export default function Nav() {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between overflow-hidden">
           <Link href="/" className="block shrink-0 min-w-0 relative">
-            {/* Dark logo for solid white nav */}
+            {/* Logo for solid white nav */}
             <Image
-              src="/images/logo-dark.webp"
+              src={logoSolid}
               alt="OETZ TROPHY"
               width={440}
               height={81}
@@ -60,9 +68,9 @@ export default function Nav() {
               loading="eager"
               priority
             />
-            {/* White logo for transparent hero nav */}
+            {/* Logo for transparent hero nav */}
             <Image
-              src="/images/logo-white.webp"
+              src={logoTransparent}
               alt="OETZ TROPHY"
               width={440}
               height={81}

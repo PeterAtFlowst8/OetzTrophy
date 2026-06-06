@@ -55,6 +55,7 @@ export async function getMessageOverrides(
 }
 
 export type SiteImageKey =
+  | 'logo'
   | 'hero'
   | 'festivalOverview'
   | 'oetzTrophy'

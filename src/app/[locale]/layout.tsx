@@ -97,11 +97,19 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const messages = await getMessages();
 
+  // Single client-managed logo. Each nav state keeps its current file as the
+  // fallback, so the look is unchanged until a logo is uploaded; once it is,
+  // the same image is used everywhere.
+  const [logoSolid, logoTransparent] = await Promise.all([
+    getSiteImage('logo', '/images/logo-dark.webp'),
+    getSiteImage('logo', '/images/logo-white.webp'),
+  ]);
+
   return (
     <html lang={locale} data-scroll-behavior="smooth" className="overflow-x-hidden">
       <body className={`${agdasima.variable} ${inter.variable} overflow-x-hidden`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Nav />
+          <Nav logoSolid={logoSolid} logoTransparent={logoTransparent} />
           {children}
           <Footer />
           <GrainOverlay />

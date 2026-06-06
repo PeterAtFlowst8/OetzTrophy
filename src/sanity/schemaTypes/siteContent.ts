@@ -401,6 +401,11 @@ const imagesSection = defineField({
   options: { collapsible: true, collapsed: false },
   fields: [
     imageField(
+      'logo',
+      'Logo',
+      'Your logo. Appears in the top navigation and the footer. It sits over the hero photo and the dark footer as well as the white menu bar, so use a version that stays legible on both light and dark backgrounds. Leave blank to keep the built-in logo.',
+    ),
+    imageField(
       'hero',
       'Homepage hero photo',
       'Shown full-screen at the top of the homepage. Best as a wide action image.',
