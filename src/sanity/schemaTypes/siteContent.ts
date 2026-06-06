@@ -88,7 +88,7 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   sponsors: 'Heading for the sponsor logos in the footer.',
   nav: 'Top navigation and mobile menu labels.',
   footer: 'Footer tagline and legal/contact links.',
-  kajakfestival: 'Schedule and location labels on the Kayak Festival page. The main title and intro are edited in Race & Festival Pages.',
+  kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title, intro and main body text live in "Race & Festival Page Text" → Kayak Festival (a separate item in the left menu).',
   kontakt: 'Labels on the contact page.',
   gallery: 'Coming-soon text for the gallery page.',
   results: 'Coming-soon text for the results page.',
@@ -382,10 +382,10 @@ function imageField(name: string, title: string, description: string) {
     fields: [
       defineField({
         name: 'alt',
-        title: 'Internal image note',
+        title: 'Image description (alt text)',
         type: 'string',
         description:
-          'Optional note for editors. Public alt text is controlled in the matching text section where the site uses it.',
+          'Describe what is in the photo, for accessibility and SEO. Leave blank to use the built-in default. (Used for the hero and festival photos; page-header photos use the page title automatically.)',
       }),
     ],
   });
@@ -429,6 +429,26 @@ const imagesSection = defineField({
       'kontakt',
       'Contact page header photo',
       'Shown at the top of the Contact page.',
+    ),
+    imageField(
+      'registration',
+      'Registration page header photo',
+      'Shown at the top of the registration page.',
+    ),
+    imageField(
+      'programmeFestival',
+      'Homepage programme card: Festival',
+      'Portrait photo on the "Kayak Festival" card in the homepage programme grid.',
+    ),
+    imageField(
+      'programmeBoaterX',
+      'Homepage programme card: Boater X',
+      'Portrait photo on the "Boater X" card in the homepage programme grid.',
+    ),
+    imageField(
+      'programmeOetzTrophy',
+      'Homepage programme card: OETZ TROPHY',
+      'Portrait photo on the "OETZ TROPHY" card in the homepage programme grid.',
     ),
   ],
 });

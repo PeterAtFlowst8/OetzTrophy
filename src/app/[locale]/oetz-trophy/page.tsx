@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { getSiteImage } from '@/lib/siteContent';
+import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
@@ -34,6 +35,7 @@ export default async function OetzTrophyPage() {
   const rules = event.rules || [];
 
   const headerImage = await getSiteImage('oetzTrophy', '/images/hero.jpg', { width: 2000 });
+  const { registrationOpensAt } = await getSiteSettings();
 
   return (
     <main>
@@ -94,8 +96,8 @@ export default async function OetzTrophyPage() {
             >
               <span style={{ fontSize: '16px' }}>↗</span>
               {locale === 'de'
-                ? `Anmeldung öffnet am ${registrationOpensLabel(locale)}`
-                : `Registration opens ${registrationOpensLabel(locale)}`}
+                ? `Anmeldung öffnet am ${registrationOpensLabel(locale, registrationOpensAt)}`
+                : `Registration opens ${registrationOpensLabel(locale, registrationOpensAt)}`}
             </Link>
           </div>
 

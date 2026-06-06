@@ -3,7 +3,9 @@
 
 export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   festivalDate,
-  festivalEndDate
+  festivalEndDate,
+  registrationOpensAt,
+  registrationFeeEur
 }`;
 
 export const postsQuery = `*[_type == "post"] | order(publishedAt desc){

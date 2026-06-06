@@ -8,6 +8,7 @@ import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import GrainOverlay from '@/components/GrainOverlay';
+import { getSiteImage } from '@/lib/siteContent';
 import '@/app/globals.css';
 
 const BASE_URL = 'https://oetz-trophy.vercel.app';
@@ -44,6 +45,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const l = (locale === 'en' ? 'en' : 'de') as keyof typeof meta;
   const m = meta[l];
 
+  // Social-share image follows the client-managed hero photo.
+  const ogImage = await getSiteImage('hero', '/images/hero.jpg', { width: 1200, height: 630 });
+
   return {
     title: {
       default: m.title,
@@ -65,13 +69,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       locale: locale === 'de' ? 'de_AT' : 'en_GB',
       url: `${BASE_URL}/${locale}`,
-      images: [{ url: '/images/hero.jpg', width: 1200, height: 630 }],
+      images: [{ url: ogImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: m.title,
       description: m.description,
-      images: ['/images/hero.jpg'],
+      images: [ogImage],
     },
     robots: {
       index: true,

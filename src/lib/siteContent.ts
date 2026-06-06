@@ -60,7 +60,11 @@ export type SiteImageKey =
   | 'oetzTrophy'
   | 'boaterX'
   | 'kajakfestival'
-  | 'kontakt';
+  | 'kontakt'
+  | 'registration'
+  | 'programmeFestival'
+  | 'programmeBoaterX'
+  | 'programmeOetzTrophy';
 
 /**
  * Returns the client-managed image for a slot, or the provided static fallback
@@ -79,4 +83,26 @@ export async function getSiteImage(
   if (opts.width) builder = builder.width(opts.width);
   if (opts.height) builder = builder.height(opts.height);
   return builder.url();
+}
+
+/**
+ * Like getSiteImage, but also returns the alt text co-located with the image
+ * in Studio. Falls back to `fallbackAlt` (usually the section's translated alt)
+ * when the editor hasn't set one.
+ */
+export async function getSiteImageData(
+  key: SiteImageKey,
+  opts: { fallbackUrl: string; fallbackAlt?: string; width?: number; height?: number },
+): Promise<{ url: string; alt: string }> {
+  const doc = await getSiteContentDoc();
+  const image = doc?.images?.[key];
+  const fallbackAlt = opts.fallbackAlt ?? '';
+  if (!image?.asset?._ref) return { url: opts.fallbackUrl, alt: fallbackAlt };
+
+  let builder = urlFor(image).auto('format');
+  if (opts.width) builder = builder.width(opts.width);
+  if (opts.height) builder = builder.height(opts.height);
+
+  const alt = typeof image.alt === 'string' && image.alt.trim() !== '' ? image.alt.trim() : fallbackAlt;
+  return { url: builder.url(), alt };
 }

@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { getSiteImage, type SiteImageKey } from '@/lib/siteContent';
 
 const eventConfigs = [
-  { image: '/images/event-festival-2.jpg', href: '/kajakfestival' },
-  { image: '/images/event-boaterx.jpg', href: '/boater-x' },
-  { image: '/images/hero.jpg', href: '/oetz-trophy' },
-] as const;
+  { slot: 'programmeFestival', fallback: '/images/event-festival-2.jpg', href: '/kajakfestival' },
+  { slot: 'programmeBoaterX', fallback: '/images/event-boaterx.jpg', href: '/boater-x' },
+  { slot: 'programmeOetzTrophy', fallback: '/images/hero.jpg', href: '/oetz-trophy' },
+] as const satisfies readonly { slot: SiteImageKey; fallback: string; href: string }[];
 
 function EventCard({
   event,
@@ -77,8 +78,13 @@ function EventCard({
 export default async function Events() {
   const t = await getTranslations('events');
 
+  const images = await Promise.all(
+    eventConfigs.map((config) => getSiteImage(config.slot, config.fallback, { width: 800 })),
+  );
+
   const events = eventConfigs.map((config, i) => ({
-    ...config,
+    href: config.href,
+    image: images[i],
     title: t(`item${i}Title` as Parameters<typeof t>[0]),
     subtitle: t(`item${i}Subtitle` as Parameters<typeof t>[0]),
   }));

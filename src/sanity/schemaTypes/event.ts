@@ -33,7 +33,7 @@ export const event = defineType({
     localizedBlockContent(
       'body',
       'Main Page Text',
-      'Main editable text shown below the page header.',
+      'Main editable text shown below the page header. (For the Kayak Festival page, the day-by-day schedule and location block are edited separately under "Main Website Text & Images" → Kayak Festival Schedule & Location.)',
     ),
     defineField({
       name: 'entryType',

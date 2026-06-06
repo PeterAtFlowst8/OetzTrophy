@@ -6,21 +6,26 @@ import DasRennen from '@/components/DasRennen';
 import LatestNews from '@/components/LatestNews';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImageData } from '@/lib/siteContent';
 
 export const revalidate = 60;
 
 export default async function Home() {
   const [settings, heroImage] = await Promise.all([
     getSiteSettings(),
-    getSiteImage('hero', '/images/hero.jpg', { width: 2000 }),
+    getSiteImageData('hero', { fallbackUrl: '/images/hero.jpg', width: 2000 }),
   ]);
 
   return (
     <main className="overflow-x-clip">
       <JsonLd data={organizationSchema} />
       <JsonLd data={festivalEventSchema} />
-      <Hero festivalDate={settings.festivalDate} imageSrc={heroImage} />
+      <Hero
+        festivalDate={settings.festivalDate}
+        registrationOpensAt={settings.registrationOpensAt}
+        imageSrc={heroImage.url}
+        imageAlt={heroImage.alt}
+      />
       <MarqueeBanner />
       <FestivalOverview festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />
       <Events />

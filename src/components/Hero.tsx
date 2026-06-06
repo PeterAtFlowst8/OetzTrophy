@@ -9,10 +9,17 @@ import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
 
 type Props = {
   festivalDate?: string | null;
+  registrationOpensAt?: string | null;
   imageSrc?: string;
+  imageAlt?: string;
 };
 
-export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Props) {
+export default function Hero({
+  festivalDate,
+  registrationOpensAt,
+  imageSrc = '/images/hero.jpg',
+  imageAlt,
+}: Props) {
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
   const locale = useLocale();
@@ -20,8 +27,8 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
   const targetDate = festivalDate ? new Date(festivalDate) : new Date('2026-09-17T09:00:00Z');
   const targetTimestamp = targetDate.getTime();
   const [state, setState] = useState<CountdownState>(() => getCountdownState(new Date(), targetDate));
-  const registrationOpen = isRegistrationOpen();
-  const opensLabel = registrationOpensLabel(locale);
+  const registrationOpen = isRegistrationOpen(registrationOpensAt);
+  const opensLabel = registrationOpensLabel(locale, registrationOpensAt);
 
   useEffect(() => {
     const updateCountdown = () => setState(getCountdownState(new Date(), new Date(targetTimestamp)));
@@ -48,7 +55,7 @@ export default function Hero({ festivalDate, imageSrc = '/images/hero.jpg' }: Pr
       {/* Background photo */}
       <Image
         src={imageSrc}
-        alt={t('imageAlt')}
+        alt={imageAlt || t('imageAlt')}
         fill
         className="object-cover object-center"
         priority

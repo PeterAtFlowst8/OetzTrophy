@@ -38,13 +38,13 @@ export const structure: StructureResolver = (S, context) =>
 
       // Singleton: site-wide settings (dates, registration)
       S.listItem()
-        .title('Festival Dates')
+        .title('Festival Dates & Registration')
         .icon(CogIcon)
         .child(
           S.document()
             .schemaType('siteSettings')
             .documentId('siteSettings')
-            .title('Festival Dates'),
+            .title('Festival Dates & Registration'),
         ),
 
       S.divider(),

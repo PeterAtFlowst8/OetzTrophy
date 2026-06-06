@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { isRegistrationOpen } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
+import { getSiteSettings } from '@/lib/settings';
 
 const TSHIRT_SIZES = new Set(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
 const DEFAULT_EXPERIENCE_LEVEL = 'race-eligible';
@@ -42,7 +43,9 @@ async function ensureRegistrationSchema(sql: ReturnType<typeof getDb>) {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!isRegistrationOpen()) {
+    const settings = await getSiteSettings();
+
+    if (!isRegistrationOpen(settings.registrationOpensAt)) {
       return NextResponse.json(
         { error: 'Registration is not open yet' },
         { status: 403 }
@@ -144,8 +147,12 @@ export async function POST(request: NextRequest) {
       `;
     }
 
-    // Create Stripe Checkout Session
-    const registrationFee = parseInt(process.env.REGISTRATION_FEE_CENTS || '13500', 10);
+    // Create Stripe Checkout Session.
+    // Fee priority: client-managed Studio value -> env override -> built-in default.
+    const registrationFee =
+      typeof settings.registrationFeeEur === 'number' && settings.registrationFeeEur > 0
+        ? Math.round(settings.registrationFeeEur * 100)
+        : parseInt(process.env.REGISTRATION_FEE_CENTS || '13500', 10);
 
     const session = await getStripe().checkout.sessions.create({
       mode: 'payment',
