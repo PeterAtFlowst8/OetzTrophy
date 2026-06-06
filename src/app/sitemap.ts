@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://oetz-trophy.vercel.app';
+import { SITE_URL as BASE_URL } from '@/lib/site';
 
 const staticPages = [
   '',

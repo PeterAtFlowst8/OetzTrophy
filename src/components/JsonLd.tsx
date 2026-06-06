@@ -1,3 +1,5 @@
+import { SITE_URL } from '@/lib/site';
+
 type Props = {
   data: Record<string, unknown>;
 };
@@ -15,8 +17,8 @@ export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'OETZ TROPHY',
-  url: 'https://oetz-trophy.vercel.app',
-  logo: 'https://oetz-trophy.vercel.app/images/logo-dark.webp',
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/logo-dark.webp`,
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+43-512-546710',

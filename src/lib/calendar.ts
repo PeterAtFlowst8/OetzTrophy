@@ -1,7 +1,7 @@
 import type { SiteSettings } from './settings';
+import { SITE_URL } from './site';
 
 const TIME_ZONE = 'Europe/Vienna';
-const SITE_URL = 'https://oetz-trophy.vercel.app';
 
 type Locale = 'de' | 'en';
 

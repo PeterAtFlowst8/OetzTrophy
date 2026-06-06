@@ -3,6 +3,7 @@ import { getDb } from '@/lib/db';
 import { isRegistrationOpen } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
+import { SITE_URL } from '@/lib/site';
 
 const TSHIRT_SIZES = new Set(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
 const DEFAULT_EXPERIENCE_LEVEL = 'race-eligible';
@@ -180,8 +181,8 @@ export async function POST(request: NextRequest) {
         tshirtSize,
         type: 'race-weekend-registration',
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL || 'https://oetz-trophy.vercel.app'}/registration/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL || 'https://oetz-trophy.vercel.app'}/registration`,
+      success_url: `${SITE_URL}/registration/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${SITE_URL}/registration`,
     });
 
     // Store session ID

@@ -9,9 +9,8 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import GrainOverlay from '@/components/GrainOverlay';
 import { getSiteImage } from '@/lib/siteContent';
+import { SITE_URL as BASE_URL } from '@/lib/site';
 import '@/app/globals.css';
-
-const BASE_URL = 'https://oetz-trophy.vercel.app';
 
 const agdasima = Agdasima({
   weight: ['400', '700'],
