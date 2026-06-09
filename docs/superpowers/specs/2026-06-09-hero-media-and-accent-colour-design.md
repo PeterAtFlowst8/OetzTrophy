@@ -37,26 +37,29 @@ Add to the `images` object, near the `hero` field:
 
 - `heroMediaType` — `string`, `options.list` = `[{title:'Photo', value:'image'}, {title:'Video', value:'video'}]`, `layout: 'radio'`, `initialValue: 'image'`. Title e.g. "Homepage hero: photo or video".
 - `heroVideo` — `file` field accepting `video/mp4,video/webm` (`options.accept`). `hidden` unless `heroMediaType === 'video'`. Description: keep it short and small (guidance ~5–15 MB), muted/looping with no sound, and that the hero **photo** is shown as the still fallback / poster.
+- `heroVideoAutoplay` — `boolean`, `initialValue: true`, `hidden` unless `heroMediaType === 'video'`. Title e.g. "Autoplay the video". Description: when on, the video plays automatically (muted, looping); when off, visitors see the hero photo with a play button and start it themselves.
 - The existing `hero` image field stays as-is (Photo option + video poster + social image).
 
 ### Data layer (`src/lib/siteContent.ts`)
 Add `getHeroMedia()` returning a typed shape, e.g.:
 
 ```
-{ type: 'image' | 'video', videoUrl: string | null, posterUrl: string, imageUrl: string, alt: string }
+{ type: 'image' | 'video', videoUrl: string | null, autoplay: boolean, posterUrl: string, imageUrl: string, alt: string }
 ```
 
 - Runs a focused GROQ query that dereferences the file asset URL:
-  `*[_type == "siteContent"][0]{ images{ heroMediaType, hero, "heroVideoUrl": heroVideo.asset->url } }`
+  `*[_type == "siteContent"][0]{ images{ heroMediaType, heroVideoAutoplay, hero, "heroVideoUrl": heroVideo.asset->url } }`
 - Resolves the poster/photo URL with `urlFor(images.hero)` (existing pattern), reuses the alt-resolution logic already in `getSiteImageData`.
 - Wrapped in the same try/catch + React `cache()` fallback discipline as the rest of the file, so a Sanity outage falls back to the static `/images/hero.jpg`.
 - `type` collapses to `'image'` when `heroMediaType !== 'video'` **or** no video has been uploaded (defensive).
 
 ### Component (`src/components/Hero.tsx`)
-- New props: `mediaType: 'image' | 'video'`, `videoSrc?: string | null`, `posterSrc?: string` (keep existing `imageSrc` / `imageAlt`).
-- When `mediaType === 'video' && videoSrc`: render a background `<video autoPlay muted loop playsInline preload="metadata" poster={posterSrc}>` with the same `absolute inset-0 object-cover` treatment as the current `<Image>`.
+- New props: `mediaType: 'image' | 'video'`, `videoSrc?: string | null`, `autoplay?: boolean`, `posterSrc?: string` (keep existing `imageSrc` / `imageAlt`).
+- When `mediaType === 'video' && videoSrc`: render a background `<video muted loop playsInline preload="metadata" poster={posterSrc}>` with the same `absolute inset-0 object-cover` treatment as the current `<Image>`.
+  - `autoplay === true`: `autoPlay` + `loop`, no controls (current ambient-background behaviour).
+  - `autoplay === false`: show the poster with native `controls` and no autoplay — visitor presses play.
 - Otherwise: unchanged `<Image>` path.
-- Reduced motion: when the visitor prefers reduced motion, show the poster image instead of autoplaying. (Render the `<Image>` and skip the video, or don't autoplay — decided in the plan; behaviour must not autoplay under reduced-motion.)
+- Reduced motion: when `autoplay` is on **and** the visitor prefers reduced motion, do not autoplay — fall back to the poster image (or render the video without autoplay). The explicit "Autoplay off" setting always wins toward not autoplaying.
 - All overlays, gradients, countdown, badge and title markup are untouched.
 
 ### Page (`src/app/[locale]/page.tsx`)
@@ -101,9 +104,10 @@ Add `getHeroMedia()` returning a typed shape, e.g.:
 ## Verification
 
 - Unit test `deriveAccentShades` (vitest, matching existing `*.test.ts`).
-- Run the dev server and confirm in-browser:
+- Type-check / build pass and lint clean.
+- Browser-preview verification is **skipped at the client's request** — changes land directly on `main` rather than going through the `preview` branch. (The behaviours below remain the acceptance criteria, just not gated on a manual preview pass.)
   1. Photo hero still renders correctly (no regression).
-  2. Selecting Video + uploading a file plays the video with the photo as poster; reduced-motion shows the poster.
+  2. Selecting Video + uploading a file plays the video with the photo as poster; the autoplay toggle is honoured; reduced-motion does not autoplay.
   3. Changing `accentColor` recolours buttons, badges, CTA hover and accent rules across the site; clearing it returns to amber.
 
 ## Out of scope
