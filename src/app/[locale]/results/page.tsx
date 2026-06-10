@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 
 const meta = {
   de: { title: 'Ergebnisse - OETZ TROPHY & Boater X', description: 'Ergebnisse der OETZ TROPHY und des Boater X. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.' },
@@ -17,10 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ResultsPage() {
   const t = await getTranslations('results');
+  const headerImage = await getOptionalSiteImage('results', { width: 2000 });
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('title')} />
+      <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">

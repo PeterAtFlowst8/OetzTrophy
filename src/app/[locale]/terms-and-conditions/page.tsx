@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 
 const meta = {
   de: {
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TermsPage() {
   const t = await getTranslations('terms');
+  const headerImage = await getOptionalSiteImage('terms', { width: 2000 });
 
   const sections = [
     { heading: t('eligibilityHeading'), text: t('eligibilityText') },
@@ -33,7 +35,7 @@ export default async function TermsPage() {
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('title')} />
+      <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12">

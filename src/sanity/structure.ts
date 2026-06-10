@@ -18,11 +18,13 @@ export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('OETZ TROPHY')
     .items([
-      // Singleton: all editable page text + images.
+      // ─── PAGES ───────────────────────────────────────────────
+      // All page text + images, organised page-by-page inside tabs
+      // (Homepage, Contact Page, Legal Pages, Page Images, …).
       // Resolve the existing document by type (its id may be auto-generated),
       // falling back to a fixed id when none exists yet.
       S.listItem()
-        .title('Main Website Text & Images')
+        .title('Website Pages — Text & Images')
         .icon(EditIcon)
         .child(() =>
           context
@@ -32,11 +34,19 @@ export const structure: StructureResolver = (S, context) =>
               S.document()
                 .schemaType('siteContent')
                 .documentId((id || 'siteContent').replace(/^drafts\./, ''))
-                .title('Main Website Text & Images'),
+                .title('Website Pages — Text & Images'),
             ),
         ),
 
-      // Singleton: site-wide settings (dates, registration)
+      // Main body text for the race/festival pages (one document each:
+      // OETZ TROPHY, Boater X, Kayak Festival).
+      S.documentTypeListItem('event')
+        .title('Race & Festival Pages (main text)')
+        .icon(CalendarIcon),
+
+      S.divider(),
+
+      // ─── SETTINGS ────────────────────────────────────────────
       S.listItem()
         .title('Festival Dates & Registration')
         .icon(CogIcon)
@@ -49,10 +59,10 @@ export const structure: StructureResolver = (S, context) =>
 
       S.divider(),
 
+      // ─── COLLECTIONS (lists you add items to) ─────────────────
       S.documentTypeListItem('post').title('Blog Posts').icon(DocumentTextIcon),
-      S.documentTypeListItem('event').title('Race & Festival Page Text').icon(CalendarIcon),
       S.documentTypeListItem('result').title('Race Results').icon(BoltIcon),
-      S.documentTypeListItem('galleryItem').title('Gallery').icon(ImagesIcon),
+      S.documentTypeListItem('galleryItem').title('Gallery Photos').icon(ImagesIcon),
       S.documentTypeListItem('sponsor').title('Sponsors').icon(StarIcon),
 
       S.divider(),

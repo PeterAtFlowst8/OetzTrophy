@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 
 const meta = {
   de: { title: 'Galerie - OETZ TROPHY Fotos & Videos', description: 'Fotos und Videos von der OETZ TROPHY, dem Boater X und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.' },
@@ -17,10 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GalleryPage() {
   const t = await getTranslations('gallery');
+  const headerImage = await getOptionalSiteImage('gallery', { width: 2000 });
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('title')} />
+      <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--color-background)' }}>
         <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">

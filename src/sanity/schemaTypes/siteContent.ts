@@ -18,25 +18,33 @@ import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderI
 const messages = enMessages as Record<string, Record<string, string>>;
 const messagesDe = deMessages as Record<string, Record<string, string>>;
 
+// One Studio tab per page, so editors find content by the page it appears on.
 type ContentGroup =
-  | 'photos'
   | 'homepage'
-  | 'racePages'
-  | 'registration'
-  | 'navigation'
-  | 'legal';
+  | 'festivalPage'
+  | 'contactPage'
+  | 'registrationPage'
+  | 'galleryPage'
+  | 'resultsPage'
+  | 'legal'
+  | 'global'
+  | 'photos';
 
 const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'homepage', title: 'Homepage' },
-  { name: 'photos', title: 'Images' },
-  { name: 'registration', title: 'Registration' },
-  { name: 'racePages', title: 'Other Pages' },
-  { name: 'navigation', title: 'Navigation & Footer' },
+  { name: 'festivalPage', title: 'Kayak Festival Page' },
+  { name: 'contactPage', title: 'Contact Page' },
+  { name: 'registrationPage', title: 'Registration Page' },
+  { name: 'galleryPage', title: 'Gallery Page' },
+  { name: 'resultsPage', title: 'Results Page' },
   { name: 'legal', title: 'Legal Pages' },
+  { name: 'global', title: 'Navigation, Footer & Sponsors' },
+  { name: 'photos', title: 'Page Images' },
 ];
 
 const SECTION_GROUPS: Record<string, ContentGroup> = {
   images: 'photos',
+  // Homepage — one page, several sections
   hero: 'homepage',
   countdown: 'homepage',
   marquee: 'homepage',
@@ -45,17 +53,20 @@ const SECTION_GROUPS: Record<string, ContentGroup> = {
   festivalOverview: 'homepage',
   events: 'homepage',
   news: 'homepage',
-  sponsors: 'navigation',
-  kajakfestival: 'racePages',
-  kontakt: 'racePages',
-  gallery: 'racePages',
-  results: 'racePages',
-  registration: 'registration',
-  terms: 'registration',
-  nav: 'navigation',
-  footer: 'navigation',
+  // Individual pages
+  kajakfestival: 'festivalPage',
+  kontakt: 'contactPage',
+  gallery: 'galleryPage',
+  results: 'resultsPage',
+  registration: 'registrationPage',
+  // Legal pages (each has its own route)
+  terms: 'legal',
   impressum: 'legal',
   datenschutz: 'legal',
+  // Site-wide chrome
+  nav: 'global',
+  footer: 'global',
+  sponsors: 'global',
 };
 
 const SECTION_TITLES: Record<string, string> = {
@@ -457,6 +468,36 @@ const imagesSection = defineField({
       'registration',
       'Registration page header photo',
       'Shown at the top of the registration page.',
+    ),
+    imageField(
+      'news',
+      'News page header photo',
+      'Shown at the top of the News page. Leave blank for the plain dark header.',
+    ),
+    imageField(
+      'gallery',
+      'Gallery page header photo',
+      'Shown at the top of the Gallery page. Leave blank for the plain dark header.',
+    ),
+    imageField(
+      'results',
+      'Results page header photo',
+      'Shown at the top of the Results page. Leave blank for the plain dark header.',
+    ),
+    imageField(
+      'terms',
+      'Terms & Conditions page header photo',
+      'Shown at the top of the Terms & Conditions page. Leave blank for the plain dark header.',
+    ),
+    imageField(
+      'datenschutz',
+      'Privacy Policy page header photo',
+      'Shown at the top of the Privacy Policy page. Leave blank for the plain dark header.',
+    ),
+    imageField(
+      'impressum',
+      'Legal Notice page header photo',
+      'Shown at the top of the Legal Notice page. Leave blank for the plain dark header.',
     ),
     imageField(
       'programmeFestival',

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 
 const meta = {
   de: { title: 'Datenschutz - OETZ TROPHY Datenschutzerklärung DSGVO', description: 'Datenschutzerklärung der OETZ TROPHY: Informationen zur Erhebung, Verarbeitung und Nutzung personenbezogener Daten gemäß DSGVO. Source To Sea GmbH, Natters.' },
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DatenschutzPage() {
   const t = await getTranslations('datenschutz');
+  const headerImage = await getOptionalSiteImage('datenschutz', { width: 2000 });
 
   const sections = [
     { heading: t('s1Heading'), text: t('s1Text') },
@@ -31,7 +33,7 @@ export default async function DatenschutzPage() {
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('title')} />
+      <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div

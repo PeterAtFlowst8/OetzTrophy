@@ -63,6 +63,12 @@ export type SiteImageKey =
   | 'kajakfestival'
   | 'kontakt'
   | 'registration'
+  | 'news'
+  | 'gallery'
+  | 'results'
+  | 'terms'
+  | 'datenschutz'
+  | 'impressum'
   | 'programmeFestival'
   | 'programmeBoaterX'
   | 'programmeOetzTrophy';
@@ -79,6 +85,26 @@ export async function getSiteImage(
   const doc = await getSiteContentDoc();
   const image = doc?.images?.[key];
   if (!image?.asset?._ref) return fallback;
+
+  let builder = urlFor(image).auto('format');
+  if (opts.width) builder = builder.width(opts.width);
+  if (opts.height) builder = builder.height(opts.height);
+  return builder.url();
+}
+
+/**
+ * Returns the client-managed image for a slot, or `undefined` when none has
+ * been uploaded. Use for optional header images on pages that should stay
+ * text-only until the editor adds a photo (PageHeader renders its dark header
+ * when `image` is undefined).
+ */
+export async function getOptionalSiteImage(
+  key: SiteImageKey,
+  opts: { width?: number; height?: number } = {},
+): Promise<string | undefined> {
+  const doc = await getSiteContentDoc();
+  const image = doc?.images?.[key];
+  if (!image?.asset?._ref) return undefined;
 
   let builder = urlFor(image).auto('format');
   if (opts.width) builder = builder.width(opts.width);

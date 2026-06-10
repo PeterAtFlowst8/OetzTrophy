@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 
 const meta = {
   de: { title: 'Impressum - OETZ TROPHY Source To Sea GmbH Tirol', description: 'Impressum und rechtliche Angaben zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol, Österreich. Haftungshinweis für externe Links.' },
@@ -17,10 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ImpressumPage() {
   const t = await getTranslations('impressum');
+  const headerImage = await getOptionalSiteImage('impressum', { width: 2000 });
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('title')} />
+      <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
         <div

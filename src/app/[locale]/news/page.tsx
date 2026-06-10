@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, getLocale } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
+import { getOptionalSiteImage } from '@/lib/siteContent';
 import { Link } from '@/i18n/navigation';
 import { getAllPosts, localizedTitle, localizedSlug, localizedExcerpt, formatDate } from '@/lib/news';
 
@@ -21,12 +22,13 @@ export const revalidate = 60;
 
 export default async function NewsPage() {
   const t = await getTranslations('news');
+  const headerImage = await getOptionalSiteImage('news', { width: 2000 });
   const locale = await getLocale();
   const posts = await getAllPosts();
 
   return (
     <main>
-      <PageHeader label={t('label')} title={t('headline')} />
+      <PageHeader label={t('label')} title={t('headline')} image={headerImage} />
 
       <section style={{ backgroundColor: 'var(--color-surface)' }}>
         <div className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-24">
