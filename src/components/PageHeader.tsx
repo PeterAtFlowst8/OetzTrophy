@@ -47,7 +47,7 @@ export default function PageHeader({ label, title, image }: Props) {
 
       <div
         className="relative max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end h-full pb-12 md:pb-16"
-        style={{ minHeight: 'inherit' }}
+        style={{ minHeight: 'inherit', containerType: 'inline-size' }}
       >
         {label && (
           <p
@@ -66,10 +66,11 @@ export default function PageHeader({ label, title, image }: Props) {
           className="uppercase leading-none"
           style={{
             fontFamily: 'var(--font-display)',
-            // Floor + slope lowered so long single-word page titles (e.g.
-            // "Teilnahmebedingungen", 20 chars) fit on mobile down to 320px
-            // without breaking the word or clipping.
-            fontSize: 'clamp(20px, 6.5vw, 80px)',
+            // Sized against the title's own column (cqi, container set on the
+            // wrapper div) rather than the viewport, so long single-word page
+            // titles (e.g. "Teilnahmebedingungen", 20 chars) shrink to fit
+            // whatever width the column actually has — no word breaks.
+            fontSize: 'clamp(18px, 7.6cqi, 80px)',
             fontWeight: 700,
             color: 'white',
             letterSpacing: '-0.02em',

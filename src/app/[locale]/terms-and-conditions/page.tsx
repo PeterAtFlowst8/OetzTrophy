@@ -38,7 +38,9 @@ export default async function TermsPage() {
       <PageHeader label={t('label')} title={t('title')} image={headerImage} />
 
       <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--color-background)' }}>
-        <div className="max-w-3xl mx-auto px-6 md:px-12">
+        {/* Container so the section headings below can size themselves in cqi
+            against this column's real width (max-w-3xl, not the viewport). */}
+        <div className="max-w-3xl mx-auto px-6 md:px-12" style={{ containerType: 'inline-size' }}>
           <div>
             <p
               className="mb-12"
@@ -64,9 +66,10 @@ export default async function TermsPage() {
                     className="uppercase mb-3"
                     style={{
                       fontFamily: 'var(--font-display)',
-                      // Floor lowered so long German headings (e.g.
-                      // "Teilnahmeberechtigung") fit narrow screens.
-                      fontSize: 'clamp(21px, 4vw, 38px)',
+                      // Sized against the text column (cqi, container on the
+                      // max-w-3xl wrapper) so long German headings (e.g.
+                      // "Teilnahmeberechtigung", 21 chars) always fit it.
+                      fontSize: 'clamp(16px, 7.3cqi, 38px)',
                       fontWeight: 700,
                       lineHeight: 1,
                       color: 'var(--color-ink)',
