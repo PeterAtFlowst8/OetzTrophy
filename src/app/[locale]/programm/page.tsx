@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 import { headingFontSize } from '@/lib/headingFit';
+import TextWithLinks from '@/components/TextWithLinks';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -33,7 +34,7 @@ export default async function ProgrammPage() {
               color: 'var(--color-body-text)',
             }}
           >
-            {t('intro')}
+            <TextWithLinks text={t('intro')} />
           </p>
 
           {/* Important places — the Google Map embed goes here. */}

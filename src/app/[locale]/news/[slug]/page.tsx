@@ -3,6 +3,7 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
+import { richTextComponents } from '@/components/richTextComponents';
 import { Link } from '@/i18n/navigation';
 import { getPostBySlug, localizedTitle, localizedExcerpt, localizedBody, formatDate } from '@/lib/news';
 
@@ -25,6 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export const revalidate = 60;
 
 const portableTextComponents = {
+  // Shared link rendering (new-tab option + styling) from richTextComponents.
+  marks: richTextComponents.marks,
   block: {
     h2: ({ children }: { children?: React.ReactNode }) => (
       <h2

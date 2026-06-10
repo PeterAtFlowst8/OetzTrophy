@@ -8,6 +8,7 @@ import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import CalendarActions from '@/components/CalendarActions';
 import { getEventBySlug, localizedField } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
+import TextWithLinks from '@/components/TextWithLinks';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -98,7 +99,7 @@ export default async function KajakfestivalPage() {
                 {t('locationHeading')}
               </h2>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: '16px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                {t('locationText')}
+                <TextWithLinks text={t('locationText')} />
               </p>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
 import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
+import TextWithLinks from '@/components/TextWithLinks';
 
 const tshirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -157,7 +158,7 @@ export default function RegistrationForm({
                       maxWidth: '62ch',
                     }}
                   >
-                    {t('intro')}
+                    <TextWithLinks text={t('intro')} />
                   </p>
 
                   <dl
@@ -259,7 +260,7 @@ export default function RegistrationForm({
                         color: 'var(--color-body-text)',
                       }}
                     >
-                      {t('formIntro')}
+                      <TextWithLinks text={t('formIntro')} />
                     </p>
                   </div>
 

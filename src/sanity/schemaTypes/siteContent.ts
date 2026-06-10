@@ -360,7 +360,7 @@ function fieldTitle(namespace: string, key: string) {
   return FIELD_TITLES[namespace]?.[key] ?? fallbackTitle(key);
 }
 
-function fieldDescription(sample: string) {
+function fieldDescription(sample: string, multiline = false) {
   const notes = [
     'Leave blank to use the built-in fallback copy for that language.',
     `Fallback English: "${truncate(sample)}"`,
@@ -368,6 +368,10 @@ function fieldDescription(sample: string) {
 
   if (sample.includes('{')) {
     notes.unshift('Keep any placeholder in curly brackets, for example {opens}.');
+  }
+
+  if (multiline) {
+    notes.push('You can add links: [link text](https://example.com).');
   }
 
   return notes.join(' ');
@@ -395,7 +399,7 @@ function localizedLeaf(
     title: fieldTitle(namespace, key),
     type: 'object',
     options: { columns: 2 },
-    description: fieldDescription(enSample),
+    description: fieldDescription(enSample, multiline),
     fields: [
       langField('de', 'German', deSample),
       langField('en', 'English', enSample),

@@ -11,6 +11,23 @@ import type { PortableTextComponents } from '@portabletext/react';
  * lists, quotes, links, images) keep their default rendering.
  */
 export const richTextComponents: PortableTextComponents = {
+  marks: {
+    // Links inserted via the Studio toolbar: honours the "Open in new tab"
+    // option (the default renderer ignores it) and styles them visibly.
+    link: ({ children, value }) => (
+      <a
+        href={value?.href}
+        {...(value?.blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        style={{
+          color: 'var(--color-accent-text)',
+          textDecoration: 'underline',
+          textUnderlineOffset: '2px',
+        }}
+      >
+        {children}
+      </a>
+    ),
+  },
   block: {
     normal: ({ children, value }) => {
       const isBlank = !value?.children?.some(

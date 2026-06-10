@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
+import TextWithLinks from '@/components/TextWithLinks';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -37,7 +38,7 @@ export default async function DatenschutzPage() {
           style={{ fontFamily: 'var(--font-body)', color: 'var(--color-body-text)' }}
         >
           <p style={{ fontSize: '15px', lineHeight: 1.8, marginBottom: '2rem' }}>
-            {t('intro')}
+            <TextWithLinks text={t('intro')} />
           </p>
 
           {sections.map((section, i) => (
@@ -55,7 +56,7 @@ export default async function DatenschutzPage() {
                 {i + 1}. {section.heading}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.8 }}>
-                {section.text}
+                <TextWithLinks text={section.text} />
               </p>
             </div>
           ))}

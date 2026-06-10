@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 import { headingFontSize } from '@/lib/headingFit';
+import TextWithLinks from '@/components/TextWithLinks';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -42,7 +43,7 @@ export default async function TermsPage() {
                 color: 'var(--color-body-text)',
               }}
             >
-              {t('intro')}
+              <TextWithLinks text={t('intro')} />
             </p>
           </div>
 
@@ -81,7 +82,7 @@ export default async function TermsPage() {
                       color: 'var(--color-body-text)',
                     }}
                   >
-                    {section.text}
+                    <TextWithLinks text={section.text} />
                   </p>
                 </section>
               </div>
@@ -100,7 +101,7 @@ export default async function TermsPage() {
                 border: '1px solid rgba(245, 158, 11, 0.45)',
               }}
             >
-              {t('reviewNote')}
+              <TextWithLinks text={t('reviewNote')} />
             </p>
           </div>
         </div>
