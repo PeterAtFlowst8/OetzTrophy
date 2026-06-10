@@ -805,12 +805,14 @@ const seoFields = [
  * new sections never silently disappear.
  */
 const FIELD_ORDER = [
-  // Homepage — follows the page top to bottom
-  'hero',
+  // Homepage — follows the page top to bottom. The hero's visual controls
+  // (photo / video choice) come first so they're immediately visible at the
+  // top of the tab, ahead of the long expanded hero text section.
   'imageHero',
   'heroMediaType',
   'heroVideo',
   'heroVideoAutoplay',
+  'hero',
   'countdown',
   'marquee',
   'calendar',
