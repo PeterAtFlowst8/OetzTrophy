@@ -74,6 +74,7 @@ export type SiteImageKey =
   | 'oetzTrophy'
   | 'boaterX'
   | 'kajakfestival'
+  | 'program'
   | 'kontakt'
   | 'registration'
   | 'news'

@@ -25,6 +25,7 @@ type ContentGroup =
   | 'oetzTrophyPage'
   | 'boaterXPage'
   | 'festivalPage'
+  | 'programPage'
   | 'contactPage'
   | 'registrationPage'
   | 'newsPage'
@@ -38,6 +39,7 @@ const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'oetzTrophyPage', title: 'OETZ TROPHY Page' },
   { name: 'boaterXPage', title: 'Boater X Page' },
   { name: 'festivalPage', title: 'Kayak Festival Page' },
+  { name: 'programPage', title: 'Program Page' },
   { name: 'registrationPage', title: 'Registration Page' },
   { name: 'newsPage', title: 'News Page' },
   { name: 'galleryPage', title: 'Gallery Page' },
@@ -59,6 +61,7 @@ const SECTION_GROUPS: Record<string, ContentGroup> = {
   news: 'homepage',
   // Individual pages
   kajakfestival: 'festivalPage',
+  programm: 'programPage',
   kontakt: 'contactPage',
   gallery: 'galleryPage',
   results: 'resultsPage',
@@ -89,6 +92,7 @@ const SECTION_TITLES: Record<string, string> = {
   datenschutz: 'Privacy Policy Page',
   terms: 'Terms & Conditions Page',
   kajakfestival: 'Kayak Festival Schedule & Location',
+  programm: 'Program Page',
   kontakt: 'Contact Page',
   gallery: 'Gallery Page',
   results: 'Results Page',
@@ -109,6 +113,7 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   footer: 'Footer tagline and legal/contact links.',
   kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title, intro and main body text live in "Race & Festival Page Text" → Kayak Festival (a separate item in the left menu).',
   kontakt: 'Labels on the contact page.',
+  programm: 'Intro text and headings on the visitor programme page (the map itself is added separately).',
   gallery: 'Coming-soon text for the gallery page.',
   results: 'Coming-soon text for the results page.',
   registration: 'Copy, field labels and confirmation text on the registration page.',
@@ -188,8 +193,16 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
   sponsors: {
     label: 'Footer sponsor heading',
   },
+  programm: {
+    label: 'Page label',
+    title: 'Page title',
+    intro: 'Intro text',
+    mapHeading: 'Map section heading',
+    mapComingSoon: 'Map coming-soon text',
+  },
   nav: {
     switchTo: 'Language switch label',
+    program: 'Program link',
     race: 'OETZ TROPHY link',
     boaterX: 'Boater X link',
     festival: 'Festival link',
@@ -584,6 +597,12 @@ const pageImageFields = [
     'festivalPage',
   ),
   imageField(
+    'imageProgram',
+    'Program page header photo',
+    'Shown at the top of the Program page. Leave blank for the plain dark header.',
+    'programPage',
+  ),
+  imageField(
     'imageKontakt',
     'Contact page header photo',
     'Shown at the top of the Contact page. Leave empty to keep the current photo.',
@@ -695,6 +714,7 @@ const seoFields = [
   seoField('oetzTrophy', 'oetzTrophyPage', 'OETZ TROPHY page'),
   seoField('boaterX', 'boaterXPage', 'Boater X page'),
   seoField('kajakfestival', 'festivalPage', 'Kayak Festival page'),
+  seoField('program', 'programPage', 'Program page'),
   seoField('kontakt', 'contactPage', 'Contact page'),
   seoField('registration', 'registrationPage', 'Registration page'),
   seoField('news', 'newsPage', 'News page'),
@@ -734,6 +754,10 @@ const FIELD_ORDER = [
   'imageKajakfestival',
   'kajakfestival',
   'seoKajakfestival',
+  // Program page
+  'imageProgram',
+  'programm',
+  'seoProgram',
   // Registration
   'imageRegistration',
   'registration',

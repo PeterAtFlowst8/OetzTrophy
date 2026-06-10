@@ -120,11 +120,13 @@ export const EDITABLE_SITE_CONTENT_KEYS: Record<string, readonly string[]> = {
     'dataText',
     'reviewNote',
   ],
+  programm: ['label', 'title', 'intro', 'mapHeading', 'mapComingSoon'],
   nav: [
     'switchTo',
     'race',
     'boaterX',
     'festival',
+    'program',
     'news',
     'registration',
     'contact',

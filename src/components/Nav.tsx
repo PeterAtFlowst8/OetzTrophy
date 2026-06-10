@@ -9,6 +9,7 @@ const desktopLinks = [
   { href: '/oetz-trophy', labelKey: 'race' },
   { href: '/boater-x', labelKey: 'boaterX' },
   { href: '/kajakfestival', labelKey: 'festival' },
+  { href: '/programm', labelKey: 'program' },
   { href: '/news', labelKey: 'news' },
 ];
 

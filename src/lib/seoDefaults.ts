@@ -12,6 +12,7 @@ export type SeoPageKey =
   | 'oetzTrophy'
   | 'boaterX'
   | 'kajakfestival'
+  | 'program'
   | 'kontakt'
   | 'registration'
   | 'news'
@@ -70,6 +71,18 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
       title: 'Kayak Festival - 4 Days of Whitewater in Ötztal 2026',
       description:
         'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and music. The paddling community gathers in Oetz, Tyrol, Austria.',
+    },
+  },
+  program: {
+    de: {
+      title: 'Programm - Infos für Besucher · OETZ TROPHY Kajakfestival',
+      description:
+        'Programm und wichtige Orte für Besucher des Ötztaler Kajakfestivals und der OETZ TROPHY: Zeitplan, Treffpunkte, Anfahrt und Parken in Oetz, Tirol.',
+    },
+    en: {
+      title: 'Programme - Visitor Info · OETZ TROPHY Kayak Festival',
+      description:
+        'Programme and important places for visitors to the Ötztal Kayak Festival and the OETZ TROPHY: schedule, meeting points, directions and parking in Oetz, Tyrol.',
     },
   },
   kontakt: {

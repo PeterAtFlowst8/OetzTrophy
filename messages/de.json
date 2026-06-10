@@ -32,7 +32,7 @@
     "stat2Label": "Österreich",
     "stat3Value": "2019",
     "stat3Label": "Seit",
-    "body": "Die Ötztaler Ache. WW\u00a0V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
+    "body": "Die Ötztaler Ache. WW V. Eines der härtesten Kajakrennen der Alpen. Nur wer sich durch die Qualifikationsläufe kämpft, darf im Hauptrennen starten. Die Strecke fordert Erfahrung, Technik und die Bereitschaft, an die eigene Grenze zu gehen."
   },
   "festivalOverview": {
     "label": "17.-20. September 2026",
@@ -92,7 +92,8 @@
     "news": "News",
     "registration": "Anmeldung",
     "contact": "Kontakt",
-    "menuLabel": "Menü"
+    "menuLabel": "Menü",
+    "program": "Programm"
   },
   "impressum": {
     "label": "Rechtliches",
@@ -253,5 +254,12 @@
     "successTitle": "Anmeldung bestätigt",
     "successRaceText": "Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
     "backHome": "Zur Startseite"
+  },
+  "programm": {
+    "label": "Infos für Besucher",
+    "title": "Programm",
+    "intro": "Alle wichtigen Informationen für deinen Besuch beim Ötztaler Kajakfestival und der OETZ TROPHY: Zeitplan, Treffpunkte und wichtige Orte rund um Oetz.",
+    "mapHeading": "Wichtige Orte",
+    "mapComingSoon": "Die Karte mit allen wichtigen Orten folgt in Kürze."
   }
 }

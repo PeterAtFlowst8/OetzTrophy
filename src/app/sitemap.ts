@@ -6,6 +6,7 @@ const staticPages = [
   '/oetz-trophy',
   '/boater-x',
   '/kajakfestival',
+  '/programm',
   '/news',
   '/kontakt',
   '/registration',
