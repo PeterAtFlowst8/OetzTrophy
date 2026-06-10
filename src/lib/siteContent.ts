@@ -139,6 +139,34 @@ export async function getOptionalSiteImage(
   return builder.url();
 }
 
+export type MenuItem = { href: string; label: string; external: boolean };
+
+/**
+ * Client-managed navigation items (Studio: Navigation tab → Menu items), in
+ * order, localised. Returns null when the list is empty/unset so the Nav
+ * falls back to the built-in menu. Items missing a label or destination are
+ * skipped defensively.
+ */
+export async function getMenuItems(locale: string): Promise<MenuItem[] | null> {
+  const doc = await getSiteContentDoc();
+  const raw = doc?.menuItems;
+  if (!Array.isArray(raw) || raw.length === 0) return null;
+
+  const lang = locale === 'en' ? 'en' : 'de';
+  const items: MenuItem[] = [];
+  for (const item of raw) {
+    const label =
+      (typeof item?.label?.[lang] === 'string' && item.label[lang].trim()) ||
+      (typeof item?.label?.de === 'string' && item.label.de.trim());
+    const external = item?.page === 'external';
+    const href = external ? item?.externalUrl : item?.page;
+    if (!label || typeof href !== 'string' || href.trim() === '') continue;
+    if (external && !/^https?:\/\//.test(href)) continue;
+    items.push({ href, label, external });
+  }
+  return items.length > 0 ? items : null;
+}
+
 /**
  * The Studio-picked accent colour (Design tab) as a hex string, or null when
  * unset — callers skip the theme override and globals.css amber applies.

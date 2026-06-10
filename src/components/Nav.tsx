@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
+import type { MenuItem } from '@/lib/siteContent';
 
 const desktopLinks = [
   { href: '/oetz-trophy', labelKey: 'race' },
@@ -22,17 +23,41 @@ const mobileLinks = [
 type Props = {
   logoSolid?: string;
   logoTransparent?: string;
+  /** Client-managed menu from Studio; null/empty = built-in menu above. */
+  menuItems?: MenuItem[] | null;
 };
+
+/** A menu entry resolved to a concrete label + destination. */
+type ResolvedItem = MenuItem;
 
 export default function Nav({
   logoSolid = '/images/logo-dark.webp',
   logoTransparent = '/images/logo-white.webp',
+  menuItems = null,
 }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
+
+  const builtIn = (links: typeof mobileLinks): ResolvedItem[] =>
+    links.map(({ href, labelKey }) => ({
+      href,
+      label: t(labelKey as Parameters<typeof t>[0]),
+      external: false,
+    }));
+
+  const custom = menuItems && menuItems.length > 0 ? menuItems : null;
+  const desktopItems: ResolvedItem[] = custom ?? builtIn(desktopLinks);
+  // Registration stays pinned first in the mobile menu even with a custom
+  // list (it's the primary CTA, tied to the registration-open logic).
+  const mobileItems: ResolvedItem[] = custom
+    ? [
+        { href: '/registration', label: t('registration'), external: false },
+        ...custom.filter((item) => item.href !== '/registration'),
+      ]
+    : builtIn(mobileLinks);
 
   const isHome = pathname === '/';
 
@@ -84,22 +109,25 @@ export default function Nav({
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-7">
-            {desktopLinks.map(({ href, labelKey }) => (
-              <Link
-                key={href}
-                href={href}
-                className="uppercase transition-opacity duration-200 hover:opacity-70"
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontWeight: 500,
-                  fontSize: '11px',
-                  letterSpacing: '0.15em',
-                  color: showSolidBg ? 'var(--color-ink)' : 'rgba(255,255,255,0.8)',
-                }}
-              >
-                {t(labelKey as Parameters<typeof t>[0])}
-              </Link>
-            ))}
+            {desktopItems.map(({ href, label, external }) => {
+              const className = 'uppercase transition-opacity duration-200 hover:opacity-70';
+              const style = {
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
+                fontSize: '11px',
+                letterSpacing: '0.15em',
+                color: showSolidBg ? 'var(--color-ink)' : 'rgba(255,255,255,0.8)',
+              } as const;
+              return external ? (
+                <a key={href} href={href} target="_blank" rel="noopener noreferrer" className={className} style={style}>
+                  {label}
+                </a>
+              ) : (
+                <Link key={href} href={href} className={className} style={style}>
+                  {label}
+                </Link>
+              );
+            })}
 
             <Link
               href="/registration"
@@ -187,22 +215,24 @@ export default function Nav({
           className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-5 md:hidden"
           style={{ backgroundColor: 'var(--color-ink)' }}
         >
-          {mobileLinks.map(({ href, labelKey }) => (
-            <Link
-              key={href}
-              href={href}
-              className="uppercase"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 700,
-                fontSize: '28px',
-                color: href === '/registration' ? 'var(--color-accent)' : 'white',
-                letterSpacing: '0.02em',
-              }}
-            >
-              {t(labelKey as Parameters<typeof t>[0])}
-            </Link>
-          ))}
+          {mobileItems.map(({ href, label, external }) => {
+            const style = {
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize: '28px',
+              color: href === '/registration' ? 'var(--color-accent)' : 'white',
+              letterSpacing: '0.02em',
+            } as const;
+            return external ? (
+              <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="uppercase" style={style} onClick={() => setMenuOpen(false)}>
+                {label}
+              </a>
+            ) : (
+              <Link key={href} href={href} className="uppercase" style={style}>
+                {label}
+              </Link>
+            );
+          })}
         </div>
       )}
     </>

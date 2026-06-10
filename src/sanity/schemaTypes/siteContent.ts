@@ -770,6 +770,87 @@ const heroMediaFields = [
   }),
 ];
 
+/** Pages a custom menu item can point to (value = route). */
+const MENU_PAGE_OPTIONS = [
+  { title: 'Homepage', value: '/' },
+  { title: 'OETZ TROPHY', value: '/oetz-trophy' },
+  { title: 'Boater X', value: '/boater-x' },
+  { title: 'Kayak Festival', value: '/kajakfestival' },
+  { title: 'Program', value: '/programm' },
+  { title: 'News', value: '/news' },
+  { title: 'Registration', value: '/registration' },
+  { title: 'Contact', value: '/kontakt' },
+  { title: 'Gallery', value: '/gallery' },
+  { title: 'Results', value: '/results' },
+  { title: 'Terms & Conditions', value: '/terms-and-conditions' },
+  { title: 'Legal Notice', value: '/impressum' },
+  { title: 'Privacy Policy', value: '/datenschutz' },
+  { title: 'External link…', value: 'external' },
+];
+
+/**
+ * Client-managed menu: add, remove and drag-to-reorder the navigation links.
+ * Leave the list EMPTY to keep the built-in menu (whose labels are editable
+ * in the Navigation section below). The Registration button and language
+ * switch are always shown and are not part of this list.
+ */
+const menuItemsField = defineField({
+  name: 'menuItems',
+  title: 'Menu items',
+  type: 'array',
+  group: 'global',
+  description:
+    'The links in the top navigation and mobile menu, in order (drag to reorder). Leave the list empty to keep the standard menu. The Registration button and the language switch are always shown and are not part of this list.',
+  of: [
+    {
+      type: 'object',
+      name: 'menuItem',
+      title: 'Menu item',
+      fields: [
+        defineField({
+          name: 'label',
+          title: 'Label',
+          type: 'object',
+          options: { columns: 2 },
+          fields: [
+            defineField({ name: 'de', title: 'German', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'en', title: 'English', type: 'string' }),
+          ],
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'page',
+          title: 'Links to',
+          type: 'string',
+          options: { list: MENU_PAGE_OPTIONS },
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'externalUrl',
+          title: 'External URL',
+          type: 'url',
+          hidden: ({ parent }) => parent?.page !== 'external',
+          validation: (Rule) =>
+            Rule.uri({ scheme: ['http', 'https'] }).custom((value, context) => {
+              const parent = context.parent as { page?: string } | undefined;
+              if (parent?.page === 'external' && !value) return 'Enter the external web address.';
+              return true;
+            }),
+        }),
+      ],
+      preview: {
+        select: { de: 'label.de', en: 'label.en', page: 'page', externalUrl: 'externalUrl' },
+        prepare({ de, en, page, externalUrl }) {
+          return {
+            title: de || en || 'Menu item',
+            subtitle: page === 'external' ? externalUrl || 'External link' : page,
+          };
+        },
+      },
+    },
+  ],
+});
+
 const designFields = [
   defineField({
     name: 'accentColor',
@@ -864,6 +945,7 @@ const FIELD_ORDER = [
   'imageDatenschutz',
   'seoDatenschutz',
   // Site-wide chrome
+  'menuItems',
   'nav',
   'imageLogo',
   'footer',
@@ -872,7 +954,7 @@ const FIELD_ORDER = [
   'accentColor',
 ];
 
-const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, ...designFields, ...seoFields];
+const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, menuItemsField, ...designFields, ...seoFields];
 const fieldByName = new Map(allFields.map((field) => [field.name, field]));
 const orderedFields = [
   ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),
