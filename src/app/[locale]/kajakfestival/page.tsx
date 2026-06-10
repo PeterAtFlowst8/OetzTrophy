@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
+import { richTextComponents } from '@/components/richTextComponents';
 import { getSiteImage } from '@/lib/siteContent';
 import CalendarActions from '@/components/CalendarActions';
 import { getEventBySlug, localizedField } from '@/lib/events';
@@ -59,7 +60,7 @@ export default async function KajakfestivalPage() {
             <div className="max-w-3xl mb-16 md:mb-20">
               {body && body.length > 0 ? (
                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                  <PortableText value={body} />
+                  <PortableText value={body} components={richTextComponents} />
                 </div>
               ) : (
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
