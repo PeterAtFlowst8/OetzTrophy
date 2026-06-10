@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getOptionalSiteImage } from '@/lib/siteContent';
+import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 
-const meta = {
-  de: { title: 'Ergebnisse - OETZ TROPHY & Boater X', description: 'Ergebnisse der OETZ TROPHY und des Boater X. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.' },
-  en: { title: 'Results - OETZ TROPHY & Boater X', description: 'Results from the OETZ TROPHY and Boater X. Time trial and head-to-head racing on the Ötztaler Ache in Oetz, Tyrol, Austria.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('results', locale);
   return { title: m.title, description: m.description };
 }
 

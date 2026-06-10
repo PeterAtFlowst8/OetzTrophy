@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getOptionalSiteImage } from '@/lib/siteContent';
+import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 
-const meta = {
-  de: { title: 'Galerie - OETZ TROPHY Fotos & Videos', description: 'Fotos und Videos von der OETZ TROPHY, dem Boater X und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.' },
-  en: { title: 'Gallery - OETZ TROPHY Photos & Videos', description: 'Photos and videos from the OETZ TROPHY, Boater X and the Ötztal Kayak Festival. Impressions from the Ötztaler Ache in Tyrol, Austria.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('gallery', locale);
   return { title: m.title, description: m.description };
 }
 

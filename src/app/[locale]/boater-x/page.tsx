@@ -4,22 +4,18 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { richTextComponents } from '@/components/richTextComponents';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
-const meta = {
-  de: { title: 'Boater X - Kajak Cross auf der Slalomstrecke in Oetz', description: 'Der Boater X (Oetz Kayak Cross) am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.' },
-  en: { title: 'Boater X - Kayak Cross on the Slalom Course in Oetz', description: 'Boater X (Oetz Kayak Cross) on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('boaterX', locale);
   return { title: m.title, description: m.description };
 }
 

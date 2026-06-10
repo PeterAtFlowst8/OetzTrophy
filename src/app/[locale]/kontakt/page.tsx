@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 
-const pageMeta = {
-  de: { title: 'Kontakt - OETZ TROPHY Veranstalter Source To Sea', description: 'Kontakt zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol. Telefon, E-Mail und Social Media. Wir freuen uns auf deine Nachricht.' },
-  en: { title: 'Contact - OETZ TROPHY Organiser Source To Sea', description: 'Contact OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Phone, email, and social media. We look forward to hearing from you.' },
-};
 
 type MetaProps = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
   const { locale } = await params;
-  const m = pageMeta[(locale === 'en' ? 'en' : 'de') as keyof typeof pageMeta];
+  const m = await getPageSeo('kontakt', locale);
   return { title: m.title, description: m.description };
 }
 

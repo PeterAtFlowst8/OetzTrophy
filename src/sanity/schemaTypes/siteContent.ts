@@ -3,6 +3,7 @@ import { EditIcon } from '@sanity/icons';
 import enMessages from '../../../messages/en.json';
 import deMessages from '../../../messages/de.json';
 import { EDITABLE_SITE_CONTENT_KEYS } from '../../lib/siteContentFields';
+import { SEO_DEFAULTS, seoFieldName, type SeoPageKey } from '../../lib/seoDefaults';
 import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderInput';
 
 /**
@@ -21,9 +22,12 @@ const messagesDe = deMessages as Record<string, Record<string, string>>;
 // One Studio tab per page, so editors find content by the page it appears on.
 type ContentGroup =
   | 'homepage'
+  | 'oetzTrophyPage'
+  | 'boaterXPage'
   | 'festivalPage'
   | 'contactPage'
   | 'registrationPage'
+  | 'newsPage'
   | 'galleryPage'
   | 'resultsPage'
   | 'legal'
@@ -32,11 +36,14 @@ type ContentGroup =
 
 const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'homepage', title: 'Homepage' },
+  { name: 'oetzTrophyPage', title: 'OETZ TROPHY Page' },
+  { name: 'boaterXPage', title: 'Boater X Page' },
   { name: 'festivalPage', title: 'Kayak Festival Page' },
-  { name: 'contactPage', title: 'Contact Page' },
   { name: 'registrationPage', title: 'Registration Page' },
+  { name: 'newsPage', title: 'News Page' },
   { name: 'galleryPage', title: 'Gallery Page' },
   { name: 'resultsPage', title: 'Results Page' },
+  { name: 'contactPage', title: 'Contact Page' },
   { name: 'legal', title: 'Legal Pages' },
   { name: 'global', title: 'Navigation, Footer & Sponsors' },
   { name: 'photos', title: 'Page Images' },
@@ -517,6 +524,72 @@ const imagesSection = defineField({
   ],
 });
 
+/**
+ * Per-page "how this page appears in Google" fields. One per page, placed in
+ * that page's tab. Blank fields fall back to the built-in copy (shown as the
+ * greyed placeholder), exactly like the text fields above.
+ */
+function seoField(key: SeoPageKey, group: ContentGroup, pageTitle: string) {
+  const langPair = (
+    name: 'title' | 'description',
+    fieldTitle: string,
+    fieldDescription: string,
+  ) =>
+    defineField({
+      name,
+      title: fieldTitle,
+      type: 'object',
+      options: { columns: 2 },
+      description: fieldDescription,
+      fields: (['de', 'en'] as const).map((lang) => {
+        const input = makeFallbackPlaceholderInput(SEO_DEFAULTS[key][lang][name]);
+        return name === 'description'
+          ? defineField({
+              name: lang,
+              title: lang === 'de' ? 'German' : 'English',
+              type: 'text',
+              rows: 3,
+              components: { input },
+            })
+          : defineField({
+              name: lang,
+              title: lang === 'de' ? 'German' : 'English',
+              type: 'string',
+              components: { input },
+            });
+      }),
+    });
+
+  return defineField({
+    name: seoFieldName(key),
+    title: `${pageTitle}: Google search result (SEO)`,
+    type: 'object',
+    group,
+    options: { collapsible: true, collapsed: true },
+    description:
+      'The title and short description shown for this page on Google and when the link is shared. Leave blank to use the built-in text.',
+    fields: [
+      langPair('title', 'Search result title', 'Shown as the blue headline on Google. Aim for under 60 characters.'),
+      langPair('description', 'Search result description', 'The grey snippet text under the headline. Aim for under 160 characters.'),
+    ],
+  });
+}
+
+const seoFields = [
+  seoField('homepage', 'homepage', 'Homepage'),
+  seoField('oetzTrophy', 'oetzTrophyPage', 'OETZ TROPHY page'),
+  seoField('boaterX', 'boaterXPage', 'Boater X page'),
+  seoField('kajakfestival', 'festivalPage', 'Kayak Festival page'),
+  seoField('kontakt', 'contactPage', 'Contact page'),
+  seoField('registration', 'registrationPage', 'Registration page'),
+  seoField('news', 'newsPage', 'News page'),
+  seoField('gallery', 'galleryPage', 'Gallery page'),
+  seoField('results', 'resultsPage', 'Results page'),
+  seoField('terms', 'legal', 'Terms & Conditions page'),
+  seoField('impressum', 'legal', 'Legal Notice page'),
+  seoField('datenschutz', 'legal', 'Privacy Policy page'),
+];
+
 export const siteContent = defineType({
   name: 'siteContent',
   title: 'Website Text & Images',
@@ -525,7 +598,7 @@ export const siteContent = defineType({
   description:
     'Simple editable website copy and main image slots. Open a section, change German or English text, then publish.',
   groups: FIELD_GROUPS,
-  fields: [imagesSection, ...textSections],
+  fields: [imagesSection, ...textSections, ...seoFields],
   preview: {
     prepare() {
       return {

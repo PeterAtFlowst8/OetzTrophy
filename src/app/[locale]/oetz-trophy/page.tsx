@@ -4,22 +4,18 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { richTextComponents } from '@/components/richTextComponents';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
 import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
-const meta = {
-  de: { title: 'OETZ TROPHY - Das härteste Kajakrennen der Welt 2026', description: 'Die OETZ TROPHY auf der Ötztaler Ache: Wildwasser V, Start nur nach Qualifikation. Die Rennstrecke fordert Erfahrung, Technik und Mut. 19. September 2026 in Oetz, Tirol.' },
-  en: { title: 'OETZ TROPHY - The Hardest Kayak Race in the World 2026', description: 'The OETZ TROPHY on the Ötztaler Ache: class V whitewater, qualification required. The course demands experience, technique and courage. 19 September 2026 in Oetz, Tyrol.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('oetzTrophy', locale);
   return { title: m.title, description: m.description };
 }
 

@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { sanityClient, urlFor } from './sanity';
 import { EDITABLE_SITE_CONTENT_KEYS } from './siteContentFields';
+import { mergeSeo, seoFieldName, type SeoPageKey } from './seoDefaults';
 
 /**
  * Reads the `siteContent` singleton (managed in Studio) and exposes:
@@ -52,6 +53,18 @@ export async function getMessageOverrides(
     }
   }
   return overrides;
+}
+
+/**
+ * Page meta title/description for generateMetadata: the Studio SEO field for
+ * the page (blank = fallback) merged over the built-in copy in seoDefaults.
+ */
+export async function getPageSeo(
+  key: SeoPageKey,
+  locale: string,
+): Promise<{ title: string; description: string }> {
+  const doc = await getSiteContentDoc();
+  return mergeSeo(doc?.[seoFieldName(key)], key, locale);
 }
 
 export type SiteImageKey =

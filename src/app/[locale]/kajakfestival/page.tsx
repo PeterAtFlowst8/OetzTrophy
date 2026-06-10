@@ -4,21 +4,17 @@ import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import PageHeader from '@/components/PageHeader';
 import { richTextComponents } from '@/components/richTextComponents';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import CalendarActions from '@/components/CalendarActions';
 import { getEventBySlug, localizedField } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
 
-const meta = {
-  de: { title: 'Kajakfestival - 4 Tage Wildwasser im Ötztal 2026', description: 'Das Ötztaler Kajakfestival: 4 Tage Wildwasser, Rennen, Testboote, Filmvorführungen und Musik. Die Paddel-Community trifft sich in Oetz, Tirol.' },
-  en: { title: 'Kayak Festival - 4 Days of Whitewater in Ötztal 2026', description: 'The Ötztal Kayak Festival: 4 days of whitewater, racing, demo boats, film screenings and music. The paddling community gathers in Oetz, Tyrol, Austria.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('kajakfestival', locale);
   return { title: m.title, description: m.description };
 }
 

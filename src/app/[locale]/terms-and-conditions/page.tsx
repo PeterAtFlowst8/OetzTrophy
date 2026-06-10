@@ -1,25 +1,15 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getOptionalSiteImage } from '@/lib/siteContent';
+import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 import { headingFontSize } from '@/lib/headingFit';
 
-const meta = {
-  de: {
-    title: 'Teilnahmebedingungen',
-    description: 'Teilnahmebedingungen für die Anmeldung zum OETZ TROPHY Rennwochenende 2026.',
-  },
-  en: {
-    title: 'Terms & Conditions',
-    description: 'Participant terms for registration to the OETZ TROPHY race weekend 2026.',
-  },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('terms', locale);
   return { title: m.title, description: m.description };
 }
 

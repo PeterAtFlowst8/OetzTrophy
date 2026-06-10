@@ -8,7 +8,7 @@ import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import GrainOverlay from '@/components/GrainOverlay';
-import { getSiteImage } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { SITE_URL as BASE_URL } from '@/lib/site';
 import '@/app/globals.css';
 
@@ -23,17 +23,6 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const meta = {
-  de: {
-    title: 'OETZ TROPHY - Extreme Kayak Championships · Ötztaler Ache',
-    description: 'Das Ötztaler Kajakfestival 2026: 4 Tage Wildwasser, der offene Boater X und die OETZ TROPHY auf der Ötztaler Ache. 17.-20. September 2026 in Oetz, Tirol, Österreich.',
-  },
-  en: {
-    title: 'OETZ TROPHY - Extreme Kayak Championships · Ötztaler Ache',
-    description: 'The Ötztal Kayak Festival 2026: 4 days of whitewater racing, the open Boater X and the OETZ TROPHY on the Ötztaler Ache. 17-20 September 2026 in Oetz, Tyrol, Austria.',
-  },
-};
-
 type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -41,8 +30,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const l = (locale === 'en' ? 'en' : 'de') as keyof typeof meta;
-  const m = meta[l];
+  // Homepage / site-default meta, editable in Studio (blank = built-in copy).
+  const m = await getPageSeo('homepage', locale);
 
   // Social-share image follows the client-managed hero photo.
   const ogImage = await getSiteImage('hero', '/images/hero.jpg', { width: 1200, height: 630 });

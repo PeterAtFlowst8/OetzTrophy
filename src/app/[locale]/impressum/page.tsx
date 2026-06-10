@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getOptionalSiteImage } from '@/lib/siteContent';
+import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 
-const meta = {
-  de: { title: 'Impressum - OETZ TROPHY Source To Sea GmbH Tirol', description: 'Impressum und rechtliche Angaben zur OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tirol, Österreich. Haftungshinweis für externe Links.' },
-  en: { title: 'Legal Notice - OETZ TROPHY Source To Sea GmbH Tyrol', description: 'Legal notice and imprint for OETZ TROPHY: Source To Sea GmbH, Natterer See 1, 6161 Natters, Tyrol, Austria. Liability information for external links.' },
-};
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const m = meta[(locale === 'en' ? 'en' : 'de') as keyof typeof meta];
+  const m = await getPageSeo('impressum', locale);
   return { title: m.title, description: m.description };
 }
 
