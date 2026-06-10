@@ -139,6 +139,16 @@ export async function getOptionalSiteImage(
   return builder.url();
 }
 
+/**
+ * The Studio-picked accent colour (Design tab) as a hex string, or null when
+ * unset — callers skip the theme override and globals.css amber applies.
+ */
+export async function getAccentColor(): Promise<string | null> {
+  const doc = await getSiteContentDoc();
+  const hex = doc?.accentColor?.hex;
+  return typeof hex === 'string' && /^#[0-9a-fA-F]{6}$/.test(hex.trim()) ? hex.trim() : null;
+}
+
 /** CDN URL for a Sanity file asset ref like `file-<id>-<ext>`. */
 export function fileUrlFromRef(ref: string): string | null {
   const match = /^file-([A-Za-z0-9]+)-(\w+)$/.exec(ref);

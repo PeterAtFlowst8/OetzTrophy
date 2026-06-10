@@ -8,7 +8,8 @@ import { routing } from '@/i18n/routing';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import GrainOverlay from '@/components/GrainOverlay';
-import { getSiteImage, getPageSeo } from '@/lib/siteContent';
+import { getSiteImage, getPageSeo, getAccentColor } from '@/lib/siteContent';
+import { deriveAccentShades } from '@/lib/theme';
 import { SITE_URL as BASE_URL } from '@/lib/site';
 import '@/app/globals.css';
 
@@ -88,14 +89,24 @@ export default async function LocaleLayout({ children, params }: Props) {
   // Single client-managed logo. Each nav state keeps its current file as the
   // fallback, so the look is unchanged until a logo is uploaded; once it is,
   // the same image is used everywhere.
-  const [logoSolid, logoTransparent] = await Promise.all([
+  const [logoSolid, logoTransparent, accentHex] = await Promise.all([
     getSiteImage('logo', '/images/logo-dark.webp'),
     getSiteImage('logo', '/images/logo-white.webp'),
+    getAccentColor(),
   ]);
+
+  // Studio-picked accent colour overrides the globals.css amber. The derived
+  // values are validated hex strings, so the inline style block is safe.
+  const accent = accentHex ? deriveAccentShades(accentHex) : null;
 
   return (
     <html lang={locale} data-scroll-behavior="smooth" className="overflow-x-hidden">
       <body className={`${agdasima.variable} ${inter.variable} overflow-x-hidden`}>
+        {accent && (
+          <style>
+            {`:root{--color-accent:${accent.accent};--color-accent-dark:${accent.accentDark};--color-accent-text:${accent.accentText}}`}
+          </style>
+        )}
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Nav logoSolid={logoSolid} logoTransparent={logoTransparent} />
           {children}

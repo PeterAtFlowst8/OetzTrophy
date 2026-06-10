@@ -32,7 +32,8 @@ type ContentGroup =
   | 'galleryPage'
   | 'resultsPage'
   | 'legal'
-  | 'global';
+  | 'global'
+  | 'design';
 
 const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'homepage', title: 'Homepage' },
@@ -47,6 +48,7 @@ const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'contactPage', title: 'Contact Page' },
   { name: 'legal', title: 'Legal Pages' },
   { name: 'global', title: 'Navigation, Footer & Sponsors' },
+  { name: 'design', title: 'Design' },
 ];
 
 const SECTION_GROUPS: Record<string, ContentGroup> = {
@@ -764,6 +766,18 @@ const heroMediaFields = [
   }),
 ];
 
+const designFields = [
+  defineField({
+    name: 'accentColor',
+    title: 'Accent colour',
+    type: 'color',
+    group: 'design',
+    options: { disableAlpha: true },
+    description:
+      'The highlight colour for buttons, badges, the ticker and accents across the whole site (currently amber). Pick a colour or type a hex code; the darker hover and text shades are derived automatically. Leave blank to keep the default.',
+  }),
+];
+
 const seoFields = [
   seoField('homepage', 'homepage', 'Homepage'),
   seoField('oetzTrophy', 'oetzTrophyPage', 'OETZ TROPHY page'),
@@ -848,9 +862,11 @@ const FIELD_ORDER = [
   'imageLogo',
   'footer',
   'sponsors',
+  // Design
+  'accentColor',
 ];
 
-const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, ...seoFields];
+const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, ...designFields, ...seoFields];
 const fieldByName = new Map(allFields.map((field) => [field.name, field]));
 const orderedFields = [
   ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),

@@ -12,6 +12,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@portabletext/react": "^6.0.3",
     "@sanity/client": "^7.20.0",
+    "@sanity/color-input": "^6.0.6",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.29.0",
     "framer-motion": "^12.38.0",
