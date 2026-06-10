@@ -62,7 +62,9 @@ export default async function TermsPage() {
                     className="uppercase mb-3"
                     style={{
                       fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(26px, 4vw, 38px)',
+                      // Floor lowered so long German headings (e.g.
+                      // "Teilnahmeberechtigung") fit narrow screens.
+                      fontSize: 'clamp(21px, 4vw, 38px)',
                       fontWeight: 700,
                       lineHeight: 1,
                       color: 'var(--color-ink)',

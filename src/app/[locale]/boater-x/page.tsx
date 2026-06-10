@@ -119,7 +119,7 @@ export default async function BoaterXPage() {
                       style={{ fontFamily: 'var(--font-body)', fontSize: '15px', lineHeight: 1.7, color: 'var(--color-body-text)', padding: '0.75rem 0', borderBottom: '1px solid var(--color-border)' }}
                     >
                       <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', color: 'var(--color-accent)', minWidth: '2ch' }}>
-                        0{i + 1}
+                        {String(i + 1).padStart(2, '0')}
                       </span>
                       {localizedField(rule, locale)}
                     </li>

@@ -76,7 +76,9 @@ export default async function DasRennen() {
             className="uppercase mb-14 md:mb-20"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(48px, 8vw, 96px)',
+              // Matches FestivalOverview: floor lowered from 48px so long
+              // client-entered words shrink to fit narrow screens.
+              fontSize: 'clamp(36px, 8vw, 96px)',
               fontWeight: 700,
               color: '#FAFAF7',
               lineHeight: 0.88,

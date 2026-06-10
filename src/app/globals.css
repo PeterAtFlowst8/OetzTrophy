@@ -32,17 +32,18 @@ body {
 }
 
 /*
- * Headings use large fluid font sizes with px floors (clamp). On narrow
- * screens a long unbreakable word — German compounds like "Kajakfestival" or
- * "Teilnahmebedingungen" — can be wider than its box and gets clipped at the
- * viewport edge. Let headings break/hyphenate such words instead of
- * overflowing. `hyphens: auto` resolves cleanly because <html lang> is set;
- * `overflow-wrap: break-word` is the last-resort fallback. Both only engage
- * when a word would otherwise overflow, so headings that fit are untouched.
+ * Heading wrapping. The heading font sizes (clamp floors below in components)
+ * are tuned so long words — German compounds like "Kajakfestival" or
+ * "Teilnahmebedingungen" — shrink to fit on narrow screens rather than being
+ * clipped at the viewport edge. `text-wrap: balance` distributes multi-line
+ * headings evenly across natural word breaks. We deliberately do NOT hyphenate
+ * (looks unprofessional on display type); `overflow-wrap: break-word` is only a
+ * last-resort guard against clipping for unusually long words on very small
+ * screens, and with the tuned floors it effectively never triggers.
  */
 h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
-  hyphens: auto;
+  text-wrap: balance;
 }
 
 /* Marquee */

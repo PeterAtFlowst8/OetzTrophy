@@ -66,7 +66,10 @@ export default function PageHeader({ label, title, image }: Props) {
           className="uppercase leading-none"
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(36px, 8vw, 80px)',
+            // Floor + slope lowered so long single-word page titles (e.g.
+            // "Teilnahmebedingungen", 20 chars) fit on mobile down to 320px
+            // without breaking the word or clipping.
+            fontSize: 'clamp(20px, 6.5vw, 80px)',
             fontWeight: 700,
             color: 'white',
             letterSpacing: '-0.02em',

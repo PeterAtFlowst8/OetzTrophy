@@ -60,7 +60,9 @@ export default async function FestivalOverview({ festivalDate, festivalEndDate }
             className="uppercase mb-12 md:mb-16"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(48px, 8vw, 96px)',
+              // Floor lowered from 48px so long client-entered words (e.g.
+              // "Kajakfestival") shrink to fit narrow screens instead of clipping.
+              fontSize: 'clamp(36px, 8vw, 96px)',
               fontWeight: 700,
               color: 'var(--color-ink)',
               lineHeight: 0.88,
