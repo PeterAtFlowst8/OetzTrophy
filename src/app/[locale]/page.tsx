@@ -5,14 +5,14 @@ import Events from '@/components/Events';
 import LatestNews from '@/components/LatestNews';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
-import { getSiteImageData } from '@/lib/siteContent';
+import { getHeroMedia } from '@/lib/siteContent';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const [settings, heroImage] = await Promise.all([
+  const [settings, heroMedia] = await Promise.all([
     getSiteSettings(),
-    getSiteImageData('hero', { fallbackUrl: '/images/hero.jpg', width: 2000 }),
+    getHeroMedia({ fallbackUrl: '/images/hero.jpg', width: 2000 }),
   ]);
 
   return (
@@ -22,8 +22,11 @@ export default async function Home() {
       <Hero
         festivalDate={settings.festivalDate}
         registrationOpensAt={settings.registrationOpensAt}
-        imageSrc={heroImage.url}
-        imageAlt={heroImage.alt}
+        imageSrc={heroMedia.imageUrl}
+        imageAlt={heroMedia.alt}
+        mediaType={heroMedia.type}
+        videoSrc={heroMedia.videoUrl}
+        videoAutoplay={heroMedia.autoplay}
       />
       <MarqueeBanner />
       <FestivalOverview festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />

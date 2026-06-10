@@ -719,6 +719,51 @@ function seoField(key: SeoPageKey, group: ContentGroup, pageTitle: string) {
   });
 }
 
+/**
+ * Hero media choice: the homepage hero can be the photo (default) or an
+ * uploaded background video. The hero photo always remains the social-share
+ * image and the still shown while the video loads, so it stays required.
+ */
+const heroMediaFields = [
+  defineField({
+    name: 'heroMediaType',
+    title: 'Hero: photo or video',
+    type: 'string',
+    group: 'homepage',
+    options: {
+      list: [
+        { title: 'Photo', value: 'image' },
+        { title: 'Video', value: 'video' },
+      ],
+      layout: 'radio',
+      direction: 'horizontal',
+    },
+    initialValue: 'image',
+    description:
+      'What fills the full-screen area at the top of the homepage. The hero photo is always used for link previews when the site is shared, and as the still image while the video loads.',
+  }),
+  defineField({
+    name: 'heroVideo',
+    title: 'Hero video',
+    type: 'file',
+    group: 'homepage',
+    options: { accept: 'video/mp4,video/webm' },
+    hidden: ({ document }) => document?.heroMediaType !== 'video',
+    description:
+      'Short background video without sound (MP4, ideally 5-15 MB — large files load slowly). Shown instead of the hero photo; the photo appears until the video starts.',
+  }),
+  defineField({
+    name: 'heroVideoAutoplay',
+    title: 'Autoplay the hero video',
+    type: 'boolean',
+    group: 'homepage',
+    initialValue: true,
+    hidden: ({ document }) => document?.heroMediaType !== 'video',
+    description:
+      'On: the video starts automatically and loops silently. Off: visitors see the hero photo with player controls and start the video themselves.',
+  }),
+];
+
 const seoFields = [
   seoField('homepage', 'homepage', 'Homepage'),
   seoField('oetzTrophy', 'oetzTrophyPage', 'OETZ TROPHY page'),
@@ -745,6 +790,9 @@ const FIELD_ORDER = [
   // Homepage — follows the page top to bottom
   'hero',
   'imageHero',
+  'heroMediaType',
+  'heroVideo',
+  'heroVideoAutoplay',
   'countdown',
   'marquee',
   'calendar',
@@ -802,7 +850,7 @@ const FIELD_ORDER = [
   'sponsors',
 ];
 
-const allFields = [...textSections, ...pageImageFields, ...seoFields];
+const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, ...seoFields];
 const fieldByName = new Map(allFields.map((field) => [field.name, field]));
 const orderedFields = [
   ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),

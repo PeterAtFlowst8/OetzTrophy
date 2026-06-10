@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -12,13 +12,59 @@ type Props = {
   registrationOpensAt?: string | null;
   imageSrc?: string;
   imageAlt?: string;
+  mediaType?: 'image' | 'video';
+  videoSrc?: string | null;
+  videoAutoplay?: boolean;
 };
+
+/**
+ * Background video for the hero. Autoplay starts from an effect (not the
+ * autoPlay attribute) so visitors who prefer reduced motion keep the still
+ * poster; with autoplay off the native controls let them start it manually.
+ */
+function HeroBackgroundVideo({
+  src,
+  poster,
+  autoplay,
+}: {
+  src: string;
+  poster?: string;
+  autoplay: boolean;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!autoplay) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    ref.current?.play().catch(() => {
+      /* autoplay blocked — poster stays visible */
+    });
+  }, [autoplay]);
+
+  return (
+    <video
+      ref={ref}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster={poster}
+      controls={!autoplay}
+      className="absolute inset-0 h-full w-full object-cover object-center"
+    >
+      <source src={src} />
+    </video>
+  );
+}
 
 export default function Hero({
   festivalDate,
   registrationOpensAt,
   imageSrc = '/images/hero.jpg',
   imageAlt,
+  mediaType = 'image',
+  videoSrc = null,
+  videoAutoplay = true,
 }: Props) {
   const t = useTranslations('hero');
   const tc = useTranslations('countdown');
@@ -52,22 +98,26 @@ export default function Hero({
   return (
     <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden">
 
-      {/* Background photo */}
-      <Image
-        src={imageSrc}
-        alt={imageAlt || t('imageAlt')}
-        fill
-        className="object-cover object-center"
-        priority
-        sizes="100vw"
-      />
+      {/* Background media: photo, or video with the photo as poster */}
+      {mediaType === 'video' && videoSrc ? (
+        <HeroBackgroundVideo src={videoSrc} poster={imageSrc} autoplay={videoAutoplay} />
+      ) : (
+        <Image
+          src={imageSrc}
+          alt={imageAlt || t('imageAlt')}
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="100vw"
+        />
+      )}
 
-      {/* Gradient layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+      {/* Gradient layers (pointer-events-none so video controls stay clickable) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-      {/* Countdown — dead center */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 pb-48 md:pb-64 hero-countdown">
+      {/* Countdown — dead center (non-interactive, lets clicks reach the video) */}
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-4 pb-48 md:pb-64 hero-countdown">
           {units ? (
             <div
               className="max-w-full text-center px-5 py-7 md:px-10 md:py-10"

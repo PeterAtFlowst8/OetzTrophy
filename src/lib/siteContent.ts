@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { sanityClient, urlFor } from './sanity';
+import { projectId, dataset } from '@/sanity/env';
 import { EDITABLE_SITE_CONTENT_KEYS } from './siteContentFields';
 import { mergeSeo, seoFieldName, type SeoPageKey } from './seoDefaults';
 
@@ -136,6 +137,56 @@ export async function getOptionalSiteImage(
   if (opts.width) builder = builder.width(opts.width);
   if (opts.height) builder = builder.height(opts.height);
   return builder.url();
+}
+
+/** CDN URL for a Sanity file asset ref like `file-<id>-<ext>`. */
+export function fileUrlFromRef(ref: string): string | null {
+  const match = /^file-([A-Za-z0-9]+)-(\w+)$/.exec(ref);
+  if (!match) return null;
+  return `https://cdn.sanity.io/files/${projectId}/${dataset}/${match[1]}.${match[2]}`;
+}
+
+export type HeroMedia = {
+  type: 'image' | 'video';
+  videoUrl: string | null;
+  autoplay: boolean;
+  imageUrl: string;
+  alt: string;
+};
+
+/**
+ * Homepage hero media: the hero photo (always present — also the video poster
+ * and social-share image), plus the background video when the editor has
+ * chosen "Video" and uploaded one. Collapses to type 'image' otherwise.
+ */
+export async function getHeroMedia(opts: {
+  fallbackUrl: string;
+  fallbackAlt?: string;
+  width?: number;
+}): Promise<HeroMedia> {
+  const doc = await getSiteContentDoc();
+
+  const image = resolveImage(doc, 'hero');
+  let imageUrl = opts.fallbackUrl;
+  let alt = opts.fallbackAlt ?? '';
+  if (image?.asset?._ref) {
+    let builder = urlFor(image).auto('format');
+    if (opts.width) builder = builder.width(opts.width);
+    imageUrl = builder.url();
+    if (typeof image.alt === 'string' && image.alt.trim() !== '') alt = image.alt.trim();
+  }
+
+  const videoRef: string | undefined = doc?.heroVideo?.asset?._ref;
+  const videoUrl =
+    doc?.heroMediaType === 'video' && videoRef ? fileUrlFromRef(videoRef) : null;
+
+  return {
+    type: videoUrl ? 'video' : 'image',
+    videoUrl,
+    autoplay: doc?.heroVideoAutoplay !== false,
+    imageUrl,
+    alt,
+  };
 }
 
 /**
