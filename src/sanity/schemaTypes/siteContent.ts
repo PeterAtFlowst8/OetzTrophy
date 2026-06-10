@@ -1,7 +1,9 @@
 import { defineType, defineField } from 'sanity';
 import { EditIcon } from '@sanity/icons';
 import enMessages from '../../../messages/en.json';
+import deMessages from '../../../messages/de.json';
 import { EDITABLE_SITE_CONTENT_KEYS } from '../../lib/siteContentFields';
+import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderInput';
 
 /**
  * Editable UI text + images for the whole marketing site.
@@ -9,10 +11,12 @@ import { EDITABLE_SITE_CONTENT_KEYS } from '../../lib/siteContentFields';
  * The text fields are generated from `messages/en.json` so the Studio always
  * mirrors the app's translation keys. Each key becomes a `{ de, en }` pair.
  * The frontend merges non-empty values here over the static JSON files, so
- * blank fields safely fall back to the built-in copy.
+ * blank fields safely fall back to the built-in copy. Each language box shows
+ * its current built-in copy as a greyed placeholder (see localizedLeaf).
  */
 
 const messages = enMessages as Record<string, Record<string, string>>;
+const messagesDe = deMessages as Record<string, Record<string, string>>;
 
 type ContentGroup =
   | 'photos'
@@ -331,20 +335,32 @@ function fieldDescription(sample: string) {
 }
 
 /** One translatable key -> a visible `{ de, en }` pair. */
-function localizedLeaf(namespace: string, key: string, sample: string) {
-  const multiline = sample.length > 60 || sample.includes('\n');
-  const langField = (name: 'de' | 'en', title: string) =>
-    multiline
-      ? defineField({ name, title, type: 'text', rows: 3 })
-      : defineField({ name, title, type: 'string' });
+function localizedLeaf(
+  namespace: string,
+  key: string,
+  enSample: string,
+  deSample: string,
+) {
+  const multiline = enSample.length > 60 || enSample.includes('\n');
+  // Each box shows its current built-in copy as a greyed placeholder, so an
+  // empty field reads as "currently shows this" rather than looking unset.
+  const langField = (name: 'de' | 'en', title: string, placeholder: string) => {
+    const input = makeFallbackPlaceholderInput(placeholder);
+    return multiline
+      ? defineField({ name, title, type: 'text', rows: 3, components: { input } })
+      : defineField({ name, title, type: 'string', components: { input } });
+  };
 
   return defineField({
     name: key,
     title: fieldTitle(namespace, key),
     type: 'object',
     options: { columns: 2 },
-    description: fieldDescription(sample),
-    fields: [langField('de', 'German'), langField('en', 'English')],
+    description: fieldDescription(enSample),
+    fields: [
+      langField('de', 'German', deSample),
+      langField('en', 'English', enSample),
+    ],
   });
 }
 
@@ -353,7 +369,9 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
   if (!editableKeys) return [];
 
   const editableEntries = editableKeys.flatMap((key) =>
-    entries[key] ? ([[key, entries[key]]] as const) : [],
+    entries[key]
+      ? ([[key, entries[key], messagesDe[namespace]?.[key] ?? entries[key]]] as const)
+      : [],
   );
   if (editableEntries.length === 0) return [];
 
@@ -366,8 +384,8 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
       SECTION_DESCRIPTIONS[namespace] ??
       'Editable website copy for this section. Blank fields use the built-in fallback copy.',
     options: { collapsible: true, collapsed: !OPEN_SECTIONS.has(namespace) },
-    fields: editableEntries.map(([key, sample]) =>
-      localizedLeaf(namespace, key, sample),
+    fields: editableEntries.map(([key, enSample, deSample]) =>
+      localizedLeaf(namespace, key, enSample, deSample),
     ),
   });
 });
