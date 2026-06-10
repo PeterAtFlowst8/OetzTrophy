@@ -87,6 +87,18 @@ export type SiteImageKey =
   | 'programmeOetzTrophy';
 
 /**
+ * Image slots live as per-page fields in Studio (e.g. `imageKontakt`), but
+ * photos uploaded before the per-page reorganisation are stored under the
+ * legacy `images.*` object — read the new field first, then fall back.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function resolveImage(doc: SiteContentDoc, key: SiteImageKey): any {
+  const fieldName = `image${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+  const image = doc?.[fieldName];
+  return image?.asset?._ref ? image : doc?.images?.[key];
+}
+
+/**
  * Returns the client-managed image for a slot, or the provided static fallback
  * when none has been uploaded (or Sanity is unavailable).
  */
@@ -96,7 +108,7 @@ export async function getSiteImage(
   opts: { width?: number; height?: number } = {},
 ): Promise<string> {
   const doc = await getSiteContentDoc();
-  const image = doc?.images?.[key];
+  const image = resolveImage(doc, key);
   if (!image?.asset?._ref) return fallback;
 
   let builder = urlFor(image).auto('format');
@@ -116,7 +128,7 @@ export async function getOptionalSiteImage(
   opts: { width?: number; height?: number } = {},
 ): Promise<string | undefined> {
   const doc = await getSiteContentDoc();
-  const image = doc?.images?.[key];
+  const image = resolveImage(doc, key);
   if (!image?.asset?._ref) return undefined;
 
   let builder = urlFor(image).auto('format');
@@ -135,7 +147,7 @@ export async function getSiteImageData(
   opts: { fallbackUrl: string; fallbackAlt?: string; width?: number; height?: number },
 ): Promise<{ url: string; alt: string }> {
   const doc = await getSiteContentDoc();
-  const image = doc?.images?.[key];
+  const image = resolveImage(doc, key);
   const fallbackAlt = opts.fallbackAlt ?? '';
   if (!image?.asset?._ref) return { url: opts.fallbackUrl, alt: fallbackAlt };
 

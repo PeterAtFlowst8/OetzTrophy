@@ -31,8 +31,7 @@ type ContentGroup =
   | 'galleryPage'
   | 'resultsPage'
   | 'legal'
-  | 'global'
-  | 'photos';
+  | 'global';
 
 const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'homepage', title: 'Homepage' },
@@ -46,11 +45,9 @@ const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
   { name: 'contactPage', title: 'Contact Page' },
   { name: 'legal', title: 'Legal Pages' },
   { name: 'global', title: 'Navigation, Footer & Sponsors' },
-  { name: 'photos', title: 'Page Images' },
 ];
 
 const SECTION_GROUPS: Record<string, ContentGroup> = {
-  images: 'photos',
   // Homepage — one page, several sections
   hero: 'homepage',
   countdown: 'homepage',
@@ -408,11 +405,12 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
   });
 });
 
-function imageField(name: string, title: string, description: string) {
+function imageField(name: string, title: string, description: string, group?: ContentGroup) {
   return defineField({
     name,
     title,
     type: 'image',
+    group,
     description,
     options: { hotspot: true },
     fields: [
@@ -427,11 +425,17 @@ function imageField(name: string, title: string, description: string) {
   });
 }
 
+/**
+ * Legacy image slots. Images now live as per-page fields in each page's tab
+ * (see pageImageFields below); the frontend still reads these as a fallback so
+ * previously uploaded photos keep working. Hidden so editors only see the new
+ * per-page fields — do not delete: the client's uploads are stored here.
+ */
 const imagesSection = defineField({
   name: 'images',
-  title: 'Main Site Images',
+  title: 'Main Site Images (legacy)',
   type: 'object',
-  group: 'photos',
+  hidden: true,
   description:
     'Replace the main photos used across the site. Leave a field empty to keep the current built-in image.',
   options: { collapsible: true, collapsed: false },
@@ -525,6 +529,117 @@ const imagesSection = defineField({
 });
 
 /**
+ * Per-page image slots, each placed in its page's tab next to the text it
+ * appears with. Data is stored at the top level (e.g. `imageKontakt`); the
+ * frontend falls back to the matching legacy `images.*` slot, so photos the
+ * client uploaded before this reorganisation keep working untouched.
+ */
+const pageImageFields = [
+  imageField(
+    'imageHero',
+    'Hero photo',
+    'Shown full-screen at the top of the homepage. Best as a wide action image. Leave empty to keep the current photo.',
+    'homepage',
+  ),
+  imageField(
+    'imageFestivalOverview',
+    'Festival overview photo',
+    'Shown beside the four-day festival overview section on the homepage. Leave empty to keep the current photo.',
+    'homepage',
+  ),
+  imageField(
+    'imageProgrammeFestival',
+    'Programme card photo: Kayak Festival',
+    'Portrait photo on the "Kayak Festival" card in the homepage programme grid. Leave empty to keep the current photo.',
+    'homepage',
+  ),
+  imageField(
+    'imageProgrammeBoaterX',
+    'Programme card photo: Boater X',
+    'Portrait photo on the "Boater X" card in the homepage programme grid. Leave empty to keep the current photo.',
+    'homepage',
+  ),
+  imageField(
+    'imageProgrammeOetzTrophy',
+    'Programme card photo: OETZ TROPHY',
+    'Portrait photo on the "OETZ TROPHY" card in the homepage programme grid. Leave empty to keep the current photo.',
+    'homepage',
+  ),
+  imageField(
+    'imageOetzTrophy',
+    'OETZ TROPHY page header photo',
+    'Shown at the top of the OETZ TROPHY race page. Leave empty to keep the current photo.',
+    'oetzTrophyPage',
+  ),
+  imageField(
+    'imageBoaterX',
+    'Boater X page header photo',
+    'Shown at the top of the Boater X race page. Leave empty to keep the current photo.',
+    'boaterXPage',
+  ),
+  imageField(
+    'imageKajakfestival',
+    'Kayak Festival page header photo',
+    'Shown at the top of the Kayak Festival page. Leave empty to keep the current photo.',
+    'festivalPage',
+  ),
+  imageField(
+    'imageKontakt',
+    'Contact page header photo',
+    'Shown at the top of the Contact page. Leave empty to keep the current photo.',
+    'contactPage',
+  ),
+  imageField(
+    'imageRegistration',
+    'Registration page header photo',
+    'Shown at the top of the registration page. Leave empty to keep the current photo.',
+    'registrationPage',
+  ),
+  imageField(
+    'imageNews',
+    'News page header photo',
+    'Shown at the top of the News page. Leave blank for the plain dark header.',
+    'newsPage',
+  ),
+  imageField(
+    'imageGallery',
+    'Gallery page header photo',
+    'Shown at the top of the Gallery page. Leave blank for the plain dark header.',
+    'galleryPage',
+  ),
+  imageField(
+    'imageResults',
+    'Results page header photo',
+    'Shown at the top of the Results page. Leave blank for the plain dark header.',
+    'resultsPage',
+  ),
+  imageField(
+    'imageTerms',
+    'Terms & Conditions page header photo',
+    'Shown at the top of the Terms & Conditions page. Leave blank for the plain dark header.',
+    'legal',
+  ),
+  imageField(
+    'imageImpressum',
+    'Legal Notice page header photo',
+    'Shown at the top of the Legal Notice page. Leave blank for the plain dark header.',
+    'legal',
+  ),
+  imageField(
+    'imageDatenschutz',
+    'Privacy Policy page header photo',
+    'Shown at the top of the Privacy Policy page. Leave blank for the plain dark header.',
+    'legal',
+  ),
+  imageField(
+    'imageLogo',
+    'Logo',
+    'Your logo. Appears in the top navigation and the footer. It sits over the hero photo and the dark footer as well as the white menu bar, so use a version that stays legible on both light and dark backgrounds. Leave blank to keep the built-in logo.',
+    'global',
+  ),
+];
+
+/**
  * Per-page "how this page appears in Google" fields. One per page, placed in
  * that page's tab. Blank fields fall back to the built-in copy (shown as the
  * greyed placeholder), exactly like the text fields above.
@@ -590,6 +705,76 @@ const seoFields = [
   seoField('datenschutz', 'legal', 'Privacy Policy page'),
 ];
 
+/**
+ * Field order = order inside each tab. Images are placed where they appear on
+ * the page (hero photo next to the hero text, page-header photo at the top of
+ * its page tab, SEO last). Fields not listed here are appended at the end so
+ * new sections never silently disappear.
+ */
+const FIELD_ORDER = [
+  // Homepage — follows the page top to bottom
+  'hero',
+  'imageHero',
+  'countdown',
+  'marquee',
+  'calendar',
+  'festivalOverview',
+  'imageFestivalOverview',
+  'events',
+  'imageProgrammeFestival',
+  'imageProgrammeBoaterX',
+  'imageProgrammeOetzTrophy',
+  'news',
+  'seoHomepage',
+  // Race pages
+  'imageOetzTrophy',
+  'seoOetzTrophy',
+  'imageBoaterX',
+  'seoBoaterX',
+  'imageKajakfestival',
+  'kajakfestival',
+  'seoKajakfestival',
+  // Registration
+  'imageRegistration',
+  'registration',
+  'seoRegistration',
+  // News / Gallery / Results
+  'imageNews',
+  'seoNews',
+  'imageGallery',
+  'gallery',
+  'seoGallery',
+  'imageResults',
+  'results',
+  'seoResults',
+  // Contact
+  'imageKontakt',
+  'kontakt',
+  'seoKontakt',
+  // Legal pages
+  'terms',
+  'imageTerms',
+  'seoTerms',
+  'impressum',
+  'imageImpressum',
+  'seoImpressum',
+  'datenschutz',
+  'imageDatenschutz',
+  'seoDatenschutz',
+  // Site-wide chrome
+  'nav',
+  'imageLogo',
+  'footer',
+  'sponsors',
+];
+
+const allFields = [...textSections, ...pageImageFields, ...seoFields];
+const fieldByName = new Map(allFields.map((field) => [field.name, field]));
+const orderedFields = [
+  ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),
+  ...allFields.filter((field) => !FIELD_ORDER.includes(field.name)),
+];
+
 export const siteContent = defineType({
   name: 'siteContent',
   title: 'Website Text & Images',
@@ -598,7 +783,7 @@ export const siteContent = defineType({
   description:
     'Simple editable website copy and main image slots. Open a section, change German or English text, then publish.',
   groups: FIELD_GROUPS,
-  fields: [imagesSection, ...textSections, ...seoFields],
+  fields: [...orderedFields, imagesSection],
   preview: {
     prepare() {
       return {
