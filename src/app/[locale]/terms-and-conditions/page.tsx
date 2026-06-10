@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
 import { getOptionalSiteImage } from '@/lib/siteContent';
+import { headingFontSize } from '@/lib/headingFit';
 
 const meta = {
   de: {
@@ -66,10 +67,15 @@ export default async function TermsPage() {
                     className="uppercase mb-3"
                     style={{
                       fontFamily: 'var(--font-display)',
-                      // Sized against the text column (cqi, container on the
-                      // max-w-3xl wrapper) so long German headings (e.g.
-                      // "Teilnahmeberechtigung", 21 chars) always fit it.
-                      fontSize: 'clamp(16px, 7.3cqi, 38px)',
+                      // Full design scale for normal headings; long German
+                      // compounds (e.g. "Teilnahmeberechtigung") get a
+                      // per-heading cap so they shrink just enough to fit the
+                      // column (cqi, container on the max-w-3xl wrapper).
+                      fontSize: headingFontSize(section.heading, {
+                        floorPx: 26,
+                        slopeCqi: 5.7,
+                        capPx: 38,
+                      }),
                       fontWeight: 700,
                       lineHeight: 1,
                       color: 'var(--color-ink)',

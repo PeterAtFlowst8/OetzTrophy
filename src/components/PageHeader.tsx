@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { headingFontSize } from '@/lib/headingFit';
 
 type Props = {
   label?: string;
@@ -66,11 +67,10 @@ export default function PageHeader({ label, title, image }: Props) {
           className="uppercase leading-none"
           style={{
             fontFamily: 'var(--font-display)',
-            // Sized against the title's own column (cqi, container set on the
-            // wrapper div) rather than the viewport, so long single-word page
-            // titles (e.g. "Teilnahmebedingungen", 20 chars) shrink to fit
-            // whatever width the column actually has — no word breaks.
-            fontSize: 'clamp(18px, 7.6cqi, 80px)',
+            // Full design scale for normal titles; long single-word titles
+            // (e.g. "Teilnahmebedingungen") get a per-title cap so they shrink
+            // just enough to fit the column (cqi, container on the wrapper).
+            fontSize: headingFontSize(title, { floorPx: 36, slopeCqi: 8, capPx: 80 }),
             fontWeight: 700,
             color: 'white',
             letterSpacing: '-0.02em',
