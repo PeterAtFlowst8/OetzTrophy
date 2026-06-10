@@ -2,7 +2,6 @@ import Hero from '@/components/Hero';
 import MarqueeBanner from '@/components/Marquee';
 import FestivalOverview from '@/components/FestivalOverview';
 import Events from '@/components/Events';
-import DasRennen from '@/components/DasRennen';
 import LatestNews from '@/components/LatestNews';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
@@ -29,7 +28,6 @@ export default async function Home() {
       <MarqueeBanner />
       <FestivalOverview festivalDate={settings.festivalDate} festivalEndDate={settings.festivalEndDate} />
       <Events />
-      <DasRennen />
       <LatestNews />
     </main>
   );

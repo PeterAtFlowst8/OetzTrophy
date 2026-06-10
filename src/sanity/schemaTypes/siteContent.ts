@@ -321,6 +321,15 @@ const OPEN_SECTIONS = new Set([
   'registration',
 ]);
 
+/**
+ * Sections for site features that were removed but whose Studio data still
+ * exists (deleting the field would orphan it and trigger "unknown field"
+ * warnings). Hidden from editors; safe to fully remove once the data is gone.
+ */
+const HIDDEN_SECTIONS = new Set([
+  'dasRennen', // homepage race teaser, removed from the site June 2026
+]);
+
 function truncate(value: string, length = 150) {
   return value.length > length ? `${value.slice(0, length - 1)}...` : value;
 }
@@ -407,6 +416,7 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
     name: namespace,
     title: SECTION_TITLES[namespace] ?? fallbackTitle(namespace),
     type: 'object',
+    hidden: HIDDEN_SECTIONS.has(namespace) || undefined,
     group: SECTION_GROUPS[namespace] ?? 'homepage',
     description:
       SECTION_DESCRIPTIONS[namespace] ??
