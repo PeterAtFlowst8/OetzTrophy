@@ -31,6 +31,20 @@ body {
   overflow-x: hidden;
 }
 
+/*
+ * Headings use large fluid font sizes with px floors (clamp). On narrow
+ * screens a long unbreakable word — German compounds like "Kajakfestival" or
+ * "Teilnahmebedingungen" — can be wider than its box and gets clipped at the
+ * viewport edge. Let headings break/hyphenate such words instead of
+ * overflowing. `hyphens: auto` resolves cleanly because <html lang> is set;
+ * `overflow-wrap: break-word` is the last-resort fallback. Both only engage
+ * when a word would otherwise overflow, so headings that fit are untouched.
+ */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 /* Marquee */
 @keyframes marquee {
   0%   { transform: translateX(0); }
