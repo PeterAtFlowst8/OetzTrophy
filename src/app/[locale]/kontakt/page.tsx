@@ -55,6 +55,7 @@ export default async function KontaktPage() {
   return (
     <main>
       <PageHeader
+        label={t('label')}
         title={t('title')}
         image={headerImage}
       />

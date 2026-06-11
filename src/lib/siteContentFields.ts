@@ -68,7 +68,7 @@ export const EDITABLE_SITE_CONTENT_KEYS: Record<string, readonly string[]> = {
     'locationHeading',
     'locationText',
   ],
-  kontakt: ['title', 'country', 'phone', 'orgHeading', 'socialHeading'],
+  kontakt: ['label', 'title', 'country', 'phone', 'orgHeading', 'socialHeading'],
   gallery: ['label', 'title', 'comingSoon', 'description'],
   results: ['label', 'title', 'comingSoon', 'description'],
   registration: [
