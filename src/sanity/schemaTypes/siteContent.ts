@@ -206,7 +206,7 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     switchTo: 'Language switch label',
     program: 'Program link',
     race: 'OETZ TROPHY link',
-    boaterX: 'Boater X link',
+    boaterX: 'Kayak Cross link',
     festival: 'Festival link',
     news: 'News link',
     registration: 'Registration link',
