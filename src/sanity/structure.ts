@@ -2,7 +2,6 @@ import type { StructureBuilder, StructureResolver } from 'sanity/structure';
 import {
   CogIcon,
   DocumentTextIcon,
-  CalendarIcon,
   StarIcon,
   BoltIcon,
   ImagesIcon,
@@ -13,7 +12,7 @@ import { PAGE_ICONS } from './schemaTypes/pageContent';
 
 // Single-instance documents, kept out of the generic type lists below.
 const SINGLETONS = ['siteSettings', ...PAGE_DOCUMENT_TYPES];
-const LISTED = ['post', 'event', 'result', 'galleryItem', 'sponsor'];
+const LISTED = ['post', 'result', 'galleryItem', 'sponsor'];
 
 // Each page document is a singleton whose _id equals its type, so the desk
 // can open it directly — no create/delete, just edit and publish that page.
@@ -40,12 +39,6 @@ export const structure: StructureResolver = (S) =>
               ),
             ),
         ),
-
-      // Main body text for the race/festival pages (one document each:
-      // OETZ TROPHY, Kayak Cross, Kayak Festival).
-      S.documentTypeListItem('event')
-        .title('Race & Festival Pages (main text)')
-        .icon(CalendarIcon),
 
       S.divider(),
 

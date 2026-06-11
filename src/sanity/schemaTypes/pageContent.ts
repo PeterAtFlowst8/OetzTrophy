@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity';
+import { defineType, defineField, defineArrayMember, type FieldDefinition } from 'sanity';
 import {
   HomeIcon,
   StarIcon,
@@ -21,6 +21,7 @@ import { EDITABLE_SITE_CONTENT_KEYS } from '../../lib/siteContentFields';
 import { SEO_DEFAULTS, seoFieldName, type SeoPageKey } from '../../lib/seoDefaults';
 import { PAGE_DOCUMENTS } from '../../lib/pageDocuments';
 import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderInput';
+import { localizedString, localizedText, localizedBlockContent } from './shared';
 
 /**
  * Editable UI text + images for the whole marketing site — one document per
@@ -74,7 +75,7 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   sponsors: 'Heading for the sponsor logos in the footer.',
   nav: 'Top navigation and mobile menu labels.',
   footer: 'Footer tagline and legal/contact links.',
-  kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title, intro and main body text live in "Race & Festival Pages (main text)" → Kayak Festival (a separate item in the left menu).',
+  kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title and main body text are edited in the fields above on this same page.',
   kontakt: 'Labels on the contact page.',
   programm: 'Intro text and headings on the visitor programme page (the map itself is added separately).',
   gallery: 'Coming-soon text for the gallery page.',
@@ -919,9 +920,9 @@ export const PAGE_ICONS: Record<string, ComponentType> = {
 
 const PAGE_SUBTITLES: Record<string, string> = {
   pageHome: 'Hero, homepage sections, photos & SEO',
-  pageOetzTrophy: 'Header photo & SEO (main text: Race & Festival Pages)',
-  pageKayakCross: 'Header photo & SEO (main text: Race & Festival Pages)',
-  pageKajakfestival: 'Schedule, location, header photo & SEO',
+  pageOetzTrophy: 'Main text, race facts, header photo & SEO',
+  pageKayakCross: 'Main text, race facts, header photo & SEO',
+  pageKajakfestival: 'Main text, schedule, location, header photo & SEO',
   pageProgram: 'Intro, daily schedule, header photo & SEO',
   pageRegistration: 'Form labels, confirmation text, header photo & SEO',
   pageNews: 'Header photo & SEO (articles: Blog Posts)',
@@ -962,19 +963,101 @@ for (const field of allFields) {
   }
 }
 
-export const pageContentTypes = PAGE_DOCUMENTS.map((def) =>
-  defineType({
+/**
+ * The three race/festival pages additionally carry the content that used to
+ * live on the separate `event` documents (title, main text, race facts,
+ * rules), so the whole page is edited in ONE document. These fields are NOT
+ * part of the shared pool/partition: they exist per document under the same
+ * names on each, are fetched directly by the race pages (src/lib/events.ts),
+ * and never flow through the merged site-content document.
+ */
+const RACE_CONTENT_PAGES = new Set(['pageOetzTrophy', 'pageKayakCross', 'pageKajakfestival']);
+
+function raceContentFields() {
+  return [
+    localizedString(
+      'title',
+      'Page Title',
+      'Shown as the main heading on the page.',
+    ),
+    localizedString(
+      'pageLabel',
+      'Page Label',
+      'The small coloured line above the page title in the header. Leave blank to use the built-in default.',
+    ),
+    localizedBlockContent(
+      'body',
+      'Main Page Text',
+      'Main editable text shown below the page header.',
+    ),
+    localizedText(
+      'excerpt',
+      'Short Fallback Description',
+      'Used as a fallback if the main page text is empty.',
+    ),
+    defineField({
+      name: 'date',
+      title: 'Event Date',
+      type: 'datetime',
+      description: 'Shown in the event facts on the page.',
+    }),
+    defineField({
+      name: 'format',
+      title: 'Format Label',
+      type: 'string',
+      description: 'Shown in the event facts, for example Time Trial, Head-to-Head, or Festival.',
+    }),
+    defineField({
+      name: 'entryType',
+      title: 'Entry / Registration Path',
+      type: 'string',
+      description:
+        'This controls the participation label only. Kayak Cross remains its own race, but paid race participation uses one shared race-weekend registration.',
+      options: {
+        list: [
+          { title: 'Qualification', value: 'qualification' },
+          { title: 'Race Weekend Registration', value: 'open' },
+          { title: 'Free Festival Access', value: 'free' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'rules',
+      title: 'Rules List',
+      type: 'array',
+      description: 'Optional numbered rules shown underneath the race facts.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({ name: 'de', title: 'German', type: 'text', rows: 2 }),
+            defineField({ name: 'en', title: 'English', type: 'text', rows: 2 }),
+          ],
+          preview: { select: { title: 'de', subtitle: 'en' } },
+        }),
+      ],
+    }),
+  ];
+}
+
+export const pageContentTypes = PAGE_DOCUMENTS.map((def) => {
+  const fields: FieldDefinition[] = [...def.keys]
+    .sort((a, b) => orderIndex(a) - orderIndex(b))
+    .map((key) => fieldByName.get(key)!);
+  // Race content goes right after the header photo, ahead of SEO (and, on
+  // the Kayak Festival page, ahead of the schedule & location section).
+  if (RACE_CONTENT_PAGES.has(def.type)) fields.splice(1, 0, ...raceContentFields());
+
+  return defineType({
     name: def.type,
     title: def.title,
     type: 'document',
     icon: PAGE_ICONS[def.type],
-    fields: [...def.keys]
-      .sort((a, b) => orderIndex(a) - orderIndex(b))
-      .map((key) => fieldByName.get(key)!),
+    fields,
     preview: {
       prepare() {
         return { title: def.title, subtitle: PAGE_SUBTITLES[def.type] };
       },
     },
-  }),
-);
+  });
+});

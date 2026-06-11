@@ -4,7 +4,6 @@ export type SanityEvent = {
   _id: string;
   title: { de: string; en: string };
   pageLabel?: { de?: string; en?: string };
-  slug: { de: { current: string }; en: { current: string } };
   date: string;
   entryType: string;
   format: string;
@@ -14,28 +13,42 @@ export type SanityEvent = {
   rules: Array<{ de: string; en: string }>;
 };
 
-// Look up by the stable document id FIRST, with the original slug as a
-// fallback. The slug field is editable in Studio, and editing it must not
-// 404 the page (it did once: the Boater X doc's slug was changed to
-// "kayak-cross" and the page disappeared). The routes are fixed in code, so
-// the lookup key must be something the client can't change.
-const eventForPageQuery = `*[_type == "event" && (_id == $id || slug.de.current == $slug || slug.en.current == $slug)][0] {
-  _id, title, pageLabel, slug, date, entryType, format, excerpt, body, rules
+const RACE_FIELDS = '_id, title, pageLabel, date, entryType, format, excerpt, body, rules';
+
+/**
+ * The main text and race facts of the three race/festival pages live on the
+ * page document (Studio: Website Pages), looked up by its fixed _id. The
+ * legacy `event` document is kept in the dataset as a fallback until the
+ * one-time copy (scripts/migrate-race-content.ts) has run — matched by its
+ * stable id first, slug second (slugs were editable in Studio and editing
+ * one must never 404 a page; the routes are fixed in code).
+ */
+const raceContentQuery = `{
+  "page": *[_id == $pageId][0] { ${RACE_FIELDS} },
+  "legacy": *[_type == "event" && (_id == $eventId || slug.de.current == $slug || slug.en.current == $slug)][0] { ${RACE_FIELDS} }
 }`;
 
-const allEventsQuery = `*[_type == "event"] | order(date asc) {
-  _id, title, slug, date, entryType, format, excerpt
-}`;
-
-export async function getEventForPage(
-  id: string,
-  slug: string,
-): Promise<SanityEvent | null> {
-  return sanityClient.fetch(eventForPageQuery, { id, slug });
+/**
+ * The page document wins once it actually carries content (a non-empty
+ * title); before the copy has run it exists but holds only photo/SEO
+ * fields, so the legacy event document keeps serving.
+ */
+export function pickRaceContent(
+  page: SanityEvent | null,
+  legacy: SanityEvent | null,
+): SanityEvent | null {
+  const hasTitle = (doc: SanityEvent | null) =>
+    Boolean(doc?.title?.de?.trim() || doc?.title?.en?.trim());
+  return hasTitle(page) ? page : legacy;
 }
 
-export async function getAllEvents(): Promise<SanityEvent[]> {
-  return sanityClient.fetch(allEventsQuery);
+export async function getRaceContent(
+  pageId: string,
+  eventId: string,
+  slug: string,
+): Promise<SanityEvent | null> {
+  const result = await sanityClient.fetch(raceContentQuery, { pageId, eventId, slug });
+  return pickRaceContent(result?.page ?? null, result?.legacy ?? null);
 }
 
 export function localizedField<T>(field: { de: T; en: T }, locale: string): T {
@@ -43,7 +56,7 @@ export function localizedField<T>(field: { de: T; en: T }, locale: string): T {
 }
 
 /**
- * The small line above the page title, editable on the event document
+ * The small line above the page title, editable on the page document
  * ("Page Label"). Falls back to the built-in default when blank, and to the
  * other language when only one is filled in.
  */
