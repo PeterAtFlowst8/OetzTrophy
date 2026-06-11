@@ -79,6 +79,15 @@ export const PAGE_DOCUMENTS: readonly PageDocumentDef[] = [
     keys: ['imageRegistration', 'registration', 'seoRegistration'],
   },
   {
+    // Title, label and rich body live as direct fields on the document
+    // (like the race pages), outside this partition — only the header
+    // photo and SEO slots flow through the merged site content.
+    type: 'pageQualification',
+    title: 'Qualification Page',
+    kind: 'page',
+    keys: ['imageQualification', 'seoQualification'],
+  },
+  {
     type: 'pageNews',
     title: 'News Page',
     kind: 'page',

@@ -15,6 +15,7 @@ export type SeoPageKey =
   | 'program'
   | 'kontakt'
   | 'registration'
+  | 'qualification'
   | 'news'
   | 'gallery'
   | 'results'
@@ -107,6 +108,18 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
       title: 'Registration - OETZ TROPHY Race Weekend 2026',
       description:
         'Register for the OETZ TROPHY race weekend 2026. Qualification, Kayak Cross and OETZ TROPHY on the Ötztaler Ache in Tyrol, Austria.',
+    },
+  },
+  qualification: {
+    de: {
+      title: 'Qualifikation - OETZ TROPHY Quali-Modus & Teilnahme',
+      description:
+        'So funktioniert die Qualifikation für die OETZ TROPHY: Ablauf, Kriterien und alle Infos zum Quali-Modus auf der Ötztaler Ache in Oetz, Tirol.',
+    },
+    en: {
+      title: 'Qualification - How to Qualify for the OETZ TROPHY',
+      description:
+        'How qualification for the OETZ TROPHY works: process, criteria and everything you need to know about qualifying on the Ötztaler Ache in Oetz, Tyrol.',
     },
   },
   news: {

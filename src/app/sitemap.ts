@@ -10,6 +10,7 @@ const staticPages = [
   '/news',
   '/kontakt',
   '/registration',
+  '/qualification',
   '/impressum',
   '/terms-and-conditions',
   '/datenschutz',

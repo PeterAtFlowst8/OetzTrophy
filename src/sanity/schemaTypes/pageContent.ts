@@ -6,6 +6,7 @@ import {
   CalendarIcon,
   ClockIcon,
   ClipboardIcon,
+  CheckmarkCircleIcon,
   DocumentTextIcon,
   ImagesIcon,
   ChartUpwardIcon,
@@ -488,6 +489,11 @@ const pageImageFields = [
     'Shown at the top of the registration page. Leave empty to keep the current photo.',
   ),
   imageField(
+    'imageQualification',
+    'Qualification page header photo',
+    'Shown at the top of the Qualification page. Leave blank for the plain dark header.',
+  ),
+  imageField(
     'imageNews',
     'News page header photo',
     'Shown at the top of the News page. Leave blank for the plain dark header.',
@@ -625,6 +631,7 @@ const MENU_PAGE_OPTIONS = [
   { title: 'Program', value: '/programm' },
   { title: 'News', value: '/news' },
   { title: 'Registration', value: '/registration' },
+  { title: 'Qualification', value: '/qualification' },
   { title: 'Contact', value: '/kontakt' },
   { title: 'Gallery', value: '/gallery' },
   { title: 'Results', value: '/results' },
@@ -828,6 +835,7 @@ const seoFields = [
   seoField('program', 'Program page'),
   seoField('kontakt', 'Contact page'),
   seoField('registration', 'Registration page'),
+  seoField('qualification', 'Qualification page'),
   seoField('news', 'News page'),
   seoField('gallery', 'Gallery page'),
   seoField('results', 'Results page'),
@@ -879,6 +887,9 @@ const FIELD_ORDER = [
   'imageRegistration',
   'registration',
   'seoRegistration',
+  // Qualification
+  'imageQualification',
+  'seoQualification',
   // News / Gallery / Results
   'imageNews',
   'seoNews',
@@ -919,6 +930,7 @@ export const PAGE_ICONS: Record<string, ComponentType> = {
   pageKajakfestival: CalendarIcon,
   pageProgram: ClockIcon,
   pageRegistration: ClipboardIcon,
+  pageQualification: CheckmarkCircleIcon,
   pageNews: DocumentTextIcon,
   pageGallery: ImagesIcon,
   pageResults: ChartUpwardIcon,
@@ -935,6 +947,7 @@ const PAGE_SUBTITLES: Record<string, string> = {
   pageKajakfestival: 'Main text, schedule, location, header photo & SEO',
   pageProgram: 'Intro, daily schedule, header photo & SEO',
   pageRegistration: 'Form labels, confirmation text, header photo & SEO',
+  pageQualification: 'How the qualification works: main text, header photo & SEO',
   pageNews: 'Header photo & SEO (articles: Blog Posts)',
   pageGallery: 'Coming-soon text, header photo & SEO',
   pageResults: 'Coming-soon text, header photo & SEO',
@@ -983,7 +996,13 @@ for (const field of allFields) {
  */
 const RACE_CONTENT_PAGES = new Set(['pageOetzTrophy', 'pageKayakCross', 'pageKajakfestival']);
 
-function raceContentFields() {
+/**
+ * Title, optional eyebrow label and rich main text — shared by the three
+ * race pages and the Qualification page. Like the race facts, these are
+ * direct fields on the page document, fetched by its fixed _id (see
+ * src/lib/events.ts and src/lib/pageText.ts), outside the partition/merge.
+ */
+function pageTextFields() {
   return [
     localizedString(
       'title',
@@ -1001,6 +1020,12 @@ function raceContentFields() {
       'Main Page Text',
       'Main editable text shown below the page header.',
     ),
+  ];
+}
+
+function raceContentFields() {
+  return [
+    ...pageTextFields(),
     localizedText(
       'excerpt',
       'Short Fallback Description',
@@ -1058,6 +1083,8 @@ export const pageContentTypes = PAGE_DOCUMENTS.map((def) => {
   // Race content goes right after the header photo, ahead of SEO (and, on
   // the Kayak Festival page, ahead of the schedule & location section).
   if (RACE_CONTENT_PAGES.has(def.type)) fields.splice(1, 0, ...raceContentFields());
+  // The Qualification page carries the same text trio, minus the race facts.
+  if (def.type === 'pageQualification') fields.splice(1, 0, ...pageTextFields());
 
   return defineType({
     name: def.type,
