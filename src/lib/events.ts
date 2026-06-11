@@ -13,7 +13,12 @@ export type SanityEvent = {
   rules: Array<{ de: string; en: string }>;
 };
 
-const eventBySlugQuery = `*[_type == "event" && (slug.de.current == $slug || slug.en.current == $slug)][0] {
+// Look up by the stable document id FIRST, with the original slug as a
+// fallback. The slug field is editable in Studio, and editing it must not
+// 404 the page (it did once: the Boater X doc's slug was changed to
+// "kayak-cross" and the page disappeared). The routes are fixed in code, so
+// the lookup key must be something the client can't change.
+const eventForPageQuery = `*[_type == "event" && (_id == $id || slug.de.current == $slug || slug.en.current == $slug)][0] {
   _id, title, slug, date, entryType, format, excerpt, body, rules
 }`;
 
@@ -21,8 +26,11 @@ const allEventsQuery = `*[_type == "event"] | order(date asc) {
   _id, title, slug, date, entryType, format, excerpt
 }`;
 
-export async function getEventBySlug(slug: string): Promise<SanityEvent | null> {
-  return sanityClient.fetch(eventBySlugQuery, { slug });
+export async function getEventForPage(
+  id: string,
+  slug: string,
+): Promise<SanityEvent | null> {
+  return sanityClient.fetch(eventForPageQuery, { id, slug });
 }
 
 export async function getAllEvents(): Promise<SanityEvent[]> {

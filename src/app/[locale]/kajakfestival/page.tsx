@@ -6,7 +6,7 @@ import PageHeader from '@/components/PageHeader';
 import { richTextComponents } from '@/components/richTextComponents';
 import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import CalendarActions from '@/components/CalendarActions';
-import { getEventBySlug, localizedField } from '@/lib/events';
+import { getEventForPage, localizedField } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
 import TextWithLinks from '@/components/TextWithLinks';
 
@@ -24,7 +24,7 @@ export const revalidate = 60;
 export default async function KajakfestivalPage() {
   const locale = await getLocale();
   const [event, settings] = await Promise.all([
-    getEventBySlug('kajakfestival'),
+    getEventForPage('event-kajakfestival', 'kajakfestival'),
     getSiteSettings(),
   ]);
   if (!event) notFound();

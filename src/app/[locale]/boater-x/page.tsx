@@ -8,7 +8,7 @@ import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
-import { getEventBySlug, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
+import { getEventForPage, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -23,7 +23,7 @@ export const revalidate = 60;
 
 export default async function BoaterXPage() {
   const locale = await getLocale();
-  const event = await getEventBySlug('boater-x');
+  const event = await getEventForPage('event-boater-x', 'boater-x');
   if (!event) notFound();
 
   const t = await getTranslations('boaterX');
