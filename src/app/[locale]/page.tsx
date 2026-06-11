@@ -6,6 +6,7 @@ import LatestNews from '@/components/LatestNews';
 import JsonLd, { organizationSchema, festivalEventSchema } from '@/components/JsonLd';
 import { getSiteSettings } from '@/lib/settings';
 import { getHeroMedia } from '@/lib/siteContent';
+import { isRegistrationOpen } from '@/lib/registration';
 
 export const revalidate = 60;
 
@@ -15,6 +16,10 @@ export default async function Home() {
     getHeroMedia({ fallbackUrl: '/images/hero.jpg', width: 2000 }),
   ]);
 
+  // Decided once per ISR snapshot so the hydrating client always agrees with
+  // the cached HTML; the CTA flips on the next revalidation (≤60s late).
+  const registrationOpen = isRegistrationOpen(settings.registrationOpensAt);
+
   return (
     <main className="overflow-x-clip">
       <JsonLd data={organizationSchema} />
@@ -22,6 +27,7 @@ export default async function Home() {
       <Hero
         festivalDate={settings.festivalDate}
         registrationOpensAt={settings.registrationOpensAt}
+        registrationOpen={registrationOpen}
         imageSrc={heroMedia.imageUrl}
         imageAlt={heroMedia.alt}
         mediaType={heroMedia.type}

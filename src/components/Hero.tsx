@@ -5,11 +5,16 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { getCountdownState, type CountdownState } from '@/lib/countdown';
-import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
+import { registrationOpensLabel } from '@/lib/registration';
 
 type Props = {
   festivalDate?: string | null;
   registrationOpensAt?: string | null;
+  // Decided on the server (see app/[locale]/page.tsx), never from the clock
+  // here: the homepage HTML is ISR-cached, so a clock read during render would
+  // let the cached HTML and the hydrating client disagree around the moment
+  // registration opens.
+  registrationOpen: boolean;
   imageSrc?: string;
   imageAlt?: string;
   mediaType?: 'image' | 'video';
@@ -60,6 +65,7 @@ function HeroBackgroundVideo({
 export default function Hero({
   festivalDate,
   registrationOpensAt,
+  registrationOpen,
   imageSrc = '/images/hero.jpg',
   imageAlt,
   mediaType = 'image',
@@ -76,7 +82,6 @@ export default function Hero({
   // reading the clock during render guarantees a hydration mismatch. State
   // starts empty; the first effect tick fills in the real values after mount.
   const [state, setState] = useState<CountdownState | null>(null);
-  const registrationOpen = isRegistrationOpen(registrationOpensAt);
   const opensLabel = registrationOpensLabel(locale, registrationOpensAt);
 
   useEffect(() => {
