@@ -96,7 +96,7 @@
     "program": "Programm"
   },
   "impressum": {
-    "label": "Rechtliches",
+    "label": "",
     "title": "Impressum",
     "country": "Österreich",
     "phone": "Telefon",
@@ -104,7 +104,7 @@
     "liabilityText": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
   },
   "datenschutz": {
-    "label": "Rechtliches",
+    "label": "",
     "title": "Datenschutz",
     "phone": "Telefon",
     "intro": "Wir, die Source To Sea GmbH, Natterer See 1, 6161 Natters, erheben, verarbeiten und nutzen deine personenbezogenen Daten nur mit deiner Einwilligung oder auf Basis einer sonstigen rechtlichen Grundlage im Einklang mit der DSGVO. Die Bereitstellung deiner Daten ist für deine Teilnahme an der OETZ TROPHY erforderlich.",
@@ -126,7 +126,7 @@
     "s8Text": "Unsere Website verwendet nur Cookies, die für den Betrieb der Website notwendig sind, sofern du keine weitergehende Erlaubnis erteilst. Unsere Website verwendet Google Analytics mit der Erweiterung 'anonymizeIp' zur Anonymisierung der IP-Adresse."
   },
   "terms": {
-    "label": "Rechtliches",
+    "label": "",
     "title": "Teilnahmebedingungen",
     "intro": "Diese Teilnahmebedingungen fassen die Verpflichtungen für die Anmeldung zum OETZ TROPHY Rennwochenende zusammen. Operative Details können vom Veranstalter vor dem Renntag aktualisiert werden.",
     "eligibilityHeading": "Teilnahmeberechtigung",
@@ -198,7 +198,7 @@
     "locationText": "Das Festival findet in Oetz im Ötztal, Tirol statt. Camping direkt am Festivalgelände ist möglich. Für Unterkünfte empfehlen wir das Ötztal Tourismus Portal. Von Innsbruck sind es ca. 45 Minuten mit dem Auto."
   },
   "kontakt": {
-    "label": "Kontakt",
+    "label": "",
     "title": "Kontakt",
     "country": "Österreich",
     "phone": "Telefon",
@@ -207,19 +207,19 @@
     "socialHeading": "Social Media"
   },
   "gallery": {
-    "label": "Galerie",
+    "label": "",
     "title": "Galerie",
     "comingSoon": "Demnächst",
     "description": "Die Galerie mit Fotos und Videos aus vergangenen Jahren wird in Kürze verfügbar sein. Bis dahin folge uns auf Instagram für aktuelle Bilder."
   },
   "results": {
-    "label": "Ergebnisse",
+    "label": "",
     "title": "Ergebnisse",
     "comingSoon": "Demnächst",
     "description": "Die Ergebnisse der OETZ TROPHY und des Kayak Cross werden nach dem Rennwochenende hier veröffentlicht."
   },
   "registration": {
-    "label": "Anmeldung",
+    "label": "",
     "title": "Anmeldung",
     "intro": "Melde dich für das OETZ TROPHY Rennwochenende an. Die Qualifikationsläufe am Freitagvormittag entscheiden alles: Die 40 schnellsten Männer und 15 schnellsten Frauen starten am Samstag in der OETZ TROPHY; die nächsten 32 Männer und 16 Frauen fahren am Freitagnachmittag den Kayak Cross. Offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV). Die Anmeldegebühr sichert deinen Startplatz.",
     "formTitle": "Deine Renndaten",
@@ -256,7 +256,7 @@
     "backHome": "Zur Startseite"
   },
   "programm": {
-    "label": "Infos für Besucher",
+    "label": "",
     "title": "Programm",
     "intro": "Alle wichtigen Informationen für deinen Besuch beim Ötztaler Kajakfestival und der OETZ TROPHY: Zeitplan, Treffpunkte und wichtige Orte rund um Oetz.",
     "scheduleHeading": "Tagesprogramm",

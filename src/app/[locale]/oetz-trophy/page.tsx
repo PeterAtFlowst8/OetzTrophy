@@ -37,7 +37,7 @@ export default async function OetzTrophyPage() {
   return (
     <main>
       <PageHeader
-        label={eventPageLabel(event, locale, 'OETZ TROPHY')}
+        label={eventPageLabel(event, locale)}
         title={title}
         image={headerImage}
       />

@@ -45,7 +45,7 @@ export default async function KajakfestivalPage() {
   return (
     <main>
       <PageHeader
-        label={eventPageLabel(event, locale, locale === 'de' ? 'Kajakfestival' : 'Kayak Festival')}
+        label={eventPageLabel(event, locale)}
         title={title}
         image={headerImage}
       />

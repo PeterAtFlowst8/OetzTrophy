@@ -57,18 +57,14 @@ export function localizedField<T>(field: { de: T; en: T }, locale: string): T {
 
 /**
  * The small line above the page title, editable on the page document
- * ("Page Label"). Falls back to the built-in default when blank, and to the
- * other language when only one is filled in.
+ * ("Page Label"). Blank means no label is shown; when only one language is
+ * filled in, the other falls back to it.
  */
-export function eventPageLabel(
-  event: SanityEvent,
-  locale: string,
-  fallback: string,
-): string {
+export function eventPageLabel(event: SanityEvent, locale: string): string {
   const label = event.pageLabel;
   const value =
     locale === 'en' ? label?.en || label?.de : label?.de || label?.en;
-  return value?.trim() || fallback;
+  return value?.trim() || '';
 }
 
 export function formatEventDate(dateString: string, locale: string): string {

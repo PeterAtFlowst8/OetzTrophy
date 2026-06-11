@@ -35,6 +35,8 @@ import { localizedString, localizedText, localizedBlockContent } from './shared'
  * The frontend merges non-empty values here over the static JSON files, so
  * blank fields safely fall back to the built-in copy. Each language box shows
  * its current built-in copy as a greyed placeholder (see localizedLeaf).
+ * Exception: the page-label keys ship with EMPTY built-in copy, so leaving
+ * them blank shows no label on the page at all.
  */
 
 const messages = enMessages as Record<string, Record<string, string>>;
@@ -324,6 +326,12 @@ function fieldTitle(namespace: string, key: string) {
 }
 
 function fieldDescription(sample: string, multiline = false) {
+  // Fields with EMPTY built-in copy (the page labels): blank doesn't fall
+  // back to anything — it hides the label on the site.
+  if (!sample) {
+    return 'Leave blank to show no label above the page title for that language.';
+  }
+
   const notes = [
     'Leave blank to use the built-in fallback copy for that language.',
     `Fallback English: "${truncate(sample)}"`,
@@ -374,8 +382,10 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
   const editableKeys = EDITABLE_SITE_CONTENT_KEYS[namespace];
   if (!editableKeys) return [];
 
+  // A key whose built-in copy is an EMPTY string still gets a field (page
+  // labels: blank = hidden on the site), so gate on type, not truthiness.
   const editableEntries = editableKeys.flatMap((key) =>
-    entries[key]
+    typeof entries[key] === 'string'
       ? ([[key, entries[key], messagesDe[namespace]?.[key] ?? entries[key]]] as const)
       : [],
   );
@@ -983,7 +993,8 @@ function raceContentFields() {
     localizedString(
       'pageLabel',
       'Page Label',
-      'The small coloured line above the page title in the header. Leave blank to use the built-in default.',
+      'The small coloured line above the page title in the header. Leave blank to show no label.',
+      { optional: true },
     ),
     localizedBlockContent(
       'body',

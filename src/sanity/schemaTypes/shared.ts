@@ -9,7 +9,12 @@ import { defineField } from 'sanity';
  * German is the default locale, so the DE field is required.
  */
 
-export function localizedString(name: string, title?: string, description?: string) {
+export function localizedString(
+  name: string,
+  title?: string,
+  description?: string,
+  opts?: { optional?: boolean },
+) {
   return defineField({
     name,
     title,
@@ -21,7 +26,7 @@ export function localizedString(name: string, title?: string, description?: stri
         name: 'de',
         title: '🇩🇪 Deutsch',
         type: 'string',
-        validation: (rule) => rule.required(),
+        validation: opts?.optional ? undefined : (rule) => rule.required(),
       }),
       defineField({ name: 'en', title: '🇬🇧 English', type: 'string' }),
     ],

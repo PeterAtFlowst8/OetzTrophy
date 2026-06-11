@@ -37,7 +37,7 @@ export default async function KayakCrossPage() {
   return (
     <main>
       <PageHeader
-        label={eventPageLabel(event, locale, 'Kayak Cross')}
+        label={eventPageLabel(event, locale)}
         title={title}
         image={headerImage}
       />

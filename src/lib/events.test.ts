@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pickRaceContent, type SanityEvent } from './events';
+import { eventPageLabel, pickRaceContent, type SanityEvent } from './events';
 
 const make = (over: Partial<SanityEvent>): SanityEvent => ({
   _id: 'x',
@@ -35,5 +35,23 @@ describe('pickRaceContent', () => {
   it('returns null when neither document has content', () => {
     expect(pickRaceContent(make({}), null)).toBeNull();
     expect(pickRaceContent(null, null)).toBeNull();
+  });
+});
+
+describe('eventPageLabel', () => {
+  it('returns the label for the locale', () => {
+    const event = make({ pageLabel: { de: 'Das Rennen', en: 'The Race' } });
+    expect(eventPageLabel(event, 'de')).toBe('Das Rennen');
+    expect(eventPageLabel(event, 'en')).toBe('The Race');
+  });
+
+  it('falls back to the other language when only one is filled in', () => {
+    const event = make({ pageLabel: { de: 'Das Rennen' } });
+    expect(eventPageLabel(event, 'en')).toBe('Das Rennen');
+  });
+
+  it('shows no label when the field is blank', () => {
+    expect(eventPageLabel(make({}), 'de')).toBe('');
+    expect(eventPageLabel(make({ pageLabel: { de: '   ' } }), 'en')).toBe('');
   });
 });
