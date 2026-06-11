@@ -72,7 +72,10 @@ export default function Hero({
 
   const targetDate = festivalDate ? new Date(festivalDate) : new Date('2026-09-17T09:00:00Z');
   const targetTimestamp = targetDate.getTime();
-  const [state, setState] = useState<CountdownState>(() => getCountdownState(new Date(), targetDate));
+  // The countdown is clock-derived and the homepage HTML is ISR-cached, so
+  // reading the clock during render guarantees a hydration mismatch. State
+  // starts empty; the first effect tick fills in the real values after mount.
+  const [state, setState] = useState<CountdownState | null>(null);
   const registrationOpen = isRegistrationOpen(registrationOpensAt);
   const opensLabel = registrationOpensLabel(locale, registrationOpensAt);
 
@@ -83,13 +86,17 @@ export default function Hero({
     return () => clearInterval(id);
   }, [targetTimestamp]);
 
+  const delta = state && state.phase !== 'static' ? state.delta : null;
+  // Pre-mount the digits render as hidden "00" placeholders: tabular-nums
+  // keeps every two-digit value the same width, so nothing shifts when the
+  // real countdown appears.
   const units =
-    state && state.phase !== 'static'
+    state === null || delta
       ? [
-          { v: String(state.delta.days).padStart(2, '0'), l: tc('days') },
-          { v: String(state.delta.hours).padStart(2, '0'), l: tc('hours') },
-          { v: String(state.delta.minutes).padStart(2, '0'), l: tc('minutes') },
-          { v: String(state.delta.seconds).padStart(2, '0'), l: tc('seconds') },
+          { v: delta ? String(delta.days).padStart(2, '0') : '00', l: tc('days') },
+          { v: delta ? String(delta.hours).padStart(2, '0') : '00', l: tc('hours') },
+          { v: delta ? String(delta.minutes).padStart(2, '0') : '00', l: tc('minutes') },
+          { v: delta ? String(delta.seconds).padStart(2, '0') : '00', l: tc('seconds') },
         ]
       : null;
 
@@ -139,7 +146,10 @@ export default function Hero({
               >
                 {countdownLabel}
               </p>
-              <div className="flex items-end justify-center gap-0">
+              <div
+                className="flex items-end justify-center gap-0"
+                style={{ visibility: delta ? undefined : 'hidden' }}
+              >
                 {units.map(({ v, l }, i) => (
                   <div key={l} className="flex items-end">
                     {i > 0 && (
