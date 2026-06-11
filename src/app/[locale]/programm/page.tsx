@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHeader from '@/components/PageHeader';
-import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
+import { getOptionalSiteImage, getPageSeo, getProgramDays } from '@/lib/siteContent';
 import { headingFontSize } from '@/lib/headingFit';
 import TextWithLinks from '@/components/TextWithLinks';
+import ProgramSchedule from '@/components/ProgramSchedule';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -15,9 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 60;
 
-export default async function ProgrammPage() {
+export default async function ProgrammPage({ params }: Props) {
+  const { locale } = await params;
   const t = await getTranslations('programm');
   const headerImage = await getOptionalSiteImage('program', { width: 2000 });
+  const scheduleDays = await getProgramDays(locale);
 
   return (
     <main>
@@ -36,6 +39,10 @@ export default async function ProgrammPage() {
           >
             <TextWithLinks text={t('intro')} />
           </p>
+
+          {scheduleDays && (
+            <ProgramSchedule heading={t('scheduleHeading')} days={scheduleDays} />
+          )}
 
           {/* Important places — the Google Map embed goes here. */}
           <h2

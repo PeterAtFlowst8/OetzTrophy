@@ -3,6 +3,7 @@ import { sanityClient, urlFor } from './sanity';
 import { projectId, dataset } from '@/sanity/env';
 import { EDITABLE_SITE_CONTENT_KEYS } from './siteContentFields';
 import { mergeSeo, seoFieldName, type SeoPageKey } from './seoDefaults';
+import { mapProgramDays, type ProgramDay } from './programSchedule';
 
 /**
  * Reads the `siteContent` singleton (managed in Studio) and exposes:
@@ -165,6 +166,16 @@ export async function getMenuItems(locale: string): Promise<MenuItem[] | null> {
     items.push({ href, label, external });
   }
   return items.length > 0 ? items : null;
+}
+
+/**
+ * The client-managed day-by-day schedule on the Program page (Studio:
+ * Program Page tab → Daily schedule), localised and render-ready. Null while
+ * the list is empty so the page hides the section entirely.
+ */
+export async function getProgramDays(locale: string): Promise<ProgramDay[] | null> {
+  const doc = await getSiteContentDoc();
+  return mapProgramDays(doc?.programDays, locale);
 }
 
 /**

@@ -199,6 +199,7 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     label: 'Page label',
     title: 'Page title',
     intro: 'Intro text',
+    scheduleHeading: 'Schedule section heading',
     mapHeading: 'Map section heading',
     mapComingSoon: 'Map coming-soon text',
   },
@@ -851,6 +852,120 @@ const menuItemsField = defineField({
   ],
 });
 
+/**
+ * Day-by-day visitor schedule on the Program page. Structured (not flat
+ * strings) so the client can add days and any number of entries per day and
+ * drag to reorder. An EMPTY list hides the whole section on the website, so
+ * nothing made-up goes live before the real times exist.
+ */
+const programDaysField = defineField({
+  name: 'programDays',
+  title: 'Daily schedule',
+  type: 'array',
+  group: 'programPage',
+  description:
+    'The day-by-day programme shown on the Program page. Add one block per festival day and any number of entries per day — drag to reorder. Leave the list empty to hide the whole section on the website.',
+  of: [
+    {
+      type: 'object',
+      name: 'programDay',
+      title: 'Festival day',
+      fields: [
+        defineField({
+          name: 'date',
+          title: 'Date',
+          type: 'date',
+          description:
+            'The day heading is generated from this date in both languages, e.g. "Freitag, 18. September 2026" / "Friday, 18 September 2026".',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'label',
+          title: 'Day label (optional)',
+          type: 'object',
+          options: { columns: 2 },
+          description:
+            'Replaces the automatic weekday heading, e.g. "Renntag 1" / "Race day 1". Leave blank to show the weekday.',
+          fields: [
+            defineField({ name: 'de', title: 'German', type: 'string' }),
+            defineField({ name: 'en', title: 'English', type: 'string' }),
+          ],
+        }),
+        defineField({
+          name: 'entries',
+          title: 'Programme entries',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              name: 'programEntry',
+              title: 'Programme entry',
+              fields: [
+                defineField({
+                  name: 'time',
+                  title: 'Time',
+                  type: 'string',
+                  description: 'Free text, e.g. "08:00 – 12:00", "ab 19:00" or "ganztägig".',
+                  validation: (Rule) => Rule.required(),
+                }),
+                defineField({
+                  name: 'title',
+                  title: 'Title',
+                  type: 'object',
+                  options: { columns: 2 },
+                  fields: [
+                    defineField({
+                      name: 'de',
+                      title: 'German',
+                      type: 'string',
+                      validation: (Rule) => Rule.required(),
+                    }),
+                    defineField({ name: 'en', title: 'English', type: 'string' }),
+                  ],
+                  validation: (Rule) => Rule.required(),
+                }),
+                defineField({
+                  name: 'description',
+                  title: 'Description (optional)',
+                  type: 'object',
+                  description: 'Short extra line under the title.',
+                  fields: [
+                    defineField({ name: 'de', title: 'German', type: 'text', rows: 2 }),
+                    defineField({ name: 'en', title: 'English', type: 'text', rows: 2 }),
+                  ],
+                }),
+              ],
+              preview: {
+                select: { time: 'time', de: 'title.de', en: 'title.en' },
+                prepare({ time, de, en }) {
+                  return { title: [time, de || en].filter(Boolean).join(' · ') || 'Programme entry' };
+                },
+              },
+            },
+          ],
+        }),
+      ],
+      preview: {
+        select: { date: 'date', de: 'label.de', en: 'label.en', entries: 'entries' },
+        prepare({ date, de, en, entries }) {
+          const heading =
+            de ||
+            en ||
+            (typeof date === 'string' && date
+              ? new Date(`${date}T12:00:00`).toLocaleDateString('de-AT', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                })
+              : 'Festival day');
+          const count = Array.isArray(entries) ? entries.length : 0;
+          return { title: heading, subtitle: `${count} ${count === 1 ? 'entry' : 'entries'}` };
+        },
+      },
+    },
+  ],
+});
+
 const designFields = [
   defineField({
     name: 'accentColor',
@@ -916,6 +1031,7 @@ const FIELD_ORDER = [
   // Program page
   'imageProgram',
   'programm',
+  'programDays',
   'seoProgram',
   // Registration
   'imageRegistration',
@@ -954,7 +1070,7 @@ const FIELD_ORDER = [
   'accentColor',
 ];
 
-const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, menuItemsField, ...designFields, ...seoFields];
+const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, menuItemsField, programDaysField, ...designFields, ...seoFields];
 const fieldByName = new Map(allFields.map((field) => [field.name, field]));
 const orderedFields = [
   ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),
