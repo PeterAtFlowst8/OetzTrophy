@@ -6,7 +6,7 @@ import PageHeader from '@/components/PageHeader';
 import { richTextComponents } from '@/components/richTextComponents';
 import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import CalendarActions from '@/components/CalendarActions';
-import { getEventForPage, localizedField } from '@/lib/events';
+import { getEventForPage, eventPageLabel, localizedField } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
 import TextWithLinks from '@/components/TextWithLinks';
 
@@ -45,7 +45,7 @@ export default async function KajakfestivalPage() {
   return (
     <main>
       <PageHeader
-        label="Kajakfestival"
+        label={eventPageLabel(event, locale, locale === 'de' ? 'Kajakfestival' : 'Kayak Festival')}
         title={title}
         image={headerImage}
       />

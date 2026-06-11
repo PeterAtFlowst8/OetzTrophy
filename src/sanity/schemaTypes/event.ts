@@ -18,6 +18,11 @@ export const event = defineType({
       'Page Title',
       'Shown as the main heading on the public race/festival page.',
     ),
+    localizedString(
+      'pageLabel',
+      'Page Label',
+      'The small coloured line above the page title in the header. Leave blank to use the built-in default.',
+    ),
     localizedSlug('slug', 'Page URL Slug'),
     defineField({
       name: 'date',

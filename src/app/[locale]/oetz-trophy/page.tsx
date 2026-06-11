@@ -8,7 +8,7 @@ import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
-import { getEventForPage, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
+import { getEventForPage, eventPageLabel, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -37,7 +37,7 @@ export default async function OetzTrophyPage() {
   return (
     <main>
       <PageHeader
-        label="OETZ TROPHY"
+        label={eventPageLabel(event, locale, 'OETZ TROPHY')}
         title={title}
         image={headerImage}
       />

@@ -3,6 +3,7 @@ import { sanityClient } from './sanity';
 export type SanityEvent = {
   _id: string;
   title: { de: string; en: string };
+  pageLabel?: { de?: string; en?: string };
   slug: { de: { current: string }; en: { current: string } };
   date: string;
   entryType: string;
@@ -19,7 +20,7 @@ export type SanityEvent = {
 // "kayak-cross" and the page disappeared). The routes are fixed in code, so
 // the lookup key must be something the client can't change.
 const eventForPageQuery = `*[_type == "event" && (_id == $id || slug.de.current == $slug || slug.en.current == $slug)][0] {
-  _id, title, slug, date, entryType, format, excerpt, body, rules
+  _id, title, pageLabel, slug, date, entryType, format, excerpt, body, rules
 }`;
 
 const allEventsQuery = `*[_type == "event"] | order(date asc) {
@@ -39,6 +40,22 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
 
 export function localizedField<T>(field: { de: T; en: T }, locale: string): T {
   return locale === 'en' ? (field.en || field.de) : field.de;
+}
+
+/**
+ * The small line above the page title, editable on the event document
+ * ("Page Label"). Falls back to the built-in default when blank, and to the
+ * other language when only one is filled in.
+ */
+export function eventPageLabel(
+  event: SanityEvent,
+  locale: string,
+  fallback: string,
+): string {
+  const label = event.pageLabel;
+  const value =
+    locale === 'en' ? label?.en || label?.de : label?.de || label?.en;
+  return value?.trim() || fallback;
 }
 
 export function formatEventDate(dateString: string, locale: string): string {
