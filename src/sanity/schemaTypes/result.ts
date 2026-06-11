@@ -20,7 +20,7 @@ export const result = defineType({
       options: {
         list: [
           { title: 'Oetz Trophy', value: 'oetz-trophy' },
-          { title: 'Boater X', value: 'boater-x' },
+          { title: 'Kayak Cross', value: 'boater-x' },
         ],
       },
       validation: (rule) => rule.required(),

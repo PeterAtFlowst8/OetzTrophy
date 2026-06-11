@@ -8,7 +8,7 @@ import type { MenuItem } from '@/lib/siteContent';
 
 const desktopLinks = [
   { href: '/oetz-trophy', labelKey: 'race' },
-  { href: '/boater-x', labelKey: 'boaterX' },
+  { href: '/kayak-cross', labelKey: 'boaterX' },
   { href: '/kajakfestival', labelKey: 'festival' },
   { href: '/programm', labelKey: 'program' },
   { href: '/news', labelKey: 'news' },

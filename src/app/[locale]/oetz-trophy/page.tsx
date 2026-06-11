@@ -77,7 +77,7 @@ export default async function OetzTrophyPage() {
               ))}
             </div>
 
-            {/* Registration CTA - shared registration with Boater X */}
+            {/* Registration CTA - shared registration with Kayak Cross */}
             <Link
               href="/registration"
               className="inline-flex items-center gap-3 px-6 py-4 mb-16 md:mb-20 transition-opacity duration-200 hover:opacity-90"

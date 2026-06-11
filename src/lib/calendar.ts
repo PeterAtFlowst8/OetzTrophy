@@ -26,13 +26,13 @@ function calendarCopy(locale?: string): CalendarCopy {
     ? {
         summary: 'OETZ TROPHY Rennwochenende 2026',
         description:
-          'Ötztaler Kajakfestival mit Qualifikation, Boater X und OETZ TROPHY auf der Ötztaler Ache.',
+          'Ötztaler Kajakfestival mit Qualifikation, Kayak Cross und OETZ TROPHY auf der Ötztaler Ache.',
         location: 'Oetz, Tirol, Österreich',
       }
     : {
         summary: 'OETZ TROPHY Race Weekend 2026',
         description:
-          'Ötztal Kayak Festival with qualifying heats, Boater X and the OETZ TROPHY on the Ötztaler Ache.',
+          'Ötztal Kayak Festival with qualifying heats, Kayak Cross and the OETZ TROPHY on the Ötztaler Ache.',
         location: 'Oetz, Tyrol, Austria',
       };
 }

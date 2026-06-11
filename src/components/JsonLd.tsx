@@ -36,7 +36,7 @@ export const festivalEventSchema = {
   '@context': 'https://schema.org',
   '@type': 'SportsEvent',
   name: 'Ötztaler Kajakfestival 2026',
-  description: 'Annual kayak festival featuring the OETZ TROPHY race, Boater X, and community events on the Ötztaler Ache.',
+  description: 'Annual kayak festival featuring the OETZ TROPHY race, Kayak Cross, and community events on the Ötztaler Ache.',
   startDate: '2026-09-17',
   endDate: '2026-09-20',
   eventStatus: 'https://schema.org/EventScheduled',
@@ -65,7 +65,7 @@ export const festivalEventSchema = {
     },
     {
       '@type': 'SportsEvent',
-      name: 'Boater X - Oetz Kayak Cross',
+      name: 'Kayak Cross',
       startDate: '2026-09-18',
       description: 'Open entry kayak cross race. Four paddlers, head-to-head.',
     },

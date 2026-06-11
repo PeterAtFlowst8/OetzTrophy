@@ -18,7 +18,7 @@
   },
   "marquee": {
     "item0": "OETZ TROPHY · 19 Sept",
-    "item1": "Boater X · 18 Sept",
+    "item1": "Kayak Cross · 18 Sept",
     "item2": "Kayak Festival · 17-20 Sept",
     "item3": "Ötztaler Ache · WW V"
   },
@@ -42,7 +42,7 @@
     "day0Label": "Thu",
     "day0": "Opening & welcome party",
     "day1Label": "Fri",
-    "day1": "Qualifying heats & Boater X",
+    "day1": "Qualifying heats & Kayak Cross",
     "day2Label": "Sat",
     "day2": "OETZ TROPHY: main race",
     "day3Label": "Sun",
@@ -54,8 +54,8 @@
     "headline": "The Programme",
     "item0Title": "Kayak Festival",
     "item0Subtitle": "17-20 September 2026",
-    "item1Title": "Boater X",
-    "item1Subtitle": "Kayak Cross race · Fri 18 Sept",
+    "item1Title": "Kayak Cross",
+    "item1Subtitle": "Head-to-head race · Fri 18 Sept",
     "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualification · Sat 19 Sept"
   },
@@ -159,9 +159,9 @@
     "rule5": "Acceptance of the terms & conditions and privacy policy at bib number distribution."
   },
   "boaterX": {
-    "label": "Boater Cross",
-    "title": "Boater X",
-    "intro": "Following the qualifying heats on Friday morning, in which the fastest 40 men and 15 women qualify for the main competition on Saturday, the Boater X (Oetz Kayak Cross) will take place on the slalom course in Oetz. Only those who have not qualified for the main competition will be allowed to participate in this event. The number of participants in the Boater X is limited to 32 men and 16 women. So it's definitely worth giving it your all in the qualifiers.",
+    "label": "Kayak Cross",
+    "title": "Kayak Cross",
+    "intro": "Following the qualifying heats on Friday morning, in which the fastest 40 men and 15 women qualify for the main competition on Saturday, the Kayak Cross will take place on the slalom course in Oetz. Only those who have not qualified for the main competition will be allowed to participate in this event. The number of participants in the Kayak Cross is limited to 32 men and 16 women. So it's definitely worth giving it your all in the qualifiers.",
     "dateLabel": "Date",
     "dateValue": "18 Sept 2026",
     "formatLabel": "Format",
@@ -187,7 +187,7 @@
     "day1Desc": "Opening of the Kayak Festival. Arrivals, campsite setup, first community gathering. Welcome party in the evening.",
     "day2Day": "Friday",
     "day2Date": "18 September",
-    "day2Desc": "Qualifying heats in the morning; Boater X (Oetz Kayak Cross) on the slalom course in the afternoon. Demo boats from sponsors. Film screenings and live music in the evening.",
+    "day2Desc": "Qualifying heats in the morning; Kayak Cross on the slalom course in the afternoon. Demo boats from sponsors. Film screenings and live music in the evening.",
     "day3Day": "Saturday",
     "day3Date": "19 September",
     "day3Desc": "OETZ TROPHY: the main race (qualification required). Award ceremony and evening programme.",
@@ -216,12 +216,12 @@
     "label": "Results",
     "title": "Results",
     "comingSoon": "Coming Soon",
-    "description": "Results from the OETZ TROPHY and Boater X will be published here after the race weekend."
+    "description": "Results from the OETZ TROPHY and Kayak Cross will be published here after the race weekend."
   },
   "registration": {
     "label": "Registration",
     "title": "Registration",
-    "intro": "Register for the OETZ TROPHY race weekend. Friday morning's qualifying heats decide it all: the fastest 40 men and 15 women race the OETZ TROPHY on Saturday; the next 32 men and 16 women race the Boater X on Friday afternoon. Open to all paddlers with whitewater experience (min. class IV). The registration fee secures your start position.",
+    "intro": "Register for the OETZ TROPHY race weekend. Friday morning's qualifying heats decide it all: the fastest 40 men and 15 women race the OETZ TROPHY on Saturday; the next 32 men and 16 women race the Kayak Cross on Friday afternoon. Open to all paddlers with whitewater experience (min. class IV). The registration fee secures your start position.",
     "formTitle": "Your race details",
     "formIntro": "Use the same email address you want attached to payment and race communication.",
     "raceLabel": "Race",

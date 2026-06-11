@@ -5,7 +5,7 @@ import { getSiteImage, type SiteImageKey } from '@/lib/siteContent';
 
 const eventConfigs = [
   { slot: 'programmeFestival', fallback: '/images/event-festival-2.jpg', href: '/kajakfestival' },
-  { slot: 'programmeBoaterX', fallback: '/images/event-boaterx.jpg', href: '/boater-x' },
+  { slot: 'programmeBoaterX', fallback: '/images/event-boaterx.jpg', href: '/kayak-cross' },
   { slot: 'programmeOetzTrophy', fallback: '/images/hero.jpg', href: '/oetz-trophy' },
 ] as const satisfies readonly { slot: SiteImageKey; fallback: string; href: string }[];
 
@@ -19,7 +19,7 @@ function EventCard({
   return (
     <div>
       <Link
-        href={event.href as '/oetz-trophy' | '/boater-x' | '/kajakfestival'}
+        href={event.href as '/oetz-trophy' | '/kayak-cross' | '/kajakfestival'}
         className="group relative overflow-hidden block cursor-pointer"
         style={{ aspectRatio: '3/4' }}
       >

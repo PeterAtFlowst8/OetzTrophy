@@ -45,7 +45,7 @@ export const event = defineType({
       title: 'Entry / Registration Path',
       type: 'string',
       description:
-        'This controls the participation label only. Boater X remains its own race, but paid race participation uses one shared race-weekend registration.',
+        'This controls the participation label only. Kayak Cross remains its own race, but paid race participation uses one shared race-weekend registration.',
       options: {
         list: [
           { title: 'Qualification', value: 'qualification' },

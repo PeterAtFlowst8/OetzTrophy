@@ -609,7 +609,7 @@ const heroMediaFields = [
 const MENU_PAGE_OPTIONS = [
   { title: 'Homepage', value: '/' },
   { title: 'OETZ TROPHY', value: '/oetz-trophy' },
-  { title: 'Kayak Cross', value: '/boater-x' },
+  { title: 'Kayak Cross', value: '/kayak-cross' },
   { title: 'Kayak Festival', value: '/kajakfestival' },
   { title: 'Program', value: '/programm' },
   { title: 'News', value: '/news' },

@@ -18,7 +18,7 @@
   },
   "marquee": {
     "item0": "OETZ TROPHY · 19. Sept",
-    "item1": "Boater X · 18. Sept",
+    "item1": "Kayak Cross · 18. Sept",
     "item2": "Kajakfestival · 17.-20. Sept",
     "item3": "Ötztaler Ache · WW V"
   },
@@ -42,7 +42,7 @@
     "day0Label": "Do",
     "day0": "Eröffnung & Willkommensfeier",
     "day1Label": "Fr",
-    "day1": "Qualifikation & Boater X",
+    "day1": "Qualifikation & Kayak Cross",
     "day2Label": "Sa",
     "day2": "OETZ TROPHY: Hauptrennen",
     "day3Label": "So",
@@ -54,8 +54,8 @@
     "headline": "Das Programm",
     "item0Title": "Kajakfestival",
     "item0Subtitle": "17.-20. September 2026",
-    "item1Title": "Boater X",
-    "item1Subtitle": "Kayak-Cross-Rennen · Fr 18. Sept",
+    "item1Title": "Kayak Cross",
+    "item1Subtitle": "Head-to-Head-Rennen · Fr 18. Sept",
     "item2Title": "OETZ TROPHY",
     "item2Subtitle": "Qualifikation · Sa 19. Sept"
   },
@@ -159,9 +159,9 @@
     "rule5": "Akzeptanz der Teilnahmebedingungen und Datenschutzerklärung bei der Startnummernausgabe."
   },
   "boaterX": {
-    "label": "Boater Cross",
-    "title": "Boater X",
-    "intro": "Im Anschluss an die Qualifikationsläufe am Freitagvormittag, bei denen sich die 40 schnellsten Männer und 15 schnellsten Frauen für das Hauptrennen am Samstag qualifizieren, findet der Boater X (Oetz Kayak Cross) auf der Slalomstrecke in Oetz statt. Nur wer sich nicht für das Hauptrennen qualifiziert hat, darf an diesem Event teilnehmen. Die Teilnehmerzahl beim Boater X ist auf 32 Männer und 16 Frauen begrenzt. Es lohnt sich also definitiv, in der Qualifikation alles zu geben.",
+    "label": "Kayak Cross",
+    "title": "Kayak Cross",
+    "intro": "Im Anschluss an die Qualifikationsläufe am Freitagvormittag, bei denen sich die 40 schnellsten Männer und 15 schnellsten Frauen für das Hauptrennen am Samstag qualifizieren, findet der Kayak Cross auf der Slalomstrecke in Oetz statt. Nur wer sich nicht für das Hauptrennen qualifiziert hat, darf an diesem Event teilnehmen. Die Teilnehmerzahl beim Kayak Cross ist auf 32 Männer und 16 Frauen begrenzt. Es lohnt sich also definitiv, in der Qualifikation alles zu geben.",
     "dateLabel": "Datum",
     "dateValue": "18. Sept 2026",
     "formatLabel": "Format",
@@ -187,7 +187,7 @@
     "day1Desc": "Eröffnung des Kajakfestivals. Anreise, Campingplatz-Setup, erstes Treffen der Community. Abends Willkommensfeier.",
     "day2Day": "Freitag",
     "day2Date": "18. September",
-    "day2Desc": "Qualifikationsläufe am Vormittag; Boater X (Oetz Kayak Cross) am Nachmittag auf der Slalomstrecke. Testboote der Sponsoren. Abends Filmvorführungen und Live-Musik.",
+    "day2Desc": "Qualifikationsläufe am Vormittag; Kayak Cross am Nachmittag auf der Slalomstrecke. Testboote der Sponsoren. Abends Filmvorführungen und Live-Musik.",
     "day3Day": "Samstag",
     "day3Date": "19. September",
     "day3Desc": "OETZ TROPHY: das Hauptrennen (Qualifikation erforderlich). Siegerehrung und Abendprogramm.",
@@ -216,12 +216,12 @@
     "label": "Ergebnisse",
     "title": "Ergebnisse",
     "comingSoon": "Demnächst",
-    "description": "Die Ergebnisse der OETZ TROPHY und des Boater X werden nach dem Rennwochenende hier veröffentlicht."
+    "description": "Die Ergebnisse der OETZ TROPHY und des Kayak Cross werden nach dem Rennwochenende hier veröffentlicht."
   },
   "registration": {
     "label": "Anmeldung",
     "title": "Anmeldung",
-    "intro": "Melde dich für das OETZ TROPHY Rennwochenende an. Die Qualifikationsläufe am Freitagvormittag entscheiden alles: Die 40 schnellsten Männer und 15 schnellsten Frauen starten am Samstag in der OETZ TROPHY; die nächsten 32 Männer und 16 Frauen fahren am Freitagnachmittag den Boater X. Offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV). Die Anmeldegebühr sichert deinen Startplatz.",
+    "intro": "Melde dich für das OETZ TROPHY Rennwochenende an. Die Qualifikationsläufe am Freitagvormittag entscheiden alles: Die 40 schnellsten Männer und 15 schnellsten Frauen starten am Samstag in der OETZ TROPHY; die nächsten 32 Männer und 16 Frauen fahren am Freitagnachmittag den Kayak Cross. Offen für alle Paddler mit Wildwasser-Erfahrung (min. WW IV). Die Anmeldegebühr sichert deinen Startplatz.",
     "formTitle": "Deine Renndaten",
     "formIntro": "Nutze die E-Mail-Adresse, die für Zahlung und Rennkommunikation verwendet werden soll.",
     "raceLabel": "Rennen",

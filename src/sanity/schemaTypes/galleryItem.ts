@@ -25,7 +25,7 @@ export const galleryItem = defineType({
       options: {
         list: [
           { title: 'Oetz Trophy', value: 'oetz-trophy' },
-          { title: 'Boater X', value: 'boater-x' },
+          { title: 'Kayak Cross', value: 'boater-x' },
           { title: 'Kayak Festival', value: 'kajakfestival' },
         ],
       },

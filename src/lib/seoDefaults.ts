@@ -29,12 +29,12 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
     de: {
       title: 'OETZ TROPHY - Extreme Kayak Championships · Ötztaler Ache',
       description:
-        'Das Ötztaler Kajakfestival 2026: 4 Tage Wildwasser, der offene Boater X und die OETZ TROPHY auf der Ötztaler Ache. 17.-20. September 2026 in Oetz, Tirol, Österreich.',
+        'Das Ötztaler Kajakfestival 2026: 4 Tage Wildwasser, der offene Kayak Cross und die OETZ TROPHY auf der Ötztaler Ache. 17.-20. September 2026 in Oetz, Tirol, Österreich.',
     },
     en: {
       title: 'OETZ TROPHY - Extreme Kayak Championships · Ötztaler Ache',
       description:
-        'The Ötztal Kayak Festival 2026: 4 days of whitewater racing, the open Boater X and the OETZ TROPHY on the Ötztaler Ache. 17-20 September 2026 in Oetz, Tyrol, Austria.',
+        'The Ötztal Kayak Festival 2026: 4 days of whitewater racing, the open Kayak Cross and the OETZ TROPHY on the Ötztaler Ache. 17-20 September 2026 in Oetz, Tyrol, Austria.',
     },
   },
   oetzTrophy: {
@@ -51,14 +51,14 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
   },
   boaterX: {
     de: {
-      title: 'Boater X - Kajak Cross auf der Slalomstrecke in Oetz',
+      title: 'Kayak Cross - Rennen auf der Slalomstrecke in Oetz',
       description:
-        'Der Boater X (Oetz Kayak Cross) am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.',
+        'Der Kayak Cross am Freitagnachmittag auf der Slalomstrecke in Oetz. Teilnahme für Paddler, die sich nicht für die OETZ TROPHY qualifiziert haben. Begrenzt auf 32 Männer und 16 Frauen. 18. September 2026.',
     },
     en: {
-      title: 'Boater X - Kayak Cross on the Slalom Course in Oetz',
+      title: 'Kayak Cross - Racing on the Slalom Course in Oetz',
       description:
-        'Boater X (Oetz Kayak Cross) on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.',
+        'The Kayak Cross on Friday afternoon at the slalom course in Oetz. For paddlers who did not qualify for the OETZ TROPHY. Capped at 32 men and 16 women. 18 September 2026.',
     },
   },
   kajakfestival: {
@@ -101,48 +101,48 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
     de: {
       title: 'Anmeldung - OETZ TROPHY Rennwochenende 2026',
       description:
-        'Melde dich für das OETZ TROPHY Rennwochenende 2026 an. Qualifikation, Boater X und OETZ TROPHY auf der Ötztaler Ache in Tirol.',
+        'Melde dich für das OETZ TROPHY Rennwochenende 2026 an. Qualifikation, Kayak Cross und OETZ TROPHY auf der Ötztaler Ache in Tirol.',
     },
     en: {
       title: 'Registration - OETZ TROPHY Race Weekend 2026',
       description:
-        'Register for the OETZ TROPHY race weekend 2026. Qualification, Boater X and OETZ TROPHY on the Ötztaler Ache in Tyrol, Austria.',
+        'Register for the OETZ TROPHY race weekend 2026. Qualification, Kayak Cross and OETZ TROPHY on the Ötztaler Ache in Tyrol, Austria.',
     },
   },
   news: {
     de: {
       title: 'News & Berichte - OETZ TROPHY Kajakfestival Ötztal',
       description:
-        'Aktuelle Neuigkeiten, Rennberichte und Ergebnisse rund um die OETZ TROPHY, den Boater X und das Kajakfestival auf der Ötztaler Ache in Tirol, Österreich.',
+        'Aktuelle Neuigkeiten, Rennberichte und Ergebnisse rund um die OETZ TROPHY, den Kayak Cross und das Kajakfestival auf der Ötztaler Ache in Tirol, Österreich.',
     },
     en: {
       title: 'News & Reports - OETZ TROPHY Kayak Festival Ötztal',
       description:
-        'Latest news, race reports and results from the OETZ TROPHY, the Boater X and the Kayak Festival on the Ötztaler Ache in Tyrol, Austria. Updated regularly.',
+        'Latest news, race reports and results from the OETZ TROPHY, the Kayak Cross and the Kayak Festival on the Ötztaler Ache in Tyrol, Austria. Updated regularly.',
     },
   },
   gallery: {
     de: {
       title: 'Galerie - OETZ TROPHY Fotos & Videos',
       description:
-        'Fotos und Videos von der OETZ TROPHY, dem Boater X und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.',
+        'Fotos und Videos von der OETZ TROPHY, dem Kayak Cross und dem Ötztaler Kajakfestival. Eindrücke von der Ötztaler Ache in Tirol.',
     },
     en: {
       title: 'Gallery - OETZ TROPHY Photos & Videos',
       description:
-        'Photos and videos from the OETZ TROPHY, Boater X and the Ötztal Kayak Festival. Impressions from the Ötztaler Ache in Tyrol, Austria.',
+        'Photos and videos from the OETZ TROPHY, Kayak Cross and the Ötztal Kayak Festival. Impressions from the Ötztaler Ache in Tyrol, Austria.',
     },
   },
   results: {
     de: {
-      title: 'Ergebnisse - OETZ TROPHY & Boater X',
+      title: 'Ergebnisse - OETZ TROPHY & Kayak Cross',
       description:
-        'Ergebnisse der OETZ TROPHY und des Boater X. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.',
+        'Ergebnisse der OETZ TROPHY und des Kayak Cross. Zeitfahren und Head-to-Head-Rennen auf der Ötztaler Ache in Oetz, Tirol.',
     },
     en: {
-      title: 'Results - OETZ TROPHY & Boater X',
+      title: 'Results - OETZ TROPHY & Kayak Cross',
       description:
-        'Results from the OETZ TROPHY and Boater X. Time trial and head-to-head racing on the Ötztaler Ache in Oetz, Tyrol, Austria.',
+        'Results from the OETZ TROPHY and Kayak Cross. Time trial and head-to-head racing on the Ötztaler Ache in Oetz, Tyrol, Austria.',
     },
   },
   terms: {

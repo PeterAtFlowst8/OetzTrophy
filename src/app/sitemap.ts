@@ -4,7 +4,7 @@ import { SITE_URL as BASE_URL } from '@/lib/site';
 const staticPages = [
   '',
   '/oetz-trophy',
-  '/boater-x',
+  '/kayak-cross',
   '/kajakfestival',
   '/programm',
   '/news',

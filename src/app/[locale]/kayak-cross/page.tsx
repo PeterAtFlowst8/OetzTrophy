@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 60;
 
-export default async function BoaterXPage() {
+export default async function KayakCrossPage() {
   const locale = await getLocale();
-  const event = await getEventForPage('event-boater-x', 'boater-x');
+  const event = await getEventForPage('event-boater-x', 'kayak-cross');
   if (!event) notFound();
 
   const t = await getTranslations('boaterX');
