@@ -1,4 +1,4 @@
-import type { StructureResolver } from 'sanity/structure';
+import type { StructureBuilder, StructureResolver } from 'sanity/structure';
 import {
   CogIcon,
   DocumentTextIcon,
@@ -8,45 +8,51 @@ import {
   ImagesIcon,
   EditIcon,
 } from '@sanity/icons';
-import { apiVersion } from './env';
+import { PAGE_DOCUMENTS, PAGE_DOCUMENT_TYPES } from '../lib/pageDocuments';
+import { PAGE_ICONS } from './schemaTypes/pageContent';
 
 // Single-instance documents, kept out of the generic type lists below.
-const SINGLETONS = ['siteSettings', 'siteContent'];
+const SINGLETONS = ['siteSettings', ...PAGE_DOCUMENT_TYPES];
 const LISTED = ['post', 'event', 'result', 'galleryItem', 'sponsor'];
 
-export const structure: StructureResolver = (S, context) =>
+// Each page document is a singleton whose _id equals its type, so the desk
+// can open it directly — no create/delete, just edit and publish that page.
+const singletonItem = (S: StructureBuilder, type: string, title: string) =>
+  S.listItem()
+    .title(title)
+    .icon(PAGE_ICONS[type])
+    .child(S.document().schemaType(type).documentId(type).title(title));
+
+export const structure: StructureResolver = (S) =>
   S.list()
     .title('OETZ TROPHY')
     .items([
-      // ─── PAGES ───────────────────────────────────────────────
-      // All page text + images, organised page-by-page inside tabs
-      // (Homepage, Contact Page, Legal Pages, Page Images, …).
-      // Resolve the existing document by type (its id may be auto-generated),
-      // falling back to a fixed id when none exists yet.
+      // ─── PAGES (one document per page: text, photos & SEO) ────
       S.listItem()
-        .title('Website Pages — Text & Images')
+        .title('Website Pages')
         .icon(EditIcon)
-        .child(() =>
-          context
-            .getClient({ apiVersion })
-            .fetch<string | null>('*[_type == "siteContent"][0]._id')
-            .then((id) =>
-              S.document()
-                .schemaType('siteContent')
-                .documentId((id || 'siteContent').replace(/^drafts\./, ''))
-                .title('Website Pages — Text & Images'),
+        .child(
+          S.list()
+            .title('Website Pages')
+            .items(
+              PAGE_DOCUMENTS.filter((def) => def.kind === 'page').map((def) =>
+                singletonItem(S, def.type, def.title),
+              ),
             ),
         ),
 
       // Main body text for the race/festival pages (one document each:
-      // OETZ TROPHY, Boater X, Kayak Festival).
+      // OETZ TROPHY, Kayak Cross, Kayak Festival).
       S.documentTypeListItem('event')
         .title('Race & Festival Pages (main text)')
         .icon(CalendarIcon),
 
       S.divider(),
 
-      // ─── SETTINGS ────────────────────────────────────────────
+      // ─── SITE-WIDE ────────────────────────────────────────────
+      ...PAGE_DOCUMENTS.filter((def) => def.kind === 'site').map((def) =>
+        singletonItem(S, def.type, def.title),
+      ),
       S.listItem()
         .title('Festival Dates & Registration')
         .icon(CogIcon)

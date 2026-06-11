@@ -4,17 +4,26 @@ import { projectId, dataset } from '@/sanity/env';
 import { EDITABLE_SITE_CONTENT_KEYS } from './siteContentFields';
 import { mergeSeo, seoFieldName, type SeoPageKey } from './seoDefaults';
 import { mapProgramDays, type ProgramDay } from './programSchedule';
+import { mergeSiteContent } from './mergeSiteContent';
+import { PAGE_DOCUMENT_TYPES } from './pageDocuments';
 
 /**
- * Reads the `siteContent` singleton (managed in Studio) and exposes:
+ * Reads the per-page content documents (managed in Studio, one per page) and
+ * exposes:
  *  - getMessageOverrides(): non-empty UI text to merge over the JSON messages
  *  - getSiteImage(): a Sanity image URL for a given slot, or a static fallback
  *
- * Every read is wrapped so a Sanity outage falls back to the built-in content
- * rather than breaking the page. Result is cached per request via React cache().
+ * The page documents are merged over the legacy `siteContent` singleton into
+ * ONE virtual document (see mergeSiteContent), so every getter below keeps
+ * the field paths it always had. Every read is wrapped so a Sanity outage
+ * falls back to the built-in content rather than breaking the page. Result is
+ * cached per request via React cache().
  */
 
-const QUERY = `*[_type == "siteContent"][0]`;
+const QUERY = `{
+  "legacy": *[_type == "siteContent"][0],
+  "pages": *[_type in $pageTypes]
+}`;
 
 type Leaf = { de?: string; en?: string };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +36,10 @@ const STATIC_MESSAGE_KEYS = new Set([
 
 const getSiteContentDoc = cache(async (): Promise<SiteContentDoc> => {
   try {
-    return await sanityClient.fetch(QUERY);
+    const result = await sanityClient.fetch(QUERY, {
+      pageTypes: [...PAGE_DOCUMENT_TYPES],
+    });
+    return mergeSiteContent(result?.legacy, result?.pages);
   } catch {
     return null;
   }

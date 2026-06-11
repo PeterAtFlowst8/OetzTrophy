@@ -1,13 +1,33 @@
 import { defineType, defineField } from 'sanity';
-import { EditIcon } from '@sanity/icons';
+import {
+  HomeIcon,
+  StarIcon,
+  BoltIcon,
+  CalendarIcon,
+  ClockIcon,
+  ClipboardIcon,
+  DocumentTextIcon,
+  ImagesIcon,
+  ChartUpwardIcon,
+  EnvelopeIcon,
+  BookIcon,
+  MenuIcon,
+  ColorWheelIcon,
+} from '@sanity/icons';
+import type { ComponentType } from 'react';
 import enMessages from '../../../messages/en.json';
 import deMessages from '../../../messages/de.json';
 import { EDITABLE_SITE_CONTENT_KEYS } from '../../lib/siteContentFields';
 import { SEO_DEFAULTS, seoFieldName, type SeoPageKey } from '../../lib/seoDefaults';
+import { PAGE_DOCUMENTS } from '../../lib/pageDocuments';
 import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderInput';
 
 /**
- * Editable UI text + images for the whole marketing site.
+ * Editable UI text + images for the whole marketing site — one document per
+ * page (see `lib/pageDocuments.ts` for the partition). Field names are
+ * IDENTICAL to the former `siteContent` singleton; the read layer merges the
+ * page documents over that legacy document, so values copied by the one-time
+ * migration script keep flowing and nothing here needed renaming.
  *
  * The text fields are generated from `messages/en.json` so the Studio always
  * mirrors the app's translation keys. Each key becomes a `{ de, en }` pair.
@@ -18,65 +38,6 @@ import { makeFallbackPlaceholderInput } from '../components/FallbackPlaceholderI
 
 const messages = enMessages as Record<string, Record<string, string>>;
 const messagesDe = deMessages as Record<string, Record<string, string>>;
-
-// One Studio tab per page, so editors find content by the page it appears on.
-type ContentGroup =
-  | 'homepage'
-  | 'oetzTrophyPage'
-  | 'boaterXPage'
-  | 'festivalPage'
-  | 'programPage'
-  | 'contactPage'
-  | 'registrationPage'
-  | 'newsPage'
-  | 'galleryPage'
-  | 'resultsPage'
-  | 'legal'
-  | 'global'
-  | 'design';
-
-const FIELD_GROUPS: { name: ContentGroup; title: string }[] = [
-  { name: 'homepage', title: 'Homepage' },
-  { name: 'oetzTrophyPage', title: 'OETZ TROPHY Page' },
-  { name: 'boaterXPage', title: 'Boater X Page' },
-  { name: 'festivalPage', title: 'Kayak Festival Page' },
-  { name: 'programPage', title: 'Program Page' },
-  { name: 'registrationPage', title: 'Registration Page' },
-  { name: 'newsPage', title: 'News Page' },
-  { name: 'galleryPage', title: 'Gallery Page' },
-  { name: 'resultsPage', title: 'Results Page' },
-  { name: 'contactPage', title: 'Contact Page' },
-  { name: 'legal', title: 'Legal Pages' },
-  { name: 'global', title: 'Navigation, Footer & Sponsors' },
-  { name: 'design', title: 'Design' },
-];
-
-const SECTION_GROUPS: Record<string, ContentGroup> = {
-  // Homepage — one page, several sections
-  hero: 'homepage',
-  countdown: 'homepage',
-  marquee: 'homepage',
-  calendar: 'homepage',
-  dasRennen: 'homepage',
-  festivalOverview: 'homepage',
-  events: 'homepage',
-  news: 'homepage',
-  // Individual pages
-  kajakfestival: 'festivalPage',
-  programm: 'programPage',
-  kontakt: 'contactPage',
-  gallery: 'galleryPage',
-  results: 'resultsPage',
-  registration: 'registrationPage',
-  // Legal pages (each has its own route)
-  terms: 'legal',
-  impressum: 'legal',
-  datenschutz: 'legal',
-  // Site-wide chrome
-  nav: 'global',
-  footer: 'global',
-  sponsors: 'global',
-};
 
 const SECTION_TITLES: Record<string, string> = {
   hero: 'Homepage Hero',
@@ -113,7 +74,7 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   sponsors: 'Heading for the sponsor logos in the footer.',
   nav: 'Top navigation and mobile menu labels.',
   footer: 'Footer tagline and legal/contact links.',
-  kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title, intro and main body text live in "Race & Festival Page Text" → Kayak Festival (a separate item in the left menu).',
+  kajakfestival: 'Only the schedule table and location block on the Kayak Festival page. The page title, intro and main body text live in "Race & Festival Pages (main text)" → Kayak Festival (a separate item in the left menu).',
   kontakt: 'Labels on the contact page.',
   programm: 'Intro text and headings on the visitor programme page (the map itself is added separately).',
   gallery: 'Coming-soon text for the gallery page.',
@@ -174,8 +135,8 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     headline: 'Section headline',
     item0Title: 'Festival card title',
     item0Subtitle: 'Festival card subtitle',
-    item1Title: 'Boater X card title',
-    item1Subtitle: 'Boater X card subtitle',
+    item1Title: 'Kayak Cross card title',
+    item1Subtitle: 'Kayak Cross card subtitle',
     item2Title: 'OETZ TROPHY card title',
     item2Subtitle: 'OETZ TROPHY card subtitle',
   },
@@ -424,7 +385,6 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
     title: SECTION_TITLES[namespace] ?? fallbackTitle(namespace),
     type: 'object',
     hidden: HIDDEN_SECTIONS.has(namespace) || undefined,
-    group: SECTION_GROUPS[namespace] ?? 'homepage',
     description:
       SECTION_DESCRIPTIONS[namespace] ??
       'Editable website copy for this section. Blank fields use the built-in fallback copy.',
@@ -435,12 +395,11 @@ const textSections = Object.entries(messages).flatMap(([namespace, entries]) => 
   });
 });
 
-function imageField(name: string, title: string, description: string, group?: ContentGroup) {
+function imageField(name: string, title: string, description: string) {
   return defineField({
     name,
     title,
     type: 'image',
-    group,
     description,
     options: { hotspot: true },
     fields: [
@@ -456,231 +415,110 @@ function imageField(name: string, title: string, description: string, group?: Co
 }
 
 /**
- * Legacy image slots. Images now live as per-page fields in each page's tab
- * (see pageImageFields below); the frontend still reads these as a fallback so
- * previously uploaded photos keep working. Hidden so editors only see the new
- * per-page fields — do not delete: the client's uploads are stored here.
- */
-const imagesSection = defineField({
-  name: 'images',
-  title: 'Main Site Images (legacy)',
-  type: 'object',
-  hidden: true,
-  description:
-    'Replace the main photos used across the site. Leave a field empty to keep the current built-in image.',
-  options: { collapsible: true, collapsed: false },
-  fields: [
-    imageField(
-      'logo',
-      'Logo',
-      'Your logo. Appears in the top navigation and the footer. It sits over the hero photo and the dark footer as well as the white menu bar, so use a version that stays legible on both light and dark backgrounds. Leave blank to keep the built-in logo.',
-    ),
-    imageField(
-      'hero',
-      'Homepage hero photo',
-      'Shown full-screen at the top of the homepage. Best as a wide action image.',
-    ),
-    imageField(
-      'festivalOverview',
-      'Homepage festival overview photo',
-      'Shown beside the four-day festival overview section on the homepage.',
-    ),
-    imageField(
-      'oetzTrophy',
-      'OETZ TROPHY page header photo',
-      'Shown at the top of the OETZ TROPHY race page.',
-    ),
-    imageField(
-      'boaterX',
-      'Boater X page header photo',
-      'Shown at the top of the Boater X race page.',
-    ),
-    imageField(
-      'kajakfestival',
-      'Kayak Festival page header photo',
-      'Shown at the top of the Kayak Festival page.',
-    ),
-    imageField(
-      'kontakt',
-      'Contact page header photo',
-      'Shown at the top of the Contact page.',
-    ),
-    imageField(
-      'registration',
-      'Registration page header photo',
-      'Shown at the top of the registration page.',
-    ),
-    imageField(
-      'news',
-      'News page header photo',
-      'Shown at the top of the News page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'gallery',
-      'Gallery page header photo',
-      'Shown at the top of the Gallery page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'results',
-      'Results page header photo',
-      'Shown at the top of the Results page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'terms',
-      'Terms & Conditions page header photo',
-      'Shown at the top of the Terms & Conditions page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'datenschutz',
-      'Privacy Policy page header photo',
-      'Shown at the top of the Privacy Policy page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'impressum',
-      'Legal Notice page header photo',
-      'Shown at the top of the Legal Notice page. Leave blank for the plain dark header.',
-    ),
-    imageField(
-      'programmeFestival',
-      'Homepage programme card: Festival',
-      'Portrait photo on the "Kayak Festival" card in the homepage programme grid.',
-    ),
-    imageField(
-      'programmeBoaterX',
-      'Homepage programme card: Boater X',
-      'Portrait photo on the "Boater X" card in the homepage programme grid.',
-    ),
-    imageField(
-      'programmeOetzTrophy',
-      'Homepage programme card: OETZ TROPHY',
-      'Portrait photo on the "OETZ TROPHY" card in the homepage programme grid.',
-    ),
-  ],
-});
-
-/**
- * Per-page image slots, each placed in its page's tab next to the text it
- * appears with. Data is stored at the top level (e.g. `imageKontakt`); the
- * frontend falls back to the matching legacy `images.*` slot, so photos the
- * client uploaded before this reorganisation keep working untouched.
+ * Per-page image slots. Data is stored under the same top-level names as in
+ * the former singleton (e.g. `imageKontakt`); the frontend still falls back
+ * to the legacy `images.*` slots on the old document, so photos the client
+ * uploaded before the per-page reorganisation keep working untouched.
  */
 const pageImageFields = [
   imageField(
     'imageHero',
     'Hero photo',
     'Shown full-screen at the top of the homepage. Best as a wide action image. Leave empty to keep the current photo.',
-    'homepage',
   ),
   imageField(
     'imageFestivalOverview',
     'Festival overview photo',
     'Shown beside the four-day festival overview section on the homepage. Leave empty to keep the current photo.',
-    'homepage',
   ),
   imageField(
     'imageProgrammeFestival',
     'Programme card photo: Kayak Festival',
     'Portrait photo on the "Kayak Festival" card in the homepage programme grid. Leave empty to keep the current photo.',
-    'homepage',
   ),
   imageField(
     'imageProgrammeBoaterX',
-    'Programme card photo: Boater X',
-    'Portrait photo on the "Boater X" card in the homepage programme grid. Leave empty to keep the current photo.',
-    'homepage',
+    'Programme card photo: Kayak Cross',
+    'Portrait photo on the "Kayak Cross" card in the homepage programme grid. Leave empty to keep the current photo.',
   ),
   imageField(
     'imageProgrammeOetzTrophy',
     'Programme card photo: OETZ TROPHY',
     'Portrait photo on the "OETZ TROPHY" card in the homepage programme grid. Leave empty to keep the current photo.',
-    'homepage',
   ),
   imageField(
     'imageOetzTrophy',
     'OETZ TROPHY page header photo',
     'Shown at the top of the OETZ TROPHY race page. Leave empty to keep the current photo.',
-    'oetzTrophyPage',
   ),
   imageField(
     'imageBoaterX',
-    'Boater X page header photo',
-    'Shown at the top of the Boater X race page. Leave empty to keep the current photo.',
-    'boaterXPage',
+    'Kayak Cross page header photo',
+    'Shown at the top of the Kayak Cross race page. Leave empty to keep the current photo.',
   ),
   imageField(
     'imageKajakfestival',
     'Kayak Festival page header photo',
     'Shown at the top of the Kayak Festival page. Leave empty to keep the current photo.',
-    'festivalPage',
   ),
   imageField(
     'imageProgram',
     'Program page header photo',
     'Shown at the top of the Program page. Leave blank for the plain dark header.',
-    'programPage',
   ),
   imageField(
     'imageKontakt',
     'Contact page header photo',
     'Shown at the top of the Contact page. Leave empty to keep the current photo.',
-    'contactPage',
   ),
   imageField(
     'imageRegistration',
     'Registration page header photo',
     'Shown at the top of the registration page. Leave empty to keep the current photo.',
-    'registrationPage',
   ),
   imageField(
     'imageNews',
     'News page header photo',
     'Shown at the top of the News page. Leave blank for the plain dark header.',
-    'newsPage',
   ),
   imageField(
     'imageGallery',
     'Gallery page header photo',
     'Shown at the top of the Gallery page. Leave blank for the plain dark header.',
-    'galleryPage',
   ),
   imageField(
     'imageResults',
     'Results page header photo',
     'Shown at the top of the Results page. Leave blank for the plain dark header.',
-    'resultsPage',
   ),
   imageField(
     'imageTerms',
     'Terms & Conditions page header photo',
     'Shown at the top of the Terms & Conditions page. Leave blank for the plain dark header.',
-    'legal',
   ),
   imageField(
     'imageImpressum',
     'Legal Notice page header photo',
     'Shown at the top of the Legal Notice page. Leave blank for the plain dark header.',
-    'legal',
   ),
   imageField(
     'imageDatenschutz',
     'Privacy Policy page header photo',
     'Shown at the top of the Privacy Policy page. Leave blank for the plain dark header.',
-    'legal',
   ),
   imageField(
     'imageLogo',
     'Logo',
     'Your logo. Appears in the top navigation and the footer. It sits over the hero photo and the dark footer as well as the white menu bar, so use a version that stays legible on both light and dark backgrounds. Leave blank to keep the built-in logo.',
-    'global',
   ),
 ];
 
 /**
- * Per-page "how this page appears in Google" fields. One per page, placed in
- * that page's tab. Blank fields fall back to the built-in copy (shown as the
- * greyed placeholder), exactly like the text fields above.
+ * Per-page "how this page appears in Google" fields. Blank fields fall back
+ * to the built-in copy (shown as the greyed placeholder), exactly like the
+ * text fields above.
  */
-function seoField(key: SeoPageKey, group: ContentGroup, pageTitle: string) {
+function seoField(key: SeoPageKey, pageTitle: string) {
   const langPair = (
     name: 'title' | 'description',
     fieldTitle: string,
@@ -715,7 +553,6 @@ function seoField(key: SeoPageKey, group: ContentGroup, pageTitle: string) {
     name: seoFieldName(key),
     title: `${pageTitle}: Google search result (SEO)`,
     type: 'object',
-    group,
     options: { collapsible: true, collapsed: true },
     description:
       'The title and short description shown for this page on Google and when the link is shared. Leave blank to use the built-in text.',
@@ -736,7 +573,6 @@ const heroMediaFields = [
     name: 'heroMediaType',
     title: 'Hero: photo or video',
     type: 'string',
-    group: 'homepage',
     options: {
       list: [
         { title: 'Photo', value: 'image' },
@@ -753,7 +589,6 @@ const heroMediaFields = [
     name: 'heroVideo',
     title: 'Hero video',
     type: 'file',
-    group: 'homepage',
     options: { accept: 'video/mp4,video/webm' },
     hidden: ({ document }) => document?.heroMediaType !== 'video',
     description:
@@ -763,7 +598,6 @@ const heroMediaFields = [
     name: 'heroVideoAutoplay',
     title: 'Autoplay the hero video',
     type: 'boolean',
-    group: 'homepage',
     initialValue: true,
     hidden: ({ document }) => document?.heroMediaType !== 'video',
     description:
@@ -799,7 +633,6 @@ const menuItemsField = defineField({
   name: 'menuItems',
   title: 'Menu items',
   type: 'array',
-  group: 'global',
   description:
     'The links in the top navigation and mobile menu, in order (drag to reorder). Leave the list empty to keep the standard menu. The Registration button and the language switch are always shown and are not part of this list.',
   of: [
@@ -862,7 +695,6 @@ const programDaysField = defineField({
   name: 'programDays',
   title: 'Daily schedule',
   type: 'array',
-  group: 'programPage',
   description:
     'The day-by-day programme shown on the Program page. Add one block per festival day and any number of entries per day — drag to reorder. Leave the list empty to hide the whole section on the website.',
   of: [
@@ -971,7 +803,6 @@ const designFields = [
     name: 'accentColor',
     title: 'Accent colour',
     type: 'color',
-    group: 'design',
     options: { disableAlpha: true },
     description:
       'The highlight colour for buttons, badges, the ticker and accents across the whole site (currently amber). Pick a colour or type a hex code; the darker hover and text shades are derived automatically. Leave blank to keep the default.',
@@ -979,31 +810,31 @@ const designFields = [
 ];
 
 const seoFields = [
-  seoField('homepage', 'homepage', 'Homepage'),
-  seoField('oetzTrophy', 'oetzTrophyPage', 'OETZ TROPHY page'),
-  seoField('boaterX', 'boaterXPage', 'Boater X page'),
-  seoField('kajakfestival', 'festivalPage', 'Kayak Festival page'),
-  seoField('program', 'programPage', 'Program page'),
-  seoField('kontakt', 'contactPage', 'Contact page'),
-  seoField('registration', 'registrationPage', 'Registration page'),
-  seoField('news', 'newsPage', 'News page'),
-  seoField('gallery', 'galleryPage', 'Gallery page'),
-  seoField('results', 'resultsPage', 'Results page'),
-  seoField('terms', 'legal', 'Terms & Conditions page'),
-  seoField('impressum', 'legal', 'Legal Notice page'),
-  seoField('datenschutz', 'legal', 'Privacy Policy page'),
+  seoField('homepage', 'Homepage'),
+  seoField('oetzTrophy', 'OETZ TROPHY page'),
+  seoField('boaterX', 'Kayak Cross page'),
+  seoField('kajakfestival', 'Kayak Festival page'),
+  seoField('program', 'Program page'),
+  seoField('kontakt', 'Contact page'),
+  seoField('registration', 'Registration page'),
+  seoField('news', 'News page'),
+  seoField('gallery', 'Gallery page'),
+  seoField('results', 'Results page'),
+  seoField('terms', 'Terms & Conditions page'),
+  seoField('impressum', 'Legal Notice page'),
+  seoField('datenschutz', 'Privacy Policy page'),
 ];
 
 /**
- * Field order = order inside each tab. Images are placed where they appear on
- * the page (hero photo next to the hero text, page-header photo at the top of
- * its page tab, SEO last). Fields not listed here are appended at the end so
- * new sections never silently disappear.
+ * Field order = order inside each page document. Images are placed where
+ * they appear on the page (hero photo next to the hero text, page-header
+ * photo at the top of its page, SEO last). Fields not listed here are
+ * appended at the end so new sections never silently disappear.
  */
 const FIELD_ORDER = [
   // Homepage — follows the page top to bottom. The hero's visual controls
   // (photo / video choice) come first so they're immediately visible at the
-  // top of the tab, ahead of the long expanded hero text section.
+  // top, ahead of the long expanded hero text section.
   'imageHero',
   'heroMediaType',
   'heroVideo',
@@ -1070,28 +901,80 @@ const FIELD_ORDER = [
   'accentColor',
 ];
 
-const allFields = [...textSections, ...pageImageFields, ...heroMediaFields, menuItemsField, programDaysField, ...designFields, ...seoFields];
-const fieldByName = new Map(allFields.map((field) => [field.name, field]));
-const orderedFields = [
-  ...FIELD_ORDER.flatMap((name) => fieldByName.get(name) ?? []),
-  ...allFields.filter((field) => !FIELD_ORDER.includes(field.name)),
-];
+export const PAGE_ICONS: Record<string, ComponentType> = {
+  pageHome: HomeIcon,
+  pageOetzTrophy: StarIcon,
+  pageKayakCross: BoltIcon,
+  pageKajakfestival: CalendarIcon,
+  pageProgram: ClockIcon,
+  pageRegistration: ClipboardIcon,
+  pageNews: DocumentTextIcon,
+  pageGallery: ImagesIcon,
+  pageResults: ChartUpwardIcon,
+  pageContact: EnvelopeIcon,
+  pageLegal: BookIcon,
+  siteNavigation: MenuIcon,
+  siteDesign: ColorWheelIcon,
+};
 
-export const siteContent = defineType({
-  name: 'siteContent',
-  title: 'Website Text & Images',
-  type: 'document',
-  icon: EditIcon,
-  description:
-    'Simple editable website copy and main image slots. Open a section, change German or English text, then publish.',
-  groups: FIELD_GROUPS,
-  fields: [...orderedFields, imagesSection],
-  preview: {
-    prepare() {
-      return {
-        title: 'Website Text & Images',
-        subtitle: 'Homepage, registration, legal copy, schedules and main photos',
-      };
+const PAGE_SUBTITLES: Record<string, string> = {
+  pageHome: 'Hero, homepage sections, photos & SEO',
+  pageOetzTrophy: 'Header photo & SEO (main text: Race & Festival Pages)',
+  pageKayakCross: 'Header photo & SEO (main text: Race & Festival Pages)',
+  pageKajakfestival: 'Schedule, location, header photo & SEO',
+  pageProgram: 'Intro, daily schedule, header photo & SEO',
+  pageRegistration: 'Form labels, confirmation text, header photo & SEO',
+  pageNews: 'Header photo & SEO (articles: Blog Posts)',
+  pageGallery: 'Coming-soon text, header photo & SEO',
+  pageResults: 'Coming-soon text, header photo & SEO',
+  pageContact: 'Contact details, header photo & SEO',
+  pageLegal: 'Terms, legal notice & privacy policy',
+  siteNavigation: 'Menu items, navigation labels, logo & footer',
+  siteDesign: 'Accent colour',
+};
+
+const allFields = [
+  ...textSections,
+  ...pageImageFields,
+  ...heroMediaFields,
+  menuItemsField,
+  programDaysField,
+  ...designFields,
+  ...seoFields,
+];
+const fieldByName = new Map(allFields.map((field) => [field.name, field]));
+const orderIndex = (name: string) => {
+  const index = FIELD_ORDER.indexOf(name);
+  return index === -1 ? FIELD_ORDER.length : index;
+};
+
+// Fail fast (build & tests) if the partition and the generated fields drift:
+// every partition key must have a field, every field must be owned by a page.
+const ownedKeys = new Set(PAGE_DOCUMENTS.flatMap((def) => def.keys));
+for (const key of ownedKeys) {
+  if (!fieldByName.has(key)) {
+    throw new Error(`pageDocuments.ts lists "${key}" but no schema field generates it`);
+  }
+}
+for (const field of allFields) {
+  if (!ownedKeys.has(field.name)) {
+    throw new Error(`Schema field "${field.name}" is not assigned to any page document`);
+  }
+}
+
+export const pageContentTypes = PAGE_DOCUMENTS.map((def) =>
+  defineType({
+    name: def.type,
+    title: def.title,
+    type: 'document',
+    icon: PAGE_ICONS[def.type],
+    fields: [...def.keys]
+      .sort((a, b) => orderIndex(a) - orderIndex(b))
+      .map((key) => fieldByName.get(key)!),
+    preview: {
+      prepare() {
+        return { title: def.title, subtitle: PAGE_SUBTITLES[def.type] };
+      },
     },
-  },
-});
+  }),
+);
