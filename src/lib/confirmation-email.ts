@@ -111,9 +111,9 @@ export async function sendConfirmationEmail(
   const apiKey = env.RESEND_API_KEY;
   if (!to || !apiKey) return false;
 
-  const { subject, html, text } = buildConfirmationEmail(input);
-
   try {
+    const { subject, html, text } = buildConfirmationEmail(input);
+
     const res = await fetchImpl(RESEND_URL, {
       method: 'POST',
       headers: {

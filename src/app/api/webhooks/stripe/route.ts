@@ -25,6 +25,10 @@ export async function POST(request: NextRequest) {
     const email = session.metadata?.email || session.customer_email;
     const sql = getDb();
 
+    // Deliberately NO `AND status <> 'paid'` guard: re-matching an already-paid
+    // row is what makes manual Stripe event resends re-attempt the confirmation
+    // email claim below. Do not "optimize" this.
+
     // Primary match: the session id our server minted for exactly this
     // registration row. Email is user-supplied and only a fallback.
     let updated = await sql`
@@ -48,31 +52,38 @@ export async function POST(request: NextRequest) {
       console.log(`Registration paid: row ${updated[0].id}`);
 
       if (isConfirmationEmailEnabled()) {
-        // Atomic claim: only the FIRST webhook delivery for this row sends the
-        // email; Stripe redeliveries find confirmation_sent_at already set.
-        const claimed = await sql`
-          UPDATE registrations
-          SET confirmation_sent_at = NOW()
-          WHERE id = ${updated[0].id} AND confirmation_sent_at IS NULL
-          RETURNING id, email, first_name, name
-        `;
+        try {
+          // Atomic claim: only the FIRST webhook delivery for this row sends the
+          // email; Stripe redeliveries find confirmation_sent_at already set.
+          const claimed = await sql`
+            UPDATE registrations
+            SET confirmation_sent_at = NOW()
+            WHERE id = ${updated[0].id} AND confirmation_sent_at IS NULL
+            RETURNING id, email, first_name, name
+          `;
 
-        if (claimed.length > 0) {
-          const row = claimed[0];
-          const sent = await sendConfirmationEmail(row.email as string, {
-            firstName: (row.first_name as string) ?? null,
-            name: row.name as string,
-          });
+          if (claimed.length > 0) {
+            const row = claimed[0];
+            const sent = await sendConfirmationEmail(row.email as string, {
+              firstName: (row.first_name as string) ?? null,
+              name: row.name as string,
+            });
 
-          if (sent) {
-            console.log(`Confirmation email sent: row ${row.id}`);
-          } else {
-            // Release the claim so a manual Stripe event resend can retry.
-            await sql`
-              UPDATE registrations SET confirmation_sent_at = NULL WHERE id = ${row.id}
-            `;
-            console.error(`Confirmation email FAILED: row ${row.id} — claim released for manual resend`);
+            if (sent) {
+              console.log(`Confirmation email sent: row ${row.id}`);
+            } else {
+              // Release the claim so a manual Stripe event resend can retry.
+              await sql`
+                UPDATE registrations SET confirmation_sent_at = NULL WHERE id = ${row.id}
+              `;
+              console.error(`Confirmation email FAILED: row ${row.id} — claim released for manual resend`);
+            }
           }
+        } catch {
+          // Email must never break payment acknowledgement. If the claim or its
+          // release failed, the row may carry a claim with no email sent —
+          // runbook: clear confirmation_sent_at and resend the Stripe event.
+          console.error(`Confirmation email block failed: row ${updated[0].id}`);
         }
       }
     } else {
