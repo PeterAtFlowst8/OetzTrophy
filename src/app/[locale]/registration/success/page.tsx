@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import TestModeBanner from '@/components/TestModeBanner';
+import { isRegistrationTestMode } from '@/lib/registration';
 
 const meta = {
   de: { title: 'Anmeldung bestätigt - OETZ TROPHY Rennwochenende 2026', description: 'Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 wurde bestätigt. Zahlung eingegangen. Wir sehen uns auf der Ötztaler Ache!' },
@@ -17,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function RegistrationSuccessPage() {
   const t = await getTranslations('registration');
+  const isTestMode = isRegistrationTestMode();
 
   return (
     <main>
@@ -26,6 +29,9 @@ export default async function RegistrationSuccessPage() {
       >
         <div>
           <div className="text-center max-w-lg">
+            {isTestMode && (
+              <TestModeBanner title={t('testBannerTitle')} body={t('testBannerBody')} />
+            )}
             <div
               className="mx-auto mb-8"
               style={{

@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
-import { isRegistrationOpen, registrationOpensLabel } from '@/lib/registration';
+import { registrationOpensLabel } from '@/lib/registration';
 import TextWithLinks from '@/components/TextWithLinks';
+import TestModeBanner from '@/components/TestModeBanner';
 
 const tshirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -13,16 +14,19 @@ type Props = {
   headerImage: string;
   registrationOpensAt: string | null;
   registrationFeeEur: number | null;
+  isOpen: boolean;
+  isTestMode: boolean;
 };
 
 export default function RegistrationForm({
   headerImage,
   registrationOpensAt,
   registrationFeeEur,
+  isOpen,
+  isTestMode,
 }: Props) {
   const t = useTranslations('registration');
   const locale = useLocale();
-  const isOpen = isRegistrationOpen(registrationOpensAt);
   const opensLabel = registrationOpensLabel(locale, registrationOpensAt);
   const feeDisplay = `€${registrationFeeEur ?? 135}`;
   const [previewMode, setPreviewMode] = useState(false);
@@ -239,6 +243,9 @@ export default function RegistrationForm({
                   className="bg-white p-5 sm:p-7 md:p-9"
                   style={{ border: '1px solid var(--color-border)' }}
                 >
+                  {isTestMode && (
+                    <TestModeBanner title={t('testBannerTitle')} body={t('testBannerBody')} />
+                  )}
                   <div className="mb-8">
                     <h2
                       className="uppercase mb-2"
