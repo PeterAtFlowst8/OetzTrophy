@@ -3,6 +3,7 @@ import { getDb } from '@/lib/db';
 import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
 import { parseRegistrationInput } from '@/lib/registrationInput';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { getTurnstileConfig, verifyTurnstileToken } from '@/lib/turnstile';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
 import { SITE_URL } from '@/lib/site';
@@ -65,6 +66,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
     const { firstName, lastName, name, email, nationality, tshirtSize, acceptedTerms, acceptedAwpRules, confirmedOver18 } = parsed.value;
+
+    const turnstile = getTurnstileConfig();
+    if (turnstile === 'misconfigured') {
+      console.error('Turnstile misconfigured: exactly one of site/secret key is set — failing closed');
+      return NextResponse.json({ error: 'Registration is temporarily unavailable' }, { status: 500 });
+    }
+    if (turnstile === 'enforced') {
+      const human = await verifyTurnstileToken(parsed.value.turnstileToken, ip);
+      if (!human) {
+        return NextResponse.json({ error: 'Verification failed — please try again' }, { status: 400 });
+      }
+    }
 
     const sql = getDb();
     await ensureRegistrationSchema(sql);
