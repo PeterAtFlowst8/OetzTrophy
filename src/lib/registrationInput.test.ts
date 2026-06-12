@@ -49,4 +49,26 @@ describe('parseRegistrationInput', () => {
     expect(parseRegistrationInput(null).ok).toBe(false);
     expect(parseRegistrationInput('hi').ok).toBe(false);
   });
+
+  it('trims whitespace from string fields', () => {
+    const r = parseRegistrationInput({ ...valid, firstName: '  Anna ', lastName: ' Müller  ' });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.value.name).toBe('Anna Müller');
+  });
+
+  it('defaults turnstileToken to empty string and trims it when present', () => {
+    const absent = parseRegistrationInput(valid);
+    if (absent.ok) expect(absent.value.turnstileToken).toBe('');
+    const present = parseRegistrationInput({ ...valid, turnstileToken: ' tok-123 ' });
+    if (present.ok) expect(present.value.turnstileToken).toBe('tok-123');
+  });
+
+  it('accepts fields at exactly the maximum length', () => {
+    const r = parseRegistrationInput({ ...valid, firstName: 'x'.repeat(100), nationality: 'y'.repeat(100) });
+    expect(r.ok).toBe(true);
+  });
+
+  it('rejects acceptedAwpRules false', () => {
+    expect(parseRegistrationInput({ ...valid, acceptedAwpRules: false }).ok).toBe(false);
+  });
 });

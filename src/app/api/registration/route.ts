@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
 import { parseRegistrationInput } from '@/lib/registrationInput';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
 import { SITE_URL } from '@/lib/site';
@@ -40,6 +41,15 @@ async function ensureRegistrationSchema(sql: ReturnType<typeof getDb>) {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request.headers);
+    const rate = checkRateLimit({ key: `reg:${ip}`, limit: 5, windowMs: 10 * 60_000 });
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: 'Too many attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } },
+      );
+    }
+
     const settings = await getSiteSettings();
 
     if (!isRegistrationOpen(settings.registrationOpensAt) && !isRegistrationTestMode()) {
@@ -49,15 +59,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
     const parsed = parseRegistrationInput(body);
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
-    const { firstName, lastName, name, email, nationality, tshirtSize } = parsed.value;
-    const acceptedTerms = true;
-    const acceptedAwpRules = true;
-    const confirmedOver18 = true;
+    const { firstName, lastName, name, email, nationality, tshirtSize, acceptedTerms, acceptedAwpRules, confirmedOver18 } = parsed.value;
 
     const sql = getDb();
     await ensureRegistrationSchema(sql);
