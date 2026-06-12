@@ -23,4 +23,11 @@ describe('toCsv (German-Excel dialect)', () => {
     const csv = toCsv([{ id: 3, name: null }], columns);
     expect(csv.trim().endsWith('"3";""')).toBe(true);
   });
+
+  it('neutralizes Excel formula triggers (CSV injection)', () => {
+    const csv = toCsv([{ id: 4, name: '=HYPERLINK("http://evil.tld";"click")' }], columns);
+    expect(csv).toContain('"\'=HYPERLINK');
+    const plus = toCsv([{ id: 5, name: '+491701234567' }], columns);
+    expect(plus).toContain('"\'+491701234567"');
+  });
 });

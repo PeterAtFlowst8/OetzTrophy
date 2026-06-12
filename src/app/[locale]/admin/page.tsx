@@ -99,7 +99,7 @@ export default async function AdminPage() {
                 <td style={td}>{r.nationality}</td>
                 <td style={td}>{r.tshirtSize}</td>
                 <td style={td}>{r.status}</td>
-                <td style={td}>{new Date(r.createdAt).toLocaleString('de-AT')}</td>
+                <td style={td}>{new Date(r.createdAt).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' })}</td>
               </tr>
             ))}
           </tbody>

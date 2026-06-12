@@ -2,10 +2,12 @@
  * Admin session auth for /admin (spec §5): HMAC-SHA256-signed expiry token in
  * an httpOnly cookie. Requires ADMIN_PASSWORD and ADMIN_SESSION_SECRET — no
  * fallback chain; missing secrets fail closed.
+ * Tokens are stateless bearers: logout clears the cookie but cannot revoke an
+ * already-issued token — rotate ADMIN_SESSION_SECRET to invalidate all sessions.
  */
 import crypto from 'node:crypto';
 
-export const ADMIN_COOKIE = 'oetz_admin_session';
+export const ADMIN_COOKIE = '__Host-oetz_admin_session';
 export const ADMIN_SESSION_MAX_AGE_SECONDS = 12 * 60 * 60;
 
 type Env = Record<string, string | undefined>;

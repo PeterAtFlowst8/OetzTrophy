@@ -13,17 +13,22 @@ export default function AdminLogin() {
     e.preventDefault();
     setBusy(true);
     setError('');
-    const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    });
-    setBusy(false);
-    if (res.ok) {
-      router.refresh();
-    } else {
-      const data = await res.json().catch(() => ({}));
-      setError(data.error || 'Login failed');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        router.refresh();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || 'Login failed');
+      }
+    } catch {
+      setError('Network error — please try again');
+    } finally {
+      setBusy(false);
     }
   }
 

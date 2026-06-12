@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
   response.cookies.set(ADMIN_COOKIE, createAdminToken(), {
     httpOnly: true,
     secure: true,
-    sameSite: 'lax',
+    sameSite: 'strict',
     path: '/',
     maxAge: ADMIN_SESSION_MAX_AGE_SECONDS,
   });
