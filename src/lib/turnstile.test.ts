@@ -52,6 +52,12 @@ describe('verifyTurnstileToken', () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
+  it('fails when no secret is configured, without calling Cloudflare', async () => {
+    const fetchImpl = vi.fn();
+    await expect(verifyTurnstileToken('tok', undefined, {}, fetchImpl)).resolves.toBe(false);
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
   it('does not send remoteip when ip is "unknown"', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ success: true }), { status: 200 }),

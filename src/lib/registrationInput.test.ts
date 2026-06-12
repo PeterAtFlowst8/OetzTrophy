@@ -71,4 +71,8 @@ describe('parseRegistrationInput', () => {
   it('rejects acceptedAwpRules false', () => {
     expect(parseRegistrationInput({ ...valid, acceptedAwpRules: false }).ok).toBe(false);
   });
+
+  it('rejects an oversized turnstileToken', () => {
+    expect(parseRegistrationInput({ ...valid, turnstileToken: 'x'.repeat(2049) }).ok).toBe(false);
+  });
 });

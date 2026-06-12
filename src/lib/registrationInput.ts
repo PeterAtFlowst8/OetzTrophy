@@ -5,6 +5,7 @@ export const TSHIRT_SIZES = new Set(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
 const MAX_NAME = 100;
 const MAX_EMAIL = 254;
 const MAX_NATIONALITY = 100;
+const MAX_TURNSTILE_TOKEN = 2048; // Cloudflare tokens are ~2 kB; cap to bound the outbound siteverify call
 // Pragmatic email shape: something@something.tld — full RFC validation is a
 // trap; Stripe re-validates on checkout anyway.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -40,6 +41,10 @@ export function parseRegistrationInput(body: unknown): ParseResult {
   const nationality = clean(b.nationality);
   const tshirtSize = clean(b.tshirtSize).toUpperCase();
   const turnstileToken = clean(b.turnstileToken);
+
+  if (turnstileToken.length > MAX_TURNSTILE_TOKEN) {
+    return { ok: false, error: 'Invalid request body' };
+  }
 
   if (!firstName || !lastName || !email || !nationality || !tshirtSize) {
     return { ok: false, error: 'First name, last name, email, nationality and t-shirt size are required' };
