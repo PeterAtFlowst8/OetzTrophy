@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
-import { isRegistrationOpen } from '@/lib/registration';
+import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
 import { SITE_URL } from '@/lib/site';
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   try {
     const settings = await getSiteSettings();
 
-    if (!isRegistrationOpen(settings.registrationOpensAt)) {
+    if (!isRegistrationOpen(settings.registrationOpensAt) && !isRegistrationTestMode()) {
       return NextResponse.json(
         { error: 'Registration is not open yet' },
         { status: 403 }

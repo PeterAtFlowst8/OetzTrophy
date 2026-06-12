@@ -32,6 +32,14 @@ describe('isRegistrationTestMode', () => {
       isRegistrationTestMode({ REGISTRATION_TEST_MODE: '1', VERCEL_ENV: 'preview' }),
     ).toBe(true);
   });
+
+  it('composes with the date gate: closed date + test mode means open', () => {
+    const closedNow = new Date('2026-06-12T00:00:00+02:00');
+    const dateOpen = isRegistrationOpen(null, closedNow);
+    const testMode = isRegistrationTestMode({ REGISTRATION_TEST_MODE: '1', VERCEL_ENV: 'preview' });
+    expect(dateOpen).toBe(false);
+    expect(dateOpen || testMode).toBe(true);
+  });
 });
 
 describe('isRegistrationOpen (unchanged behaviour)', () => {
