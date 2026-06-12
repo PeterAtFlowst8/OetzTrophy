@@ -90,7 +90,12 @@ export default function RegistrationForm({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.code === 'turnstile_failed' ? t('turnstileFailed') : (data.error || 'Something went wrong'));
+        const codeMessages: Record<string, string> = {
+          turnstile_failed: t('turnstileFailed'),
+          already_registered: t('alreadyRegistered'),
+          rate_limited: t('tooManyAttempts'),
+        };
+        setError((data.code && codeMessages[data.code]) || data.error || 'Something went wrong');
         setTurnstileToken(null);
         setTurnstileResetSignal((n) => n + 1);
         setSubmitting(false);

@@ -28,6 +28,12 @@ type Props = {
 export default function TurnstileWidget({ siteKey, locale, onToken, resetSignal = 0, onScriptError }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const onTokenRef = useRef(onToken);
+  const onScriptErrorRef = useRef(onScriptError);
+  useEffect(() => {
+    onTokenRef.current = onToken;
+    onScriptErrorRef.current = onScriptError;
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -39,9 +45,9 @@ export default function TurnstileWidget({ siteKey, locale, onToken, resetSignal 
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
         sitekey: siteKey,
         language: locale === 'de' ? 'de' : 'en',
-        callback: (token: string) => onToken(token),
-        'expired-callback': () => onToken(null),
-        'error-callback': () => onToken(null),
+        callback: (token: string) => onTokenRef.current(token),
+        'expired-callback': () => onTokenRef.current(null),
+        'error-callback': () => onTokenRef.current(null),
       });
     }
 
@@ -50,7 +56,7 @@ export default function TurnstileWidget({ siteKey, locale, onToken, resetSignal 
     }
 
     function onScriptLoadError() {
-      if (!cancelled) onScriptError?.();
+      if (!cancelled) onScriptErrorRef.current?.();
     }
 
     if (window.turnstile) {
@@ -77,7 +83,8 @@ export default function TurnstileWidget({ siteKey, locale, onToken, resetSignal 
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, locale, onToken, onScriptError]);
+    // Callbacks live in refs so caller-side inline handlers can't remount the widget (a remount forces a fresh CF challenge with real keys).
+  }, [siteKey, locale]);
 
   useEffect(() => {
     if (resetSignal > 0 && widgetIdRef.current && window.turnstile) {

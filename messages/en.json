@@ -257,7 +257,9 @@
     "testBannerTitle": "Test mode — no real charges",
     "testBannerBody": "This is the staging site. Pay with Stripe test card 4242 4242 4242 4242, any future expiry date and any 3-digit CVC. Registrations made here are test data and will be deleted before launch.",
     "turnstileNotice": "This form is protected by Cloudflare Turnstile.",
-    "turnstileFailed": "Verification failed — please try again."
+    "turnstileFailed": "Verification failed — please try again.",
+    "alreadyRegistered": "This email address is already registered and paid.",
+    "tooManyAttempts": "Too many attempts — please wait a few minutes and try again."
   },
   "programm": {
     "label": "",

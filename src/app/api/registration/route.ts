@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const rate = checkRateLimit({ key: `reg:${ip}`, limit: 5, windowMs: 10 * 60_000 });
     if (!rate.allowed) {
       return NextResponse.json(
-        { error: 'Too many attempts. Please try again later.' },
+        { error: 'Too many attempts. Please try again later.', code: 'rate_limited' },
         { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } },
       );
     }
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     if (existing.length > 0) {
       if (existing[0].status === 'paid') {
         return NextResponse.json(
-          { error: 'This email is already registered and paid' },
+          { error: 'This email is already registered and paid', code: 'already_registered' },
           { status: 409 }
         );
       }
@@ -191,7 +191,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error('Registration error:', error);
+    const message = error instanceof Error ? error.message.split('\n')[0] : 'unknown';
+    console.error(`Registration error: ${message.replace(/\(email\)=\([^)]*\)/, '(email)=(redacted)')}`);
     return NextResponse.json(
       { error: 'Registration failed. Please try again.' },
       { status: 500 }

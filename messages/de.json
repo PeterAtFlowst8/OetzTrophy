@@ -257,7 +257,9 @@
     "testBannerTitle": "Testmodus — keine echten Zahlungen",
     "testBannerBody": "Dies ist die Staging-Website. Zahle mit der Stripe-Testkarte 4242 4242 4242 4242, einem beliebigen zukünftigen Ablaufdatum und einem beliebigen 3-stelligen CVC. Anmeldungen hier sind Testdaten und werden vor dem Start gelöscht.",
     "turnstileNotice": "Dieses Formular ist durch Cloudflare Turnstile geschützt.",
-    "turnstileFailed": "Verifizierung fehlgeschlagen — bitte versuche es erneut."
+    "turnstileFailed": "Verifizierung fehlgeschlagen — bitte versuche es erneut.",
+    "alreadyRegistered": "Diese E-Mail-Adresse ist bereits angemeldet und bezahlt.",
+    "tooManyAttempts": "Zu viele Versuche — bitte warte ein paar Minuten und versuche es erneut."
   },
   "programm": {
     "label": "",
