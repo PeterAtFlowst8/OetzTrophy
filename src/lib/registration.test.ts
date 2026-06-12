@@ -38,7 +38,8 @@ describe('isRegistrationTestMode', () => {
     const dateOpen = isRegistrationOpen(null, closedNow);
     const testMode = isRegistrationTestMode({ REGISTRATION_TEST_MODE: '1', VERCEL_ENV: 'preview' });
     expect(dateOpen).toBe(false);
-    expect(dateOpen || testMode).toBe(true);
+    // Mirror the route's exact boolean (route.ts: !open && !testMode blocks).
+    expect(!dateOpen && !testMode).toBe(false);
   });
 });
 
