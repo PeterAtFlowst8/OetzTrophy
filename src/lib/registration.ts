@@ -24,12 +24,14 @@ const TEST_MODE_TRUTHY = new Set(['1', 'true', 'yes', 'on']);
  * Hard-disabled on production deployments regardless of the env var, so a
  * mis-scoped variable can never open the live site early or banner it as a
  * test site. `env` is injectable for tests; defaults to process.env.
+ * Server-side only: client bundles see an empty process.env, so a no-arg call
+ * in client code always returns false — decide on the server and pass props.
  */
 export function isRegistrationTestMode(
   env: Record<string, string | undefined> = process.env,
 ): boolean {
-  if ((env.VERCEL_ENV ?? '').toLowerCase() === 'production') return false;
-  return TEST_MODE_TRUTHY.has((env.REGISTRATION_TEST_MODE ?? '').toLowerCase());
+  if ((env.VERCEL_ENV ?? '').trim().toLowerCase() === 'production') return false;
+  return TEST_MODE_TRUTHY.has((env.REGISTRATION_TEST_MODE ?? '').trim().toLowerCase());
 }
 
 /** The registration open date, formatted for display in the given locale. */

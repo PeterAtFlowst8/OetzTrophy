@@ -18,11 +18,14 @@ describe('isRegistrationTestMode', () => {
     expect(isRegistrationTestMode({ REGISTRATION_TEST_MODE: v })).toBe(false);
   });
 
-  it('is ALWAYS off on production deployments, even when the flag is set', () => {
-    expect(
-      isRegistrationTestMode({ REGISTRATION_TEST_MODE: '1', VERCEL_ENV: 'production' }),
-    ).toBe(false);
-  });
+  it.each(['production', 'Production', 'PRODUCTION'])(
+    'is ALWAYS off on production deployments (VERCEL_ENV=%s), even when the flag is set',
+    (vercelEnv) => {
+      expect(
+        isRegistrationTestMode({ REGISTRATION_TEST_MODE: '1', VERCEL_ENV: vercelEnv }),
+      ).toBe(false);
+    },
+  );
 
   it('works on preview deployments', () => {
     expect(
