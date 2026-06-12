@@ -1,12 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
 import { registrationOpensLabel } from '@/lib/registration';
 import TextWithLinks from '@/components/TextWithLinks';
 import TestModeBanner from '@/components/TestModeBanner';
+import TurnstileWidget from '@/components/TurnstileWidget';
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 const tshirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -42,6 +45,10 @@ export default function RegistrationForm({
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const handleTurnstileToken = useCallback((token: string | null) => {
+    setTurnstileToken(token);
+  }, []);
 
   useEffect(() => {
     setPreviewMode(new URLSearchParams(window.location.search).get('preview') === 'form');
@@ -58,6 +65,7 @@ export default function RegistrationForm({
     form.acceptedTerms &&
     form.acceptedAwpRules &&
     form.confirmedOver18 &&
+    (!TURNSTILE_SITE_KEY || Boolean(turnstileToken)) &&
     !submitting,
   );
 
@@ -75,7 +83,7 @@ export default function RegistrationForm({
       const res = await fetch('/api/registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken: turnstileToken ?? '' }),
       });
 
       const data = await res.json();
@@ -482,6 +490,22 @@ export default function RegistrationForm({
                     >
                       {error}
                     </p>
+                  )}
+
+                  {TURNSTILE_SITE_KEY && (
+                    <div className="mt-6">
+                      <TurnstileWidget
+                        siteKey={TURNSTILE_SITE_KEY}
+                        locale={locale}
+                        onToken={handleTurnstileToken}
+                      />
+                      <p
+                        className="mt-2"
+                        style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--color-muted)' }}
+                      >
+                        {t('turnstileNotice')}
+                      </p>
+                    </div>
                   )}
 
                   <button
