@@ -242,8 +242,12 @@ The opening is fully automatic; no midnight operations. How the flip works:
 - **API gate** (`POST /api/registration`): evaluated per request against the server clock —
   opens at exactly the stored instant (default `2026-06-17T00:00 Europe/Vienna`, or whatever
   the client sets in Studio).
-- **Registration page UI**: ISR with `revalidate = 60` → shows the open form within ≤ 60 s of
-  the instant. Homepage Hero flips the same way (server-decided prop, `19581bf` pattern).
+- **Registration page UI**: rendered per request (build route table shows all `[locale]`
+  routes as dynamic — the `revalidate = 60` export is currently inert because the next-intl
+  layout reads request headers), so a reload shows the open form immediately after the
+  instant. Homepage Hero flips the same way (server-decided prop, `19581bf` pattern).
+  Follow-up flagged: reconcile the inert ISR exports (real ISR via `setRequestLocale` vs
+  removing the exports) before launch-day traffic.
 - Caveat: if the client edits the open date in Studio at the last minute, allow ~1 min for
   Sanity CDN + ISR to propagate. The *flip itself* needs no content change — it's clock vs.
   stored date.
