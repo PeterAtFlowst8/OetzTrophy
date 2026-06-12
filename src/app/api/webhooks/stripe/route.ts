@@ -20,19 +20,33 @@ export async function POST(request: NextRequest) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const email = session.metadata?.email || session.customer_email;
     const paymentId = session.payment_intent as string;
+    const email = session.metadata?.email || session.customer_email;
+    const sql = getDb();
 
-    if (email) {
-      const sql = getDb();
-      await sql`
+    // Primary match: the session id our server minted for exactly this
+    // registration row. Email is user-supplied and only a fallback.
+    let updated = await sql`
+      UPDATE registrations
+      SET status = 'paid', stripe_payment_id = ${paymentId}, updated_at = NOW()
+      WHERE stripe_session_id = ${session.id}
+      RETURNING id
+    `;
+
+    if (updated.length === 0 && email) {
+      updated = await sql`
         UPDATE registrations
-        SET status = 'paid',
-            stripe_payment_id = ${paymentId},
-            updated_at = NOW()
+        SET status = 'paid', stripe_payment_id = ${paymentId}, updated_at = NOW()
         WHERE email = ${email}
+        RETURNING id
       `;
-      console.log(`Registration confirmed for ${email}`);
+    }
+
+    if (updated.length > 0) {
+      // GDPR: row id only — never log email addresses (PII) to Vercel logs.
+      console.log(`Registration paid: row ${updated[0].id}`);
+    } else {
+      console.warn(`Webhook session ${session.id} matched no registration row`);
     }
   }
 
