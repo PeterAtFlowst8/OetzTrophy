@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe } from '@/lib/stripe';
 import { getDb } from '@/lib/db';
+import { isConfirmationEmailEnabled, sendConfirmationEmail } from '@/lib/confirmation-email';
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -45,6 +46,35 @@ export async function POST(request: NextRequest) {
     if (updated.length > 0) {
       // GDPR: row id only — never log email addresses (PII) to Vercel logs.
       console.log(`Registration paid: row ${updated[0].id}`);
+
+      if (isConfirmationEmailEnabled()) {
+        // Atomic claim: only the FIRST webhook delivery for this row sends the
+        // email; Stripe redeliveries find confirmation_sent_at already set.
+        const claimed = await sql`
+          UPDATE registrations
+          SET confirmation_sent_at = NOW()
+          WHERE id = ${updated[0].id} AND confirmation_sent_at IS NULL
+          RETURNING id, email, first_name, name
+        `;
+
+        if (claimed.length > 0) {
+          const row = claimed[0];
+          const sent = await sendConfirmationEmail(row.email as string, {
+            firstName: (row.first_name as string) ?? null,
+            name: row.name as string,
+          });
+
+          if (sent) {
+            console.log(`Confirmation email sent: row ${row.id}`);
+          } else {
+            // Release the claim so a manual Stripe event resend can retry.
+            await sql`
+              UPDATE registrations SET confirmation_sent_at = NULL WHERE id = ${row.id}
+            `;
+            console.error(`Confirmation email FAILED: row ${row.id} — claim released for manual resend`);
+          }
+        }
+      }
     } else {
       console.warn(`Webhook session ${session.id} matched no registration row`);
     }
