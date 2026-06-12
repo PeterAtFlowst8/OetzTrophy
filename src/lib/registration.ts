@@ -15,6 +15,23 @@ export function isRegistrationOpen(
   return now >= new Date(opensAt || REGISTRATION_OPENS_AT_FALLBACK);
 }
 
+const TEST_MODE_TRUTHY = new Set(['1', 'true', 'yes', 'on']);
+
+/**
+ * Preview-only override that opens registration for end-to-end payment
+ * testing (spec: docs/superpowers/specs/2026-06-12-registration-payment-test-design.md).
+ *
+ * Hard-disabled on production deployments regardless of the env var, so a
+ * mis-scoped variable can never open the live site early or banner it as a
+ * test site. `env` is injectable for tests; defaults to process.env.
+ */
+export function isRegistrationTestMode(
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  if ((env.VERCEL_ENV ?? '').toLowerCase() === 'production') return false;
+  return TEST_MODE_TRUTHY.has((env.REGISTRATION_TEST_MODE ?? '').toLowerCase());
+}
+
 /** The registration open date, formatted for display in the given locale. */
 export function registrationOpensLabel(locale: string, opensAt?: string | null) {
   return new Date(opensAt || REGISTRATION_OPENS_AT_FALLBACK).toLocaleDateString(
