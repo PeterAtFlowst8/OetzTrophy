@@ -254,7 +254,16 @@ The opening is fully automatic; no midnight operations. How the flip works:
 
 **The manual part is the Production env swap, and it is deliberately front-loaded: do it by
 June 16.** Live values are inert while the date gate is closed (nobody can reach checkout
-creation), so registration opens at midnight already fully armed:
+creation), so registration opens at midnight already fully armed.
+
+**ORDERING (hard requirement):** Vercel binds env at deployment creation, and
+`NEXT_PUBLIC_TURNSTILE_SITE_KEY` is additionally inlined into the client bundle at build.
+Therefore: **set ALL Production env values FIRST, then merge preview→main** (the merge
+triggers the production build that bakes them in). If any env value changes after that
+deploy, redeploy. The config-symmetric Turnstile design means a missing prod key pair is
+SILENT (widget simply absent) — so after the deploy, verify the live widget renders on
+`https://oetz-trophy.com/de/registration?preview=form` (the form-preview mechanism renders
+the real widget while the date gate is still closed; this is why `?preview=form` stays).
 
 1. Live `sk_live_…` key; live-mode webhook endpoint at
    `https://oetz-trophy.com/api/webhooks/stripe` + its `whsec_…`.
