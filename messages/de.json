@@ -253,7 +253,11 @@
     "paymentNote": "Anmeldegebühr: €135. Zahlung via Stripe.",
     "successTitle": "Anmeldung bestätigt",
     "successRaceText": "Deine Anmeldung für das OETZ TROPHY Rennwochenende 2026 ist eingegangen und die Zahlung wurde bestätigt. Du erhältst eine Bestätigung per E-Mail. Wir sehen uns auf der Ötztaler Ache!",
-    "backHome": "Zur Startseite"
+    "backHome": "Zur Startseite",
+    "testBannerTitle": "Testmodus — keine echten Zahlungen",
+    "testBannerBody": "Dies ist die Staging-Website. Zahle mit der Stripe-Testkarte 4242 4242 4242 4242, einem beliebigen zukünftigen Ablaufdatum und einem beliebigen 3-stelligen CVC. Anmeldungen hier sind Testdaten und werden vor dem Start gelöscht.",
+    "turnstileNotice": "Dieses Formular ist durch Cloudflare Turnstile geschützt.",
+    "turnstileFailed": "Verifizierung fehlgeschlagen — bitte versuche es erneut."
   },
   "programm": {
     "label": "",
