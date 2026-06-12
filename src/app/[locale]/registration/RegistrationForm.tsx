@@ -46,6 +46,7 @@ export default function RegistrationForm({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const handleTurnstileToken = useCallback((token: string | null) => {
     setTurnstileToken(token);
   }, []);
@@ -89,7 +90,9 @@ export default function RegistrationForm({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong');
+        setError(data.code === 'turnstile_failed' ? t('turnstileFailed') : (data.error || 'Something went wrong'));
+        setTurnstileToken(null);
+        setTurnstileResetSignal((n) => n + 1);
         setSubmitting(false);
         return;
       }
@@ -99,6 +102,8 @@ export default function RegistrationForm({
       }
     } catch {
       setError('Network error. Please try again.');
+      setTurnstileToken(null);
+      setTurnstileResetSignal((n) => n + 1);
       setSubmitting(false);
     }
   };
@@ -498,6 +503,8 @@ export default function RegistrationForm({
                         siteKey={TURNSTILE_SITE_KEY}
                         locale={locale}
                         onToken={handleTurnstileToken}
+                        resetSignal={turnstileResetSignal}
+                        onScriptError={() => setError(t('turnstileFailed'))}
                       />
                       <p
                         className="mt-2"

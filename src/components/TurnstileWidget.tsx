@@ -20,14 +20,18 @@ type Props = {
   locale: string;
   /** Called with the token on success, null when the token expires/errors. */
   onToken: (token: string | null) => void;
+  /** Increment to reset the widget (e.g. after a failed submit consumed the token). */
+  resetSignal?: number;
+  onScriptError?: () => void;
 };
 
-export default function TurnstileWidget({ siteKey, locale, onToken }: Props) {
+export default function TurnstileWidget({ siteKey, locale, onToken, resetSignal = 0, onScriptError }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    let scriptEl: HTMLScriptElement | null = null;
 
     function renderWidget() {
       if (cancelled || !containerRef.current || !window.turnstile) return;
@@ -41,6 +45,14 @@ export default function TurnstileWidget({ siteKey, locale, onToken }: Props) {
       });
     }
 
+    function onScriptLoad() {
+      renderWidget();
+    }
+
+    function onScriptLoadError() {
+      if (!cancelled) onScriptError?.();
+    }
+
     if (window.turnstile) {
       renderWidget();
     } else {
@@ -51,17 +63,27 @@ export default function TurnstileWidget({ siteKey, locale, onToken }: Props) {
         script.async = true;
         document.head.appendChild(script);
       }
-      script.addEventListener('load', renderWidget);
+      scriptEl = script;
+      script.addEventListener('load', onScriptLoad);
+      script.addEventListener('error', onScriptLoadError);
     }
 
     return () => {
       cancelled = true;
+      scriptEl?.removeEventListener('load', onScriptLoad);
+      scriptEl?.removeEventListener('error', onScriptLoadError);
       if (widgetIdRef.current && window.turnstile) {
         window.turnstile.remove(widgetIdRef.current);
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, locale, onToken]);
+  }, [siteKey, locale, onToken, onScriptError]);
+
+  useEffect(() => {
+    if (resetSignal > 0 && widgetIdRef.current && window.turnstile) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
+  }, [resetSignal]);
 
   return <div ref={containerRef} />;
 }

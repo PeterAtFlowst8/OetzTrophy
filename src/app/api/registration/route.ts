@@ -75,7 +75,10 @@ export async function POST(request: NextRequest) {
     if (turnstile === 'enforced') {
       const human = await verifyTurnstileToken(parsed.value.turnstileToken, ip);
       if (!human) {
-        return NextResponse.json({ error: 'Verification failed — please try again' }, { status: 400 });
+        return NextResponse.json(
+          { error: 'Verification failed — please try again', code: 'turnstile_failed' },
+          { status: 400 },
+        );
       }
     }
 
