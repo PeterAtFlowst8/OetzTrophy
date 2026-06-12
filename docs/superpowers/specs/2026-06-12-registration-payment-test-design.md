@@ -271,8 +271,12 @@ the real widget while the date gate is still closed; this is why `?preview=form`
 3. Strong unique `ADMIN_PASSWORD` + fresh `ADMIN_SESSION_SECRET`.
 4. Run the cleanup SQL (§9) after testing ends.
 5. Confirm `REGISTRATION_TEST_MODE` absent from Production.
-6. Datenschutz page updated in Studio (processors incl. Cloudflare); retention window
-   confirmed by client.
+6. Datenschutz processors + retention shipped in built-in copy (2026-06-12, commit
+   `a2ac33a`); retention window (12 months) still to be confirmed by client.
+6b. **Stripe customer receipts ON** (live mode → Settings → Customer emails → "Successful
+   payments" + "Refunds"): the success page promises a Stripe payment receipt (commit
+   `083fbbc`) — no other email is sent by the system. Branded confirmation email =
+   possible post-launch follow-up.
 7. **Post-swap, pre-open verification (June 16):** prod registration page still shows
    "opens June 17" (gate closed, banner-free); Stripe dashboard (live mode) shows the
    webhook endpoint enabled; admin login works on prod with the new password.
