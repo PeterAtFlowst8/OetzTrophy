@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
+import { parseRegistrationInput } from '@/lib/registrationInput';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
 import { SITE_URL } from '@/lib/site';
 
-const TSHIRT_SIZES = new Set(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
 const DEFAULT_EXPERIENCE_LEVEL = 'race-eligible';
-
-function clean(value: unknown) {
-  return typeof value === 'string' ? value.trim() : '';
-}
 
 async function ensureRegistrationSchema(sql: ReturnType<typeof getDb>) {
   await sql`
@@ -54,36 +50,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const firstName = clean(body.firstName);
-    const lastName = clean(body.lastName);
-    const email = clean(body.email).toLowerCase();
-    const nationality = clean(body.nationality);
-    const tshirtSize = clean(body.tshirtSize).toUpperCase();
-    const acceptedTerms = body.acceptedTerms === true;
-    const acceptedAwpRules = body.acceptedAwpRules === true;
-    const confirmedOver18 = body.confirmedOver18 === true;
-    const name = `${firstName} ${lastName}`.trim();
-
-    if (!firstName || !lastName || !email || !nationality || !tshirtSize) {
-      return NextResponse.json(
-        { error: 'First name, last name, email, nationality and t-shirt size are required' },
-        { status: 400 }
-      );
+    const parsed = parseRegistrationInput(body);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
-
-    if (!email.includes('@') || !TSHIRT_SIZES.has(tshirtSize)) {
-      return NextResponse.json(
-        { error: 'Please check your email and t-shirt size' },
-        { status: 400 }
-      );
-    }
-
-    if (!acceptedTerms || !acceptedAwpRules || !confirmedOver18) {
-      return NextResponse.json(
-        { error: 'All confirmations are required' },
-        { status: 400 }
-      );
-    }
+    const { firstName, lastName, name, email, nationality, tshirtSize } = parsed.value;
+    const acceptedTerms = true;
+    const acceptedAwpRules = true;
+    const confirmedOver18 = true;
 
     const sql = getDb();
     await ensureRegistrationSchema(sql);
