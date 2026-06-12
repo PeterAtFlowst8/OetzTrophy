@@ -275,8 +275,10 @@ the real widget while the date gate is still closed; this is why `?preview=form`
    `a2ac33a`); retention window (12 months) still to be confirmed by client.
 6b. **Stripe customer receipts ON** (live mode → Settings → Customer emails → "Successful
    payments" + "Refunds"): the success page promises a Stripe payment receipt (commit
-   `083fbbc`) — no other email is sent by the system. Branded confirmation email =
-   possible post-launch follow-up.
+   `083fbbc`).
+6c. **Confirmation email live** (spec §12): Resend domain `oetz-trophy.com` verified,
+   `RESEND_API_KEY` in Production scope, send verified end-to-end on preview before the
+   merge.
 7. **Post-swap, pre-open verification (June 16):** prod registration page still shows
    "opens June 17" (gate closed, banner-free); Stripe dashboard (live mode) shows the
    webhook endpoint enabled; admin login works on prod with the new password.
@@ -284,6 +286,30 @@ the real widget while the date gate is still closed; this is why `?preview=form`
 **Zero code changes.** Failure mode if the swap is skipped: registration opens on the 17th
 but every checkout attempt fails on the placeholder key — hence the hard June 16 deadline
 on this checklist, not the 17th.
+
+### 12. Confirmation email (added 2026-06-12 evening — Peter: "a must")
+
+- **Provider:** Resend (new account), domain `oetz-trophy.com` verified via DKIM/SPF records
+  (Peter controls DNS). Single secret: `RESEND_API_KEY` (Preview branch `preview` +
+  Production — same key; preview E2E intentionally delivers real mail to the
+  `test+n@flowst8.eu` test addresses).
+- **Sender:** `OETZ TROPHY <noreply@oetz-trophy.com>`, Reply-To `info@oetz-trophy.com`.
+- **Content:** ONE bilingual email (DE first, EN below), built in code (not Sanity):
+  registration + payment confirmed, event dates 17.–20. Sept 2026 in Oetz, program link,
+  contact, note that a separate Stripe receipt arrives. Plain-text alternative included.
+- **Trigger & idempotency:** in the Stripe webhook, only on the row's FIRST flip to paid:
+  atomic claim `UPDATE … SET confirmation_sent_at = NOW() WHERE id = X AND
+  confirmation_sent_at IS NULL RETURNING …`; claim released on send failure (loud row-id
+  log, webhook still returns 200 — email is best-effort, never blocks payment ack).
+  New column `confirmation_sent_at TIMESTAMPTZ` via the existing idempotent
+  ensure-schema path.
+- **Config-symmetric:** no `RESEND_API_KEY` → email silently disabled (local dev, and
+  production-before-the-key-lands behave identically to today). Claim is only taken when
+  sending is enabled.
+- **GDPR:** Resend added to the Datenschutz §5 processor list (DE+EN).
+- **Failure stance:** send failures never 4xx/5xx the webhook; admin table + Stripe
+  dashboard remain the source of truth; manual resend = clearing `confirmation_sent_at`
+  and resending the Stripe event.
 
 ## Implementation order
 
