@@ -235,14 +235,38 @@ Known quirk to observe (not fix) during E2E: `success_url`/`cancel_url` carry no
 prefix — confirm the default-locale redirect lands correctly; log a follow-up if EN testers
 get bounced to DE.
 
-### 11. Go-live (June 17) — documented here, executed separately
+### 11. Go-live — executed **by June 16**, registration opens itself on the 17th
 
-Swap **Production** scope only: live `sk_live_…` key; live-mode webhook endpoint at
-`https://oetz-trophy.com/api/webhooks/stripe` + its `whsec_…`; real Turnstile site/secret
-keys; strong unique `ADMIN_PASSWORD` + fresh `ADMIN_SESSION_SECRET`; run the cleanup SQL;
-confirm `REGISTRATION_TEST_MODE` absent from Production; Datenschutz page updated in Studio
-(processors incl. Cloudflare); client confirmed the retention window. Date gate opens
-automatically via the Studio-managed date. **Zero code changes.**
+The opening is fully automatic; no midnight operations. How the flip works:
+
+- **API gate** (`POST /api/registration`): evaluated per request against the server clock —
+  opens at exactly the stored instant (default `2026-06-17T00:00 Europe/Vienna`, or whatever
+  the client sets in Studio).
+- **Registration page UI**: ISR with `revalidate = 60` → shows the open form within ≤ 60 s of
+  the instant. Homepage Hero flips the same way (server-decided prop, `19581bf` pattern).
+- Caveat: if the client edits the open date in Studio at the last minute, allow ~1 min for
+  Sanity CDN + ISR to propagate. The *flip itself* needs no content change — it's clock vs.
+  stored date.
+
+**The manual part is the Production env swap, and it is deliberately front-loaded: do it by
+June 16.** Live values are inert while the date gate is closed (nobody can reach checkout
+creation), so registration opens at midnight already fully armed:
+
+1. Live `sk_live_…` key; live-mode webhook endpoint at
+   `https://oetz-trophy.com/api/webhooks/stripe` + its `whsec_…`.
+2. Real Turnstile site/secret keys.
+3. Strong unique `ADMIN_PASSWORD` + fresh `ADMIN_SESSION_SECRET`.
+4. Run the cleanup SQL (§9) after testing ends.
+5. Confirm `REGISTRATION_TEST_MODE` absent from Production.
+6. Datenschutz page updated in Studio (processors incl. Cloudflare); retention window
+   confirmed by client.
+7. **Post-swap, pre-open verification (June 16):** prod registration page still shows
+   "opens June 17" (gate closed, banner-free); Stripe dashboard (live mode) shows the
+   webhook endpoint enabled; admin login works on prod with the new password.
+
+**Zero code changes.** Failure mode if the swap is skipped: registration opens on the 17th
+but every checkout attempt fails on the placeholder key — hence the hard June 16 deadline
+on this checklist, not the 17th.
 
 ## Implementation order
 
