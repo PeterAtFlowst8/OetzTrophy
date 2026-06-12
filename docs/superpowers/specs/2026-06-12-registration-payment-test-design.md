@@ -26,7 +26,12 @@ unable to take payments or open registration early.
 - Stale branch `feature/registration-preproduction-test` (May 9, 51 commits behind) contains a
   Stripe-bypassing fake test mode + admin panel. **Reference material only** — not revived here.
 - Stripe account: client-owned, Peter has dashboard access. Test keys (`sk_test_…`) available.
-- Vercel preview deployments are auth-protected (401).
+- Stable custom domain **`preview.oetz-trophy.com` is assigned to the `preview` branch**
+  (verified via Vercel domains API 2026-06-12) — use it everywhere instead of the generated
+  `…-git-preview-….vercel.app` alias.
+- Vercel Authentication still returns **401 on the preview domain too** (custom domains on
+  non-production branches are protected; only production domains are exempt — verified by curl
+  2026-06-12). The bypass secret is therefore still required for Stripe and for testers.
 
 ## Decisions (made during design)
 
@@ -51,14 +56,15 @@ Production keeps placeholders:
 | `STRIPE_SECRET_KEY` | client's `sk_test_…` | `"123"` placeholder → checkout creation fails loudly |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_…` of the new test endpoint | placeholder |
 | `REGISTRATION_TEST_MODE` | `1` | absent |
-| `NEXT_PUBLIC_SITE_URL` | `https://oetz-trophy-git-preview-peters-projects-2818a888.vercel.app` | absent |
+| `NEXT_PUBLIC_SITE_URL` | `https://preview.oetz-trophy.com` | absent |
 | `DATABASE_URL` | unchanged (shared) | unchanged |
 
 Notes: the legacy `NEXT_PUBLIC_URL=https://oetz-trophy.com` stays as-is in ALL scopes — do not
 delete it; production keeps using it, and on Preview the new `NEXT_PUBLIC_SITE_URL` simply wins
 by precedence in `src/lib/site.ts` (`NEXT_PUBLIC_SITE_URL || NEXT_PUBLIC_URL || default`).
-The `…-git-preview-…` branch alias is stable across deploys, so webhook URL and tester
-link never rot. The leftover `website` Vercel project (disconnection candidate) gets nothing.
+`preview.oetz-trophy.com` is permanently assigned to the `preview` branch, so the webhook URL
+and tester link never rot. Scope the Preview-environment vars to the `preview` git branch where
+the Vercel UI offers it, so ad-hoc feature-branch previews don't silently become payment rigs. The leftover `website` Vercel project (disconnection candidate) gets nothing.
 Dead var `REGISTRATION_FEE_EURO` (code reads Studio `registrationFeeEur`, fallback
 `REGISTRATION_FEE_CENTS`, default €135) is out of scope — do not propagate it.
 
@@ -90,7 +96,7 @@ Dead var `REGISTRATION_FEE_EURO` (code reads Studio `registrationFeeEur`, fallba
 ### 3. Stripe dashboard (client account, test mode)
 
 - Create **test-mode** webhook endpoint:
-  `https://oetz-trophy-git-preview-peters-projects-2818a888.vercel.app/api/webhooks/stripe?x-vercel-protection-bypass=<automation-secret>`
+  `https://preview.oetz-trophy.com/api/webhooks/stripe?x-vercel-protection-bypass=<automation-secret>`
   subscribed to `checkout.session.completed`. Copy its signing secret → Preview
   `STRIPE_WEBHOOK_SECRET`. (Stripe cannot send custom headers; Vercel accepts the bypass
   secret as a query parameter — confirm exact param behaviour against current Vercel docs
@@ -102,9 +108,12 @@ Dead var `REGISTRATION_FEE_EURO` (code reads Studio `registrationFeeEur`, fallba
 - Enable **Protection Bypass for Automation** on the `oetz-trophy` project (generates the
   secret used above).
 - Client/tester link (one click, sets bypass cookie for the whole staging session):
-  `https://oetz-trophy-git-preview-…vercel.app/registration?x-vercel-protection-bypass=<secret>&x-vercel-set-bypass-cookie=true`
+  `https://preview.oetz-trophy.com/registration?x-vercel-protection-bypass=<secret>&x-vercel-set-bypass-cookie=true`
 - The Stripe Checkout round-trip returns to the same domain, so the cookie keeps working
   through payment → success page.
+- Alternative if the bypass-param links feel clunky: exempt the preview environment from
+  Vercel Authentication in Deployment Protection settings (makes `preview.oetz-trophy.com`
+  plainly public until launch). Default remains protection on + bypass links.
 
 ### 5. Shared-DB hygiene (launch checklist item)
 
@@ -124,7 +133,7 @@ Dead var `REGISTRATION_FEE_EURO` (code reads Studio `registrationFeeEur`, fallba
 2. On the preview deployment via bypass link: registration form is open (despite date gate),
    TEST banner visible in DE and EN.
 3. Submit with fake email → Stripe test checkout → pay with `4242 4242 4242 4242` →
-   redirected to `/registration/success` **on the preview domain** (not oetz-trophy.com).
+   redirected to `https://preview.oetz-trophy.com/registration/success` (not oetz-trophy.com).
 4. Stripe dashboard (test mode): webhook delivery `200`.
 5. DB row: `status='paid'`, `stripe_session_id` starts `cs_test_`.
 6. Production spot-check: prod registration page still shows "opens June 17", no banner.
