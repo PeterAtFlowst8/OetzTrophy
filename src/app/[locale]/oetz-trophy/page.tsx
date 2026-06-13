@@ -9,6 +9,7 @@ import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
 import { getRaceContent, eventPageLabel, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
+import TextWithLinks from '@/components/TextWithLinks';
 
 
 type Props = { params: Promise<{ locale: string }> };
@@ -53,7 +54,7 @@ export default async function OetzTrophyPage() {
                 </div>
               ) : (
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                  {localizedField(event.excerpt, locale)}
+                  <TextWithLinks text={localizedField(event.excerpt, locale)} />
                 </p>
               )}
             </div>
@@ -117,7 +118,7 @@ export default async function OetzTrophyPage() {
                       <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '20px', color: 'var(--color-accent)', minWidth: '2ch' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      {localizedField(rule, locale)}
+                      <TextWithLinks text={localizedField(rule, locale)} />
                     </li>
                   ))}
                 </ul>

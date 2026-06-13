@@ -61,7 +61,7 @@ export default async function KajakfestivalPage() {
                 </div>
               ) : (
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                  {localizedField(event.excerpt, locale)}
+                  <TextWithLinks text={localizedField(event.excerpt, locale)} />
                 </p>
               )}
             </div>
