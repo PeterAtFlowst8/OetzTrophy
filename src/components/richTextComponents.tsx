@@ -1,15 +1,24 @@
 import type { PortableTextComponents } from '@portabletext/react';
 
 /**
- * Minimal Portable Text serialisers shared by the race/festival page bodies.
+ * Portable Text serialisers shared by the race/festival/qualification bodies.
  *
- * Editors in Studio add empty "blank line" paragraphs to space their text out.
- * By default an empty block collapses to nothing, so that spacing is lost on the
- * site. Here an empty normal block renders as a single line of vertical space
- * (a non-breaking space, hidden from screen readers), faithfully reflecting what
- * the editor typed. Non-empty paragraphs and every other block type (headings,
- * lists, quotes, links, images) keep their default rendering.
+ * Tailwind's Preflight resets headings to inherit the body size/weight and
+ * strips list markers, so the default tags render as flat body text. These
+ * serialisers re-apply the site's typography (display-font headings, an accent
+ * blockquote, marked lists) so the formatting a client adds with the Studio
+ * toolbar actually shows on the page.
+ *
+ * Editors also add empty "blank line" paragraphs to space text out; an empty
+ * normal block renders as a single line of vertical space (a non-breaking
+ * space, hidden from screen readers) rather than collapsing to nothing.
  */
+const headingBase = {
+  fontFamily: 'var(--font-display)',
+  fontWeight: 700,
+  color: 'var(--color-ink)',
+};
+
 export const richTextComponents: PortableTextComponents = {
   marks: {
     // Links inserted via the Studio toolbar: honours the "Open in new tab"
@@ -29,6 +38,40 @@ export const richTextComponents: PortableTextComponents = {
     ),
   },
   block: {
+    h2: ({ children }) => (
+      <h2
+        className="uppercase"
+        style={{ ...headingBase, fontSize: 'clamp(26px, 3.5vw, 34px)', lineHeight: 1.05, margin: '2.5rem 0 1rem' }}
+      >
+        {children}
+      </h2>
+    ),
+    h3: ({ children }) => (
+      <h3
+        className="uppercase"
+        style={{ ...headingBase, fontSize: 'clamp(21px, 2.8vw, 26px)', lineHeight: 1.1, margin: '2rem 0 0.75rem' }}
+      >
+        {children}
+      </h3>
+    ),
+    h4: ({ children }) => (
+      <h4 style={{ ...headingBase, fontSize: 'clamp(18px, 2.2vw, 21px)', lineHeight: 1.2, margin: '1.5rem 0 0.5rem' }}>
+        {children}
+      </h4>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote
+        style={{
+          borderLeft: '3px solid var(--color-accent)',
+          paddingLeft: '1.25rem',
+          margin: '1.75rem 0',
+          fontStyle: 'italic',
+          color: 'var(--color-muted)',
+        }}
+      >
+        {children}
+      </blockquote>
+    ),
     normal: ({ children, value }) => {
       const isBlank = !value?.children?.some(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,10 +79,22 @@ export const richTextComponents: PortableTextComponents = {
       );
 
       if (isBlank) {
-        return <p aria-hidden="true">{' '}</p>;
+        return <p aria-hidden="true">{' '}</p>;
       }
 
       return <p>{children}</p>;
     },
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', margin: '1.25rem 0' }}>{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol style={{ listStyleType: 'decimal', paddingLeft: '1.5rem', margin: '1.25rem 0' }}>{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li style={{ marginBottom: '0.5rem', lineHeight: 1.7 }}>{children}</li>,
+    number: ({ children }) => <li style={{ marginBottom: '0.5rem', lineHeight: 1.7 }}>{children}</li>,
   },
 };

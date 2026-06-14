@@ -26,8 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export const revalidate = 60;
 
 const portableTextComponents = {
-  // Shared link rendering (new-tab option + styling) from richTextComponents.
+  // Shared link + list rendering from richTextComponents; article-specific
+  // heading/paragraph sizing stays local below.
   marks: richTextComponents.marks,
+  list: richTextComponents.list,
+  listItem: richTextComponents.listItem,
   block: {
     h2: ({ children }: { children?: React.ReactNode }) => (
       <h2
