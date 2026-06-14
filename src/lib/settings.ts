@@ -18,7 +18,7 @@ const settingsQuery = `*[_type == "siteSettings"][0] {
 const defaults: SiteSettings = {
   festivalDate: '2026-09-17T09:00:00Z',
   festivalEndDate: '2026-09-20T18:00:00Z',
-  registrationOpensAt: '2026-06-17T00:00:00+02:00',
+  registrationOpensAt: '2026-06-17T18:00:00+02:00',
   registrationFeeEur: 135,
 };
 

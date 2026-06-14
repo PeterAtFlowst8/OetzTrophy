@@ -52,6 +52,12 @@ describe('isRegistrationOpen (unchanged behaviour)', () => {
     expect(isRegistrationOpen(null, new Date(REGISTRATION_OPENS_AT_FALLBACK))).toBe(true);
   });
 
+  it('defaults to opening at 18:00 Vienna time on 17 June (closed at midday)', () => {
+    // Fallback used when Sanity registrationOpensAt is blank (its state in prod).
+    expect(isRegistrationOpen(null, new Date('2026-06-17T12:00:00+02:00'))).toBe(false);
+    expect(isRegistrationOpen(null, new Date('2026-06-17T18:00:00+02:00'))).toBe(true);
+  });
+
   it('respects a Studio-managed date', () => {
     expect(
       isRegistrationOpen('2026-06-10T00:00:00+02:00', new Date('2026-06-12T00:00:00+02:00')),

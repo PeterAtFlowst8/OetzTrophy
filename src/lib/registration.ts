@@ -6,7 +6,7 @@
  * it is missing (Sanity empty/outage), we fall back to the built-in date so the
  * site never breaks.
  */
-export const REGISTRATION_OPENS_AT_FALLBACK = '2026-06-17T00:00:00+02:00';
+export const REGISTRATION_OPENS_AT_FALLBACK = '2026-06-17T18:00:00+02:00';
 
 export function isRegistrationOpen(
   opensAt?: string | null,
