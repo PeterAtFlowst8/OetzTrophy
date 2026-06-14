@@ -204,7 +204,14 @@
     "phone": "Phone",
     "orgHeading": "Organiser",
     "contactHeading": "Get in Touch",
-    "socialHeading": "Social Media"
+    "socialHeading": "Social Media",
+    "orgName": "Source To Sea GmbH",
+    "addressStreet": "Natterer See 1",
+    "addressCity": "6161 Natters",
+    "addressRegion": "Tirol",
+    "phoneNumber": "+43 (0)512 546710",
+    "email": "info@oetz-trophy.com",
+    "emailLabel": "E-Mail"
   },
   "gallery": {
     "label": "",

@@ -79,10 +79,10 @@ export default async function KontaktPage() {
                   {t('orgHeading')}
                 </h2>
                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '15px', lineHeight: 2, color: 'var(--color-body-text)' }}>
-                  <p><strong style={{ color: 'var(--color-ink)' }}>Source To Sea GmbH</strong></p>
-                  <p>Natterer See 1</p>
-                  <p>6161 Natters</p>
-                  <p>Tirol / {t('country')}</p>
+                  <p><strong style={{ color: 'var(--color-ink)' }}>{t('orgName')}</strong></p>
+                  <p>{t('addressStreet')}</p>
+                  <p>{t('addressCity')}</p>
+                  <p>{t('addressRegion')} / {t('country')}</p>
                 </div>
 
                 <div
@@ -95,12 +95,12 @@ export default async function KontaktPage() {
                 >
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
                     <strong style={{ color: 'var(--color-ink)' }}>{t('phone')}</strong><br />
-                    +43 (0)512 546710
+                    {t('phoneNumber')}
                   </p>
                   <p className="mt-3" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', lineHeight: 1.8, color: 'var(--color-body-text)' }}>
-                    <strong style={{ color: 'var(--color-ink)' }}>E-Mail</strong><br />
-                    <a href="mailto:info@oetz-trophy.com" style={{ color: 'var(--color-accent)' }}>
-                      info@oetz-trophy.com
+                    <strong style={{ color: 'var(--color-ink)' }}>{t('emailLabel')}</strong><br />
+                    <a href={`mailto:${t('email')}`} style={{ color: 'var(--color-accent)' }}>
+                      {t('email')}
                     </a>
                   </p>
                 </div>
