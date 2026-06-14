@@ -36,10 +36,24 @@ export function isRegistrationTestMode(
 
 /** The registration open date, formatted for display in the given locale. */
 export function registrationOpensLabel(locale: string, opensAt?: string | null) {
-  return new Date(opensAt || REGISTRATION_OPENS_AT_FALLBACK).toLocaleDateString(
-    locale === 'de' ? 'de-AT' : 'en-GB',
-    // Format in Austria's timezone so the date isn't shifted to the previous
-    // day when rendered on a UTC server (e.g. Vercel).
-    { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Vienna' },
-  );
+  const when = new Date(opensAt || REGISTRATION_OPENS_AT_FALLBACK);
+  const loc = locale === 'de' ? 'de-AT' : 'en-GB';
+  // Format in Austria's timezone so the date/time isn't shifted when rendered
+  // on a UTC server (e.g. Vercel).
+  const datePart = when.toLocaleDateString(loc, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Vienna',
+  });
+  const timePart = when.toLocaleTimeString(loc, {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Vienna',
+  });
+  // Registration opens in June — always CEST. Show the zone explicitly for the
+  // international field rather than the locale-native abbreviation ("MESZ").
+  return locale === 'de'
+    ? `${datePart} um ${timePart} Uhr CEST`
+    : `${datePart}, ${timePart} CEST`;
 }

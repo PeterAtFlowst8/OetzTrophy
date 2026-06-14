@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   isRegistrationOpen,
   isRegistrationTestMode,
+  registrationOpensLabel,
   REGISTRATION_OPENS_AT_FALLBACK,
 } from '@/lib/registration';
 
@@ -62,5 +63,16 @@ describe('isRegistrationOpen (unchanged behaviour)', () => {
     expect(
       isRegistrationOpen('2026-06-10T00:00:00+02:00', new Date('2026-06-12T00:00:00+02:00')),
     ).toBe(true);
+  });
+});
+
+describe('registrationOpensLabel', () => {
+  it('shows the opening date with time and timezone (CEST)', () => {
+    const de = registrationOpensLabel('de', '2026-06-17T18:00:00+02:00');
+    expect(de).toContain('18:00');
+    expect(de).toContain('CEST');
+    const en = registrationOpensLabel('en', '2026-06-17T18:00:00+02:00');
+    expect(en).toContain('18:00');
+    expect(en).toContain('CEST');
   });
 });
