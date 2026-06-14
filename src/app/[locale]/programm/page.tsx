@@ -62,23 +62,22 @@ export default async function ProgrammPage({ params }: Props) {
             {t('mapHeading')}
           </h2>
 
-          {/*
-            TODO(map): replace this placeholder with the Google Maps embed of
-            important places (parking, race start, festival area, …), e.g. an
-            <iframe> from Google My Maps, sized to fill this box.
-          */}
+          {/* Google My Maps embed: important places (parking, start, festival area). */}
           <div
-            className="flex items-center justify-center px-6 text-center"
             style={{
-              minHeight: '320px',
-              backgroundColor: 'var(--color-surface)',
+              width: '100%',
+              height: 'clamp(360px, 60vh, 520px)',
               border: '1px solid var(--color-border)',
-              fontFamily: 'var(--font-body)',
-              fontSize: '15px',
-              color: 'var(--color-muted)',
+              backgroundColor: 'var(--color-surface)',
             }}
           >
-            {t('mapComingSoon')}
+            <iframe
+              src="https://www.google.com/maps/d/u/0/embed?mid=1yefxj93tueT9LP7C1nYCQzcpik1AHjO6&ehbc=2E312F"
+              title={t('mapHeading')}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ display: 'block', width: '100%', height: '100%', border: 0 }}
+            />
           </div>
         </div>
       </section>
