@@ -274,6 +274,8 @@
     "intro": "Everything you need for your visit to the Ötztal Kayak Festival and the OETZ TROPHY: schedule, meeting points and important places around Oetz.",
     "scheduleHeading": "Daily schedule",
     "mapHeading": "Important places",
-    "mapComingSoon": "The map with all important places is coming soon."
+    "mapComingSoon": "The map with all important places is coming soon.",
+    "mapConsent": "This map is loaded from Google Maps, which transfers data to Google. See our [privacy policy](/en/datenschutz) for details.",
+    "mapLoad": "Load map"
   }
 }

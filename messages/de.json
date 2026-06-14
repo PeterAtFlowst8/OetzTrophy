@@ -274,6 +274,8 @@
     "intro": "Alle wichtigen Informationen für deinen Besuch beim Ötztaler Kajakfestival und der OETZ TROPHY: Zeitplan, Treffpunkte und wichtige Orte rund um Oetz.",
     "scheduleHeading": "Tagesprogramm",
     "mapHeading": "Wichtige Orte",
-    "mapComingSoon": "Die Karte mit allen wichtigen Orten folgt in Kürze."
+    "mapComingSoon": "Die Karte mit allen wichtigen Orten folgt in Kürze.",
+    "mapConsent": "Die Karte wird von Google Maps geladen — dabei werden Daten an Google übertragen. Mehr dazu in der [Datenschutzerklärung](/de/datenschutz).",
+    "mapLoad": "Karte laden"
   }
 }

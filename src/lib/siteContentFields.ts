@@ -134,7 +134,7 @@ export const EDITABLE_SITE_CONTENT_KEYS: Record<string, readonly string[]> = {
     'dataText',
     'reviewNote',
   ],
-  programm: ['label', 'title', 'intro', 'scheduleHeading', 'mapHeading', 'mapComingSoon'],
+  programm: ['label', 'title', 'intro', 'scheduleHeading', 'mapHeading', 'mapComingSoon', 'mapConsent', 'mapLoad'],
   nav: [
     'switchTo',
     'race',

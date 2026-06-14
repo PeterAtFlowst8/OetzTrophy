@@ -5,6 +5,7 @@ import { getOptionalSiteImage, getPageSeo, getProgramDays } from '@/lib/siteCont
 import { headingFontSize } from '@/lib/headingFit';
 import TextWithLinks from '@/components/TextWithLinks';
 import ProgramSchedule from '@/components/ProgramSchedule';
+import MapConsent from '@/components/MapConsent';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -62,23 +63,13 @@ export default async function ProgrammPage({ params }: Props) {
             {t('mapHeading')}
           </h2>
 
-          {/* Google My Maps embed: important places (parking, start, festival area). */}
-          <div
-            style={{
-              width: '100%',
-              height: 'clamp(360px, 60vh, 520px)',
-              border: '1px solid var(--color-border)',
-              backgroundColor: 'var(--color-surface)',
-            }}
-          >
-            <iframe
-              src="https://www.google.com/maps/d/u/0/embed?mid=1yefxj93tueT9LP7C1nYCQzcpik1AHjO6&ehbc=2E312F"
-              title={t('mapHeading')}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              style={{ display: 'block', width: '100%', height: '100%', border: 0 }}
-            />
-          </div>
+          {/* Google My Maps embed behind a GDPR consent gate (loads only on click). */}
+          <MapConsent
+            src="https://www.google.com/maps/d/u/0/embed?mid=1yefxj93tueT9LP7C1nYCQzcpik1AHjO6&ehbc=2E312F"
+            title={t('mapHeading')}
+            notice={t('mapConsent')}
+            loadLabel={t('mapLoad')}
+          />
         </div>
       </section>
     </main>
