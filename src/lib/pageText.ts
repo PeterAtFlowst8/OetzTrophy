@@ -12,9 +12,16 @@ export type PageText = {
   pageLabel?: { de?: string; en?: string };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: { de?: any[]; en?: any[] };
+  // Optional race-fact fields — present on pages that use raceContentFields()
+  // (the Qualification page); blank/absent on plainer page-text documents.
+  excerpt?: { de?: string; en?: string };
+  date?: string;
+  format?: string;
+  entryType?: string;
+  rules?: Array<{ de?: string; en?: string }>;
 };
 
-const QUERY = `*[_id == $pageId][0]{ title, pageLabel, body }`;
+const QUERY = `*[_id == $pageId][0]{ title, pageLabel, body, excerpt, date, format, entryType, rules }`;
 
 export async function getPageText(pageId: string): Promise<PageText | null> {
   try {

@@ -947,7 +947,7 @@ const PAGE_SUBTITLES: Record<string, string> = {
   pageKajakfestival: 'Main text, schedule, location, header photo & SEO',
   pageProgram: 'Intro, daily schedule, header photo & SEO',
   pageRegistration: 'Form labels, confirmation text, header photo & SEO',
-  pageQualification: 'How the qualification works: main text, header photo & SEO',
+  pageQualification: 'How the qualification works: main text, event facts, rules, header photo & SEO',
   pageNews: 'Header photo & SEO (articles: Blog Posts)',
   pageGallery: 'Coming-soon text, header photo & SEO',
   pageResults: 'Coming-soon text, header photo & SEO',
@@ -1083,8 +1083,9 @@ export const pageContentTypes = PAGE_DOCUMENTS.map((def) => {
   // Race content goes right after the header photo, ahead of SEO (and, on
   // the Kayak Festival page, ahead of the schedule & location section).
   if (RACE_CONTENT_PAGES.has(def.type)) fields.splice(1, 0, ...raceContentFields());
-  // The Qualification page carries the same text trio, minus the race facts.
-  if (def.type === 'pageQualification') fields.splice(1, 0, ...pageTextFields());
+  // The Qualification page carries the same fields as the race pages so the
+  // client can fill its stat block (date/format/entry) and rules in Studio.
+  if (def.type === 'pageQualification') fields.splice(1, 0, ...raceContentFields());
 
   return defineType({
     name: def.type,
