@@ -51,6 +51,19 @@ export type RegistrationRecord = {
   updatedAt: string;
 };
 
+/**
+ * Delete leftover test registrations. Test-mode checkouts always carry a
+ * `cs_test_…` Stripe session id, so this never matches real (live) rows.
+ * Returns the number of rows removed.
+ */
+export async function deleteTestRegistrations(): Promise<number> {
+  const sql = getDb();
+  const rows = await sql`
+    DELETE FROM registrations WHERE stripe_session_id LIKE 'cs_test_%' RETURNING id
+  `;
+  return rows.length;
+}
+
 export async function listRegistrations(): Promise<RegistrationRecord[]> {
   const sql = getDb();
   const rows = await sql`
