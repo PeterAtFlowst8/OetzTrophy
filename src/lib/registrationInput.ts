@@ -17,6 +17,7 @@ export type RegistrationInput = {
   email: string;
   nationality: string;
   tshirtSize: string;
+  category: 'men' | 'women';
   acceptedTerms: true;
   acceptedAwpRules: true;
   confirmedOver18: true;
@@ -40,6 +41,7 @@ export function parseRegistrationInput(body: unknown): ParseResult {
   const email = clean(b.email).toLowerCase();
   const nationality = clean(b.nationality);
   const tshirtSize = clean(b.tshirtSize).toUpperCase();
+  const category = clean(b.category).toLowerCase();
   const turnstileToken = clean(b.turnstileToken);
 
   if (turnstileToken.length > MAX_TURNSTILE_TOKEN) {
@@ -55,6 +57,9 @@ export function parseRegistrationInput(body: unknown): ParseResult {
   if (email.length > MAX_EMAIL || !EMAIL_RE.test(email) || !TSHIRT_SIZES.has(tshirtSize)) {
     return { ok: false, error: 'Please check your email and t-shirt size' };
   }
+  if (category !== 'men' && category !== 'women') {
+    return { ok: false, error: 'Please choose a race category' };
+  }
   if (b.acceptedTerms !== true || b.acceptedAwpRules !== true || b.confirmedOver18 !== true) {
     return { ok: false, error: 'All confirmations are required' };
   }
@@ -68,6 +73,7 @@ export function parseRegistrationInput(body: unknown): ParseResult {
       email,
       nationality,
       tshirtSize,
+      category,
       acceptedTerms: true,
       acceptedAwpRules: true,
       confirmedOver18: true,

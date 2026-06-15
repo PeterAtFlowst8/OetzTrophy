@@ -53,6 +53,7 @@ const VALID_BODY = {
   email: 'ada@example.com',
   nationality: 'AT',
   tshirtSize: 'M',
+  category: 'men',
   acceptedTerms: true,
   acceptedAwpRules: true,
   confirmedOver18: true,

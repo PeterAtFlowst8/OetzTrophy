@@ -7,6 +7,7 @@ const valid = {
   email: 'Anna.Mueller@Example.com',
   nationality: 'Austria',
   tshirtSize: 'm',
+  category: 'men',
   acceptedTerms: true,
   acceptedAwpRules: true,
   confirmedOver18: true,
@@ -75,4 +76,17 @@ describe('parseRegistrationInput', () => {
   it('rejects an oversized turnstileToken', () => {
     expect(parseRegistrationInput({ ...valid, turnstileToken: 'x'.repeat(2049) }).ok).toBe(false);
   });
+
+  it('accepts and lowercases a valid category', () => {
+    const r = parseRegistrationInput({ ...valid, category: 'WOMEN' });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.value.category).toBe('women');
+  });
+
+  it.each([['category', ''], ['category', 'mixed'], ['category', 'mann']])(
+    'rejects bad %s = %j',
+    (key, val) => {
+      expect(parseRegistrationInput({ ...valid, [key]: val }).ok).toBe(false);
+    },
+  );
 });
