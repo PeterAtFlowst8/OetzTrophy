@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminActions() {
   const router = useRouter();
+  const [deleting, setDeleting] = useState(false);
 
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -12,13 +14,18 @@ export default function AdminActions() {
 
   async function handleDeleteTest() {
     if (!window.confirm('Delete ALL test registrations (cs_test_…)? This cannot be undone.')) return;
-    const res = await fetch('/api/admin/delete-test', { method: 'POST' });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok) {
-      window.alert(`Deleted ${data?.deleted?.registrations ?? 0} test registration(s).`);
-      router.refresh();
-    } else {
-      window.alert('Delete failed.');
+    setDeleting(true);
+    try {
+      const res = await fetch('/api/admin/delete-test', { method: 'POST' });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        window.alert(`Deleted ${data?.deleted?.registrations ?? 0} test registration(s).`);
+        router.refresh();
+      } else {
+        window.alert(data?.error ?? 'Delete failed.');
+      }
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -35,10 +42,11 @@ export default function AdminActions() {
       <button
         type="button"
         onClick={handleDeleteTest}
-        className="px-5 py-2 uppercase"
-        style={{ ...buttonStyle, backgroundColor: '#7c2d12', color: '#ffedd5' }}
+        disabled={deleting}
+        className="px-5 py-2 uppercase disabled:opacity-50"
+        style={{ ...buttonStyle, backgroundColor: '#7c2d12', color: '#ffedd5', cursor: deleting ? 'wait' : 'pointer' }}
       >
-        Delete test data
+        {deleting ? 'Deleting…' : 'Delete test data'}
       </button>
       <a
         href="/api/admin/export"
