@@ -1037,12 +1037,12 @@ function raceContentFields() {
       type: 'datetime',
       description: 'Shown in the event facts on the page.',
     }),
-    defineField({
-      name: 'format',
-      title: 'Format Label',
-      type: 'string',
-      description: 'Shown in the event facts, for example Time Trial, Head-to-Head, or Festival.',
-    }),
+    localizedString(
+      'format',
+      'Format Label',
+      'Shown in the event facts, for example Zeitlauf / Time Trial, Head-to-Head, or Festival.',
+      { optional: true },
+    ),
     defineField({
       name: 'entryType',
       title: 'Entry / Registration Path',

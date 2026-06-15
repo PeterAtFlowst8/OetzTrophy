@@ -16,7 +16,7 @@ export type PageText = {
   // (the Qualification page); blank/absent on plainer page-text documents.
   excerpt?: { de?: string; en?: string };
   date?: string;
-  format?: string;
+  format?: string | { de?: string; en?: string };
   entryType?: string;
   rules?: Array<{ de?: string; en?: string }>;
 };

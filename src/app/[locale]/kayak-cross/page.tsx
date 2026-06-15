@@ -8,7 +8,7 @@ import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
-import { getRaceContent, eventPageLabel, localizedField, formatShortDate, entryTypeLabel } from '@/lib/events';
+import { getRaceContent, eventPageLabel, localizedField, localizedFormat, formatShortDate, entryTypeLabel } from '@/lib/events';
 import TextWithLinks from '@/components/TextWithLinks';
 
 
@@ -64,7 +64,7 @@ export default async function KayakCrossPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mb-16 md:mb-20">
               {[
                 { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(event.date, locale) },
-                { label: 'Format', value: event.format },
+                { label: 'Format', value: localizedFormat(event.format, locale) },
                 { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryTypeLabel(event.entryType, locale) },
               ].map((item) => (
                 <div key={item.label} style={{ borderTop: '3px solid var(--color-accent)', paddingTop: '1rem' }}>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { eventPageLabel, pickRaceContent, type SanityEvent } from './events';
+import { eventPageLabel, localizedFormat, pickRaceContent, type SanityEvent } from './events';
 
 const make = (over: Partial<SanityEvent>): SanityEvent => ({
   _id: 'x',
@@ -35,6 +35,28 @@ describe('pickRaceContent', () => {
   it('returns null when neither document has content', () => {
     expect(pickRaceContent(make({}), null)).toBeNull();
     expect(pickRaceContent(null, null)).toBeNull();
+  });
+});
+
+describe('localizedFormat', () => {
+  it('returns a legacy plain-string value for either language (backward compat)', () => {
+    expect(localizedFormat('Zeitlauf', 'de')).toBe('Zeitlauf');
+    expect(localizedFormat('Zeitlauf', 'en')).toBe('Zeitlauf');
+  });
+
+  it('returns the per-language value from a bilingual object', () => {
+    expect(localizedFormat({ de: 'Zeitlauf', en: 'Time trial' }, 'de')).toBe('Zeitlauf');
+    expect(localizedFormat({ de: 'Zeitlauf', en: 'Time trial' }, 'en')).toBe('Time trial');
+  });
+
+  it('falls back to the other language when one side is blank', () => {
+    expect(localizedFormat({ de: 'Zeitlauf', en: '' }, 'en')).toBe('Zeitlauf');
+  });
+
+  it('returns empty string for missing or blank values', () => {
+    expect(localizedFormat(undefined, 'de')).toBe('');
+    expect(localizedFormat(null, 'de')).toBe('');
+    expect(localizedFormat({ de: '', en: '' }, 'de')).toBe('');
   });
 });
 

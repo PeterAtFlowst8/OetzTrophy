@@ -6,7 +6,7 @@ export type SanityEvent = {
   pageLabel?: { de?: string; en?: string };
   date: string;
   entryType: string;
-  format: string;
+  format: string | { de?: string; en?: string };
   excerpt: { de: string; en: string };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: { de: any[]; en: any[] };
@@ -53,6 +53,21 @@ export async function getRaceContent(
 
 export function localizedField<T>(field: { de: T; en: T }, locale: string): T {
   return locale === 'en' ? (field.en || field.de) : field.de;
+}
+
+/**
+ * Format label, backward-compatible: legacy values are a single string (shown
+ * in both languages); new values are a { de, en } object with cross-language
+ * fill. Returns '' when blank so callers can hide the fact.
+ */
+export function localizedFormat(
+  format: string | { de?: string; en?: string } | null | undefined,
+  locale: string,
+): string {
+  if (!format) return '';
+  if (typeof format === 'string') return format.trim();
+  const value = locale === 'en' ? format.en || format.de : format.de || format.en;
+  return value?.trim() || '';
 }
 
 /**
