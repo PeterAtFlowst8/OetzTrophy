@@ -10,12 +10,17 @@ vi.mock('@/lib/turnstile', () => ({
   getTurnstileConfig: vi.fn(),
   verifyTurnstileToken: vi.fn(),
 }));
+vi.mock('@/lib/waitlist-email', () => ({
+  sendWaitlistEmail: vi.fn().mockResolvedValue(true),
+  isWaitlistEmailEnabled: vi.fn().mockReturnValue(true),
+}));
 
 import { POST } from './route';
 import { getDb } from '@/lib/db';
 import { getStripe } from '@/lib/stripe';
 import { getSiteSettings } from '@/lib/settings';
 import { getTurnstileConfig, verifyTurnstileToken } from '@/lib/turnstile';
+import { sendWaitlistEmail } from '@/lib/waitlist-email';
 
 function makeSql(handler?: (text: string) => unknown[]) {
   const calls: { text: string }[] = [];
@@ -156,5 +161,50 @@ describe('POST /api/registration', () => {
     expect(res.status).toBe(409);
     expect((await res.json()).code).toBe('already_registered');
     expect(create).not.toHaveBeenCalled();
+  });
+
+  it('diverts to the waitlist (no Stripe) when the category is full', async () => {
+    const sql = makeSql((text) =>
+      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 130 }] :
+      text.includes('INSERT INTO waitlist') ? [{ id: 7 }] : [],
+    );
+    vi.mocked(getDb).mockReturnValue(sql as never);
+    const create = vi.fn();
+    vi.mocked(getStripe).mockReturnValue({ checkout: { sessions: { create } } } as never);
+
+    const res = await POST(request(VALID_BODY));
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ waitlisted: true });
+    expect(create).not.toHaveBeenCalled();
+    expect(ran(sql, 'INSERT INTO waitlist')).toBe(true);
+    expect(sendWaitlistEmail).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT resend the waitlist email when the entry already existed', async () => {
+    const sql = makeSql((text) =>
+      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 130 }] :
+      text.includes('INSERT INTO waitlist') ? [] : [], // ON CONFLICT DO NOTHING → no row
+    );
+    vi.mocked(getDb).mockReturnValue(sql as never);
+    const res = await POST(request(VALID_BODY));
+    expect(await res.json()).toEqual({ waitlisted: true });
+    expect(sendWaitlistEmail).not.toHaveBeenCalled();
+  });
+
+  it('proceeds to Stripe when the category still has space', async () => {
+    const sql = makeSql((text) =>
+      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 0 }] : [],
+    );
+    vi.mocked(getDb).mockReturnValue(sql as never);
+    const create = vi.fn().mockResolvedValue({ id: 'cs_test_x', url: 'https://checkout.stripe.com/x' });
+    vi.mocked(getStripe).mockReturnValue({ checkout: { sessions: { create } } } as never);
+
+    const res = await POST(request(VALID_BODY));
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ url: 'https://checkout.stripe.com/x' });
+    expect(ran(sql, 'INSERT INTO registrations')).toBe(true);
+    expect(create).toHaveBeenCalledTimes(1);
   });
 });
