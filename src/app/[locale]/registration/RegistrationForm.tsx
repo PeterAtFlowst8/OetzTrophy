@@ -545,7 +545,7 @@ export default function RegistrationForm({
                       color: 'var(--color-muted)',
                     }}
                   >
-                    {t('paymentNote')}
+                    {t('paymentNote', { fee: feeDisplay })}
                   </p>
                 </form>
               </div>
