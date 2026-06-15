@@ -34,6 +34,20 @@ export const siteSettings = defineType({
         'Race-weekend registration fee in euros, e.g. 135. This is BOTH the price shown on the registration page AND the amount charged at checkout. Change it here and both update together.',
       validation: (Rule) => Rule.min(0).precision(2),
     }),
+    defineField({
+      name: 'maxMen',
+      title: 'Max participants — Men',
+      type: 'number',
+      description: 'Maximum PAID men. When reached, the registration button becomes "Join the waiting list". Leave blank for the default (130).',
+      validation: (Rule) => Rule.min(0).integer(),
+    }),
+    defineField({
+      name: 'maxWomen',
+      title: 'Max participants — Women',
+      type: 'number',
+      description: 'Maximum PAID women. When reached, the registration button becomes "Join the waiting list". Leave blank for the default (50).',
+      validation: (Rule) => Rule.min(0).integer(),
+    }),
   ],
   preview: {
     prepare() {

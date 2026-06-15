@@ -64,6 +64,8 @@ const OPEN = {
   festivalEndDate: '2026-09-20T18:00:00Z',
   registrationOpensAt: '2000-01-01T00:00:00Z',
   registrationFeeEur: 135,
+  maxMen: null,
+  maxWomen: null,
 };
 const CLOSED = { ...OPEN, registrationOpensAt: '2099-01-01T00:00:00Z' };
 
