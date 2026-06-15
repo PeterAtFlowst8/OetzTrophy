@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
+import { getDb, ensureSchema } from '@/lib/db';
 import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
 import { parseRegistrationInput } from '@/lib/registrationInput';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -9,37 +9,6 @@ import { getSiteSettings } from '@/lib/settings';
 import { SITE_URL } from '@/lib/site';
 
 const DEFAULT_EXPERIENCE_LEVEL = 'race-eligible';
-
-async function ensureRegistrationSchema(sql: ReturnType<typeof getDb>) {
-  await sql`
-    CREATE TABLE IF NOT EXISTS registrations (
-      id SERIAL PRIMARY KEY,
-      name TEXT NOT NULL,
-      first_name TEXT,
-      last_name TEXT,
-      email TEXT NOT NULL UNIQUE,
-      club TEXT,
-      nationality TEXT,
-      tshirt_size TEXT,
-      experience_level TEXT NOT NULL,
-      accepted_terms BOOLEAN NOT NULL DEFAULT FALSE,
-      accepted_awp_rules BOOLEAN NOT NULL DEFAULT FALSE,
-      confirmed_over_18 BOOLEAN NOT NULL DEFAULT FALSE,
-      stripe_session_id TEXT,
-      stripe_payment_id TEXT,
-      status TEXT NOT NULL DEFAULT 'pending',
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-      updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    )
-  `;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS first_name TEXT`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS last_name TEXT`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS tshirt_size TEXT`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS accepted_terms BOOLEAN NOT NULL DEFAULT FALSE`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS accepted_awp_rules BOOLEAN NOT NULL DEFAULT FALSE`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS confirmed_over_18 BOOLEAN NOT NULL DEFAULT FALSE`;
-  await sql`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS confirmation_sent_at TIMESTAMP WITH TIME ZONE`;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -84,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     const sql = getDb();
-    await ensureRegistrationSchema(sql);
+    await ensureSchema(sql);
 
     // Check for existing registration
     const existing = await sql`

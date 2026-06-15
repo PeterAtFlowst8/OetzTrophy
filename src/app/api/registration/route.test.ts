@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 // Mock the heavy I/O boundaries; exercise the REAL rate-limiter, gate and input
 // validation so this test covers the route's gate composition end to end.
-vi.mock('@/lib/db', () => ({ getDb: vi.fn() }));
+vi.mock('@/lib/db', () => ({ getDb: vi.fn(), ensureSchema: vi.fn() }));
 vi.mock('@/lib/stripe', () => ({ getStripe: vi.fn() }));
 vi.mock('@/lib/settings', () => ({ getSiteSettings: vi.fn() }));
 vi.mock('@/lib/turnstile', () => ({
