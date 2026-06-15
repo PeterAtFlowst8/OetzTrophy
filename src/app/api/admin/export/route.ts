@@ -16,6 +16,7 @@ export async function GET() {
     { key: 'email', header: 'Email' },
     { key: 'nationality', header: 'Nationality' },
     { key: 'tshirtSize', header: 'T-shirt' },
+    { key: 'category', header: 'Category' },
     { key: 'status', header: 'Status' },
     { key: 'stripeSessionId', header: 'Stripe session' },
     { key: 'stripePaymentId', header: 'Stripe payment' },

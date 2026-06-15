@@ -71,6 +71,7 @@ export default async function AdminPage() {
               <th style={th}>Email</th>
               <th style={th}>Nationality</th>
               <th style={th}>T-shirt</th>
+              <th style={th}>Category</th>
               <th style={th}>Status</th>
               <th style={th}>Created</th>
             </tr>
@@ -99,6 +100,7 @@ export default async function AdminPage() {
                 <td style={td}>{r.email}</td>
                 <td style={td}>{r.nationality}</td>
                 <td style={td}>{r.tshirtSize}</td>
+                <td style={td}>{r.category}</td>
                 <td style={td}>{r.status}</td>
                 <td style={td}>{new Date(r.createdAt).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' })}</td>
               </tr>
