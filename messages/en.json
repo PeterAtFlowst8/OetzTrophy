@@ -266,7 +266,14 @@
     "turnstileNotice": "This form is protected by Cloudflare Turnstile.",
     "turnstileFailed": "Verification failed — please try again.",
     "alreadyRegistered": "This email address is already registered and paid.",
-    "tooManyAttempts": "Too many attempts — please wait a few minutes and try again."
+    "tooManyAttempts": "Too many attempts — please wait a few minutes and try again.",
+    "categoryLabel": "Category",
+    "categoryMen": "Men",
+    "categoryWomen": "Women",
+    "categoryFullNote": "This category is full — you can join the waiting list.",
+    "joinWaitlist": "Join the waiting list",
+    "waitlistSuccessTitle": "You're on the waiting list",
+    "waitlistSuccessText": "All spots in your category are currently taken. No payment was taken. We'll email you as soon as a spot opens up."
   },
   "programm": {
     "label": "",

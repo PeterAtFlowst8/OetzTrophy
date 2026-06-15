@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import PageHeader from '@/components/PageHeader';
 import { registrationOpensLabel } from '@/lib/registration';
 import TextWithLinks from '@/components/TextWithLinks';
+import { isSelectedCategoryFull, type CategoryAvailability } from '@/lib/capacity';
 import TestModeBanner from '@/components/TestModeBanner';
 import TurnstileWidget from '@/components/TurnstileWidget';
 
@@ -19,6 +20,7 @@ type Props = {
   registrationFeeEur: number | null;
   isOpen: boolean;
   isTestMode: boolean;
+  availability: CategoryAvailability;
 };
 
 export default function RegistrationForm({
@@ -27,6 +29,7 @@ export default function RegistrationForm({
   registrationFeeEur,
   isOpen,
   isTestMode,
+  availability,
 }: Props) {
   const t = useTranslations('registration');
   const locale = useLocale();
@@ -39,14 +42,17 @@ export default function RegistrationForm({
     email: '',
     nationality: '',
     tshirtSize: '',
+    category: '',
     acceptedTerms: false,
     acceptedAwpRules: false,
     confirmedOver18: false,
   });
+  const selectedFull = isSelectedCategoryFull(form.category, availability);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
+  const [waitlisted, setWaitlisted] = useState(false);
   const handleTurnstileToken = useCallback((token: string | null) => {
     setTurnstileToken(token);
   }, []);
@@ -63,6 +69,7 @@ export default function RegistrationForm({
     form.email &&
     form.nationality &&
     form.tshirtSize &&
+    form.category &&
     form.acceptedTerms &&
     form.acceptedAwpRules &&
     form.confirmedOver18 &&
@@ -102,6 +109,11 @@ export default function RegistrationForm({
         return;
       }
 
+      if (data.waitlisted) {
+        setWaitlisted(true);
+        setSubmitting(false);
+        return;
+      }
       if (data.url) {
         window.location.href = data.url;
       }
@@ -256,6 +268,24 @@ export default function RegistrationForm({
               </div>
 
               <div>
+                {waitlisted ? (
+                  <div
+                    className="bg-white p-5 sm:p-7 md:p-9 py-12 text-center"
+                    style={{ border: '1px solid var(--color-border)' }}
+                  >
+                    <p
+                      className="uppercase mb-3"
+                      style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,4vw,38px)', fontWeight: 700, color: 'var(--color-ink)', lineHeight: 0.95 }}
+                    >
+                      {t('waitlistSuccessTitle')}
+                    </p>
+                    <p
+                      style={{ fontFamily: 'var(--font-body)', fontSize: '15px', lineHeight: 1.7, color: 'var(--color-body-text)', maxWidth: '52ch', margin: '0 auto' }}
+                    >
+                      {t('waitlistSuccessText')}
+                    </p>
+                  </div>
+                ) : (
                 <form
                   onSubmit={handleSubmit}
                   className="bg-white p-5 sm:p-7 md:p-9"
@@ -398,6 +428,41 @@ export default function RegistrationForm({
                         ))}
                       </select>
                     </div>
+
+                    <div className="md:col-span-2">
+                      <span style={labelStyle}>{t('categoryLabel')} *</span>
+                      <div className="flex gap-3">
+                        {(['men', 'women'] as const).map((value) => (
+                          <label
+                            key={value}
+                            className="flex-1 flex items-center gap-3 border px-4 py-3.5 cursor-pointer"
+                            style={{
+                              borderColor: form.category === value ? 'var(--color-accent)' : 'var(--color-border)',
+                              backgroundColor: form.category === value ? 'rgba(245,158,11,0.10)' : 'white',
+                            }}
+                          >
+                            <input
+                              type="radio"
+                              name="category"
+                              value={value}
+                              required
+                              checked={form.category === value}
+                              onChange={(e) => setForm({ ...form, category: e.target.value })}
+                              className="size-5"
+                              style={{ accentColor: 'var(--color-accent)' }}
+                            />
+                            <span style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-ink)' }}>
+                              {value === 'men' ? t('categoryMen') : t('categoryWomen')}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                      {selectedFull && (
+                        <p className="mt-2" style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: '#b45309' }}>
+                          {t('categoryFullNote')}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <fieldset
@@ -534,20 +599,23 @@ export default function RegistrationForm({
                       cursor: submitting ? 'wait' : canSubmit ? 'pointer' : 'not-allowed',
                     }}
                   >
-                    {submitting ? t('submitting') : t('submit')}
+                    {submitting ? t('submitting') : selectedFull ? t('joinWaitlist') : t('submit')}
                   </button>
 
-                  <p
-                    className="text-center mt-3"
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '12px',
-                      color: 'var(--color-muted)',
-                    }}
-                  >
-                    {t('paymentNote', { fee: feeDisplay })}
-                  </p>
+                  {!selectedFull && (
+                    <p
+                      className="text-center mt-3"
+                      style={{
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '12px',
+                        color: 'var(--color-muted)',
+                      }}
+                    >
+                      {t('paymentNote', { fee: feeDisplay })}
+                    </p>
+                  )}
                 </form>
+                )}
               </div>
             </div>
           )}
