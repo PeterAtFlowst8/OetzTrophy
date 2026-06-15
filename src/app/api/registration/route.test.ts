@@ -183,8 +183,8 @@ describe('POST /api/registration', () => {
 
   it('does NOT resend the waitlist email when the entry already existed', async () => {
     const sql = makeSql((text) =>
-      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 130 }] :
-      text.includes('INSERT INTO waitlist') ? [] : [], // ON CONFLICT DO NOTHING → no row
+      // count(*) → cap (full); waitlist INSERT ... ON CONFLICT DO NOTHING → [] (already on list)
+      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 130 }] : [],
     );
     vi.mocked(getDb).mockReturnValue(sql as never);
     const res = await POST(request(VALID_BODY));

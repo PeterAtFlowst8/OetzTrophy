@@ -72,11 +72,11 @@ export async function POST(request: NextRequest) {
 
     // Capacity (paid-only) for the chosen category.
     const caps = resolveCaps(settings);
-    const cap = category === 'men' ? caps.men : caps.women;
+    const cap = caps[category];
     const paidRows = await sql`
       SELECT count(*)::int AS n FROM registrations WHERE category = ${category} AND status = 'paid'
     `;
-    const paidCount = (paidRows[0]?.n as number) ?? 0;
+    const paidCount = Number(paidRows[0]?.n ?? 0);
 
     if (isCategoryFull(paidCount, cap)) {
       // Full → waiting list. No pending row, no Stripe. Insert-if-new is idempotent.
