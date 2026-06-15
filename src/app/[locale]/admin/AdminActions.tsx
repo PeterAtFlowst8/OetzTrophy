@@ -19,7 +19,7 @@ export default function AdminActions() {
       const res = await fetch('/api/admin/delete-test', { method: 'POST' });
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
-        window.alert(`Deleted ${data?.deleted?.registrations ?? 0} test registration(s).`);
+        window.alert(`Deleted ${data?.deleted?.registrations ?? 0} registration(s) and ${data?.deleted?.waitlist ?? 0} waitlist row(s).`);
         router.refresh();
       } else {
         window.alert(data?.error ?? 'Delete failed.');

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { isAdminAuthenticated } from '@/lib/admin-auth-server';
-import { listRegistrations } from '@/lib/db';
+import { listRegistrations, listWaitlist } from '@/lib/db';
 import AdminLogin from './AdminLogin';
 import AdminActions from './AdminActions';
 
@@ -23,6 +23,7 @@ export default async function AdminPage() {
   }
 
   const registrations = await listRegistrations();
+  const waitlist = await listWaitlist();
   const paid = registrations.filter((r) => r.status === 'paid');
   const isTestRow = (sessionId: string | null) => sessionId?.startsWith('cs_test_') ?? false;
 
@@ -100,6 +101,38 @@ export default async function AdminPage() {
                 <td style={td}>{r.tshirtSize}</td>
                 <td style={td}>{r.status}</td>
                 <td style={td}>{new Date(r.createdAt).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' })}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 className="uppercase mt-14 mb-3" style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 700 }}>
+        Waiting list
+      </h2>
+      <p className="mb-4" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-body-text)' }}>
+        {waitlist.length} total · {waitlist.filter((w) => w.category === 'men').length} men ·{' '}
+        {waitlist.filter((w) => w.category === 'women').length} women
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full" style={{ borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={th}>ID</th>
+              <th style={th}>Name</th>
+              <th style={th}>Email</th>
+              <th style={th}>Category</th>
+              <th style={th}>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            {waitlist.map((w) => (
+              <tr key={w.id}>
+                <td style={td}>{w.id}</td>
+                <td style={td}>{w.name}</td>
+                <td style={td}>{w.email}</td>
+                <td style={td}>{w.category}</td>
+                <td style={td}>{new Date(w.createdAt).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' })}</td>
               </tr>
             ))}
           </tbody>
