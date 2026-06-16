@@ -405,31 +405,6 @@ export default function RegistrationForm({
                     </div>
 
                     <div className="md:col-span-2">
-                      <label htmlFor="tshirtSize" style={labelStyle}>
-                        {t('tshirtLabel')} *
-                      </label>
-                      <select
-                        id="tshirtSize"
-                        name="tshirtSize"
-                        required
-                        value={form.tshirtSize}
-                        onChange={(e) => setForm({ ...form, tshirtSize: e.target.value })}
-                        className={fieldClass}
-                        style={{
-                          fontFamily: 'var(--font-body)',
-                          color: form.tshirtSize ? 'var(--color-ink)' : 'var(--color-muted)',
-                        }}
-                      >
-                        <option value="">{t('tshirtPlaceholder')}</option>
-                        {tshirtSizes.map((size) => (
-                          <option key={size} value={size}>
-                            {size}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="md:col-span-2">
                       <span style={labelStyle}>{t('categoryLabel')} *</span>
                       <div className="flex gap-3">
                         {(['men', 'women'] as const).map((value) => (
@@ -462,6 +437,31 @@ export default function RegistrationForm({
                           {t('categoryFullNote')}
                         </p>
                       )}
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label htmlFor="tshirtSize" style={labelStyle}>
+                        {t('tshirtLabel')} *
+                      </label>
+                      <select
+                        id="tshirtSize"
+                        name="tshirtSize"
+                        required
+                        value={form.tshirtSize}
+                        onChange={(e) => setForm({ ...form, tshirtSize: e.target.value })}
+                        className={fieldClass}
+                        style={{
+                          fontFamily: 'var(--font-body)',
+                          color: form.tshirtSize ? 'var(--color-ink)' : 'var(--color-muted)',
+                        }}
+                      >
+                        <option value="">{t('tshirtPlaceholder')}</option>
+                        {tshirtSizes.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
