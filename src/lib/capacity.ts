@@ -5,10 +5,10 @@ export type Caps = { men: number; women: number };
 
 export const DEFAULT_CAPS: Caps = { men: 130, women: 50 };
 
-/** Caps come from Sanity settings when set to a positive number, else the defaults. */
+/** Caps come from Sanity settings when set to a non-negative number (0 closes the category), else the defaults. */
 export function resolveCaps(settings: { maxMen?: number | null; maxWomen?: number | null }): Caps {
   const pick = (v: number | null | undefined, d: number) =>
-    typeof v === 'number' && v > 0 ? v : d;
+    typeof v === 'number' && v >= 0 ? v : d;
   return {
     men: pick(settings.maxMen, DEFAULT_CAPS.men),
     women: pick(settings.maxWomen, DEFAULT_CAPS.women),

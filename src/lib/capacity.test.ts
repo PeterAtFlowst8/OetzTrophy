@@ -9,8 +9,8 @@ describe('resolveCaps', () => {
   it('uses positive settings values when present', () => {
     expect(resolveCaps({ maxMen: 140, maxWomen: 60 })).toEqual({ men: 140, women: 60 });
   });
-  it('ignores zero/negative overrides and keeps the defaults', () => {
-    expect(resolveCaps({ maxMen: 0, maxWomen: -5 })).toEqual({ men: 130, women: 50 });
+  it('honors an explicit 0 (freeze the category) but ignores negatives', () => {
+    expect(resolveCaps({ maxMen: 0, maxWomen: -5 })).toEqual({ men: 0, women: 50 });
   });
 });
 
