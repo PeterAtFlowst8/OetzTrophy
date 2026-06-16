@@ -38,7 +38,7 @@ export function buildWaitlistEmail(input: WaitlistEmailInput): {
   const text = [
     `Hallo ${greetName},`,
     '',
-    'danke für dein Interesse am OETZ TROPHY Rennwochenende 2026. Aktuell sind alle Startplätze in deiner Wertung vergeben — du stehst jetzt auf der Warteliste.',
+    'danke für dein Interesse am OETZ TROPHY Rennwochenende 2026. Aktuell sind alle Startplätze in deiner Rennkategorie vergeben — du stehst jetzt auf der Warteliste.',
     '',
     'Es wurde keine Zahlung vorgenommen. Sobald ein Platz frei wird, melden wir uns per E-Mail mit dem Link zur Anmeldung.',
     '',
@@ -76,7 +76,7 @@ export function buildWaitlistEmail(input: WaitlistEmailInput): {
     <div style="background:#ffffff;border:1px solid #e7e5e4;border-top:4px solid #f59e0b;padding:24px;">
       ${block([
         `Hallo ${safeName},`,
-        'danke für dein Interesse am <strong>OETZ TROPHY Rennwochenende 2026</strong>. Aktuell sind alle Startplätze in deiner Wertung vergeben — du stehst jetzt auf der <strong>Warteliste</strong>.',
+        'danke für dein Interesse am <strong>OETZ TROPHY Rennwochenende 2026</strong>. Aktuell sind alle Startplätze in deiner Rennkategorie vergeben — du stehst jetzt auf der <strong>Warteliste</strong>.',
         'Es wurde <strong>keine Zahlung</strong> vorgenommen. Sobald ein Platz frei wird, melden wir uns per E-Mail mit dem Link zur Anmeldung.',
         '<strong>Wann:</strong> 17.–20. September 2026<br/><strong>Wo:</strong> Oetz, Ötztal (Tirol)',
         'Fragen? <a href="mailto:info@oetz-trophy.com" style="color:#b45309;">info@oetz-trophy.com</a>',

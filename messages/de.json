@@ -267,13 +267,13 @@
     "turnstileFailed": "Verifizierung fehlgeschlagen — bitte versuche es erneut.",
     "alreadyRegistered": "Diese E-Mail-Adresse ist bereits angemeldet und bezahlt.",
     "tooManyAttempts": "Zu viele Versuche — bitte warte ein paar Minuten und versuche es erneut.",
-    "categoryLabel": "Wertung",
+    "categoryLabel": "Rennkategorie",
     "categoryMen": "Herren",
     "categoryWomen": "Damen",
-    "categoryFullNote": "Diese Wertung ist ausgebucht — du kannst dich auf die Warteliste setzen.",
+    "categoryFullNote": "Diese Rennkategorie ist ausgebucht — du kannst dich auf die Warteliste setzen.",
     "joinWaitlist": "Auf die Warteliste",
     "waitlistSuccessTitle": "Du stehst auf der Warteliste",
-    "waitlistSuccessText": "Aktuell sind alle Startplätze in deiner Wertung vergeben. Es wurde keine Zahlung vorgenommen. Wir melden uns per E-Mail, sobald ein Platz frei wird."
+    "waitlistSuccessText": "Aktuell sind alle Startplätze in deiner Rennkategorie vergeben. Es wurde keine Zahlung vorgenommen. Wir melden uns per E-Mail, sobald ein Platz frei wird."
   },
   "programm": {
     "label": "",
