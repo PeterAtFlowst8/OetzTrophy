@@ -8,7 +8,7 @@ import { getSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 import { Link } from '@/i18n/navigation';
-import { getRaceContent, eventPageLabel, localizedField, localizedFormat, formatShortDate, entryTypeLabel } from '@/lib/events';
+import { getRaceContent, eventPageLabel, localizedField, localizedFormat, formatShortDate, entryFactValue } from '@/lib/events';
 import TextWithLinks from '@/components/TextWithLinks';
 
 
@@ -65,7 +65,7 @@ export default async function OetzTrophyPage() {
               {[
                 { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(event.date, locale) },
                 { label: 'Format', value: localizedFormat(event.format, locale) },
-                { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryTypeLabel(event.entryType, locale) },
+                { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryFactValue(event.entryLabel, event.entryType, locale) },
               ].map((item) => (
                 <div key={item.label} style={{ borderTop: '3px solid var(--color-accent)', paddingTop: '1rem' }}>
                   <p className="uppercase mb-2" style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.2em', color: 'var(--color-muted)' }}>

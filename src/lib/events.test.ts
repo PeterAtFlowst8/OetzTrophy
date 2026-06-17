@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { eventPageLabel, localizedFormat, pickRaceContent, type SanityEvent } from './events';
+import { entryFactValue, eventPageLabel, localizedFormat, pickRaceContent, type SanityEvent } from './events';
 
 const make = (over: Partial<SanityEvent>): SanityEvent => ({
   _id: 'x',
@@ -57,6 +57,28 @@ describe('localizedFormat', () => {
     expect(localizedFormat(undefined, 'de')).toBe('');
     expect(localizedFormat(null, 'de')).toBe('');
     expect(localizedFormat({ de: '', en: '' }, 'de')).toBe('');
+  });
+});
+
+describe('entryFactValue', () => {
+  it('uses the editable free-text label for the locale when it is set', () => {
+    const label = { de: 'Anmeldung', en: 'Registration' };
+    expect(entryFactValue(label, 'open', 'de')).toBe('Anmeldung');
+    expect(entryFactValue(label, 'open', 'en')).toBe('Registration');
+  });
+
+  it('falls back to the dropdown label when the free text is blank or absent', () => {
+    expect(entryFactValue(undefined, 'open', 'de')).toBe('Rennwochenende-Anmeldung');
+    expect(entryFactValue({ de: '', en: '' }, 'qualification', 'en')).toBe('Qualification');
+  });
+
+  it('fills the other language when only one free-text side is set', () => {
+    expect(entryFactValue({ de: 'Anmeldung' }, 'open', 'en')).toBe('Anmeldung');
+  });
+
+  it('returns empty string when both the free text and the dropdown are absent', () => {
+    expect(entryFactValue(undefined, undefined, 'de')).toBe('');
+    expect(entryFactValue({ de: '   ' }, '', 'en')).toBe('');
   });
 });
 

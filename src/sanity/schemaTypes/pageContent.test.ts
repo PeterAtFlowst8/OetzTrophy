@@ -11,7 +11,7 @@ describe('pageQualification schema', () => {
     const qual = pageContentTypes.find((t) => t.name === 'pageQualification');
     expect(qual).toBeDefined();
     const names = (qual!.fields as Array<{ name: string }>).map((f) => f.name);
-    for (const field of ['title', 'body', 'date', 'format', 'entryType', 'rules']) {
+    for (const field of ['title', 'body', 'date', 'format', 'entryLabel', 'entryType', 'rules']) {
       expect(names, `expected pageQualification to expose "${field}"`).toContain(field);
     }
   });

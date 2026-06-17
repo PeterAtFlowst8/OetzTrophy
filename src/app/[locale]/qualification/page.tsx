@@ -7,7 +7,7 @@ import TextWithLinks from '@/components/TextWithLinks';
 import { richTextComponents } from '@/components/richTextComponents';
 import { getOptionalSiteImage, getPageSeo } from '@/lib/siteContent';
 import { getPageText, pageTextBody, pageTextString } from '@/lib/pageText';
-import { formatShortDate, entryTypeLabel, localizedFormat } from '@/lib/events';
+import { formatShortDate, entryFactValue, localizedFormat } from '@/lib/events';
 import { getSiteSettings } from '@/lib/settings';
 import { registrationOpensLabel } from '@/lib/registration';
 
@@ -38,10 +38,11 @@ export default async function QualificationPage() {
   // Stat block: render only the facts the client has filled in (same fields and
   // styling as the race pages, but the Qualification doc starts blank).
   const formatLabel = localizedFormat(text?.format, locale);
+  const entryValue = entryFactValue(text?.entryLabel, text?.entryType, locale);
   const facts = [
     text?.date ? { label: locale === 'de' ? 'Datum' : 'Date', value: formatShortDate(text.date, locale) } : null,
     formatLabel ? { label: 'Format', value: formatLabel } : null,
-    text?.entryType ? { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryTypeLabel(text.entryType, locale) } : null,
+    entryValue ? { label: locale === 'de' ? 'Teilnahme' : 'Entry', value: entryValue } : null,
   ].filter((f): f is { label: string; value: string } => f !== null);
 
   const rules = (text?.rules ?? [])

@@ -6,6 +6,7 @@ export type SanityEvent = {
   pageLabel?: { de?: string; en?: string };
   date: string;
   entryType: string;
+  entryLabel?: { de?: string; en?: string };
   format: string | { de?: string; en?: string };
   excerpt: { de: string; en: string };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,7 +14,7 @@ export type SanityEvent = {
   rules: Array<{ de: string; en: string }>;
 };
 
-const RACE_FIELDS = '_id, title, pageLabel, date, entryType, format, excerpt, body, rules';
+const RACE_FIELDS = '_id, title, pageLabel, date, entryType, entryLabel, format, excerpt, body, rules';
 
 /**
  * The main text and race facts of the three race/festival pages live on the
@@ -108,4 +109,21 @@ export function entryTypeLabel(entryType: string, locale: string): string {
     'free': { de: 'Freier Eintritt', en: 'Free Entry' },
   };
   return locale === 'en' ? labels[entryType]?.en || entryType : labels[entryType]?.de || entryType;
+}
+
+/**
+ * The "Teilnahme / Entry" stat value. The client's free-text label
+ * (`entryLabel`, with cross-language fill) wins; when it is blank, fall back to
+ * the standard label for the `entryType` dropdown; when both are empty, return
+ * '' so the stat is hidden.
+ */
+export function entryFactValue(
+  entryLabel: { de?: string; en?: string } | null | undefined,
+  entryType: string | null | undefined,
+  locale: string,
+): string {
+  const custom =
+    locale === 'en' ? entryLabel?.en || entryLabel?.de : entryLabel?.de || entryLabel?.en;
+  if (custom?.trim()) return custom.trim();
+  return entryType ? entryTypeLabel(entryType, locale) : '';
 }

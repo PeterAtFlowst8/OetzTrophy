@@ -1043,12 +1043,18 @@ function raceContentFields() {
       'Shown in the event facts, for example Zeitlauf / Time Trial, Head-to-Head, or Festival.',
       { optional: true },
     ),
+    localizedString(
+      'entryLabel',
+      'Entry / Participation label',
+      'Shown in the event facts, for example Anmeldung / Registration. Leave blank to use the standard label from the dropdown below.',
+      { optional: true },
+    ),
     defineField({
       name: 'entryType',
       title: 'Entry / Registration Path',
       type: 'string',
       description:
-        'This controls the participation label only. Kayak Cross remains its own race, but paid race participation uses one shared race-weekend registration.',
+        'Standard participation label, used only when the "Entry / Participation label" text field above is left empty.',
       options: {
         list: [
           { title: 'Qualification', value: 'qualification' },

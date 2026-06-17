@@ -18,10 +18,11 @@ export type PageText = {
   date?: string;
   format?: string | { de?: string; en?: string };
   entryType?: string;
+  entryLabel?: { de?: string; en?: string };
   rules?: Array<{ de?: string; en?: string }>;
 };
 
-const QUERY = `*[_id == $pageId][0]{ title, pageLabel, body, excerpt, date, format, entryType, rules }`;
+const QUERY = `*[_id == $pageId][0]{ title, pageLabel, body, excerpt, date, format, entryType, entryLabel, rules }`;
 
 export async function getPageText(pageId: string): Promise<PageText | null> {
   try {
