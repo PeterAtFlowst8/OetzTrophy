@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { isAdminAuthenticated } from '@/lib/admin-auth-server';
-import { deleteTestRegistrations, deleteTestWaitlist } from '@/lib/db';
+import { deleteTestRegistrations, deleteTestWaitlist, deleteTestVolunteers } from '@/lib/db';
 
 export async function POST() {
   if (!(await isAdminAuthenticated())) {
@@ -8,5 +8,6 @@ export async function POST() {
   }
   const registrations = await deleteTestRegistrations();
   const waitlist = await deleteTestWaitlist();
-  return NextResponse.json({ deleted: { registrations, waitlist } });
+  const volunteers = await deleteTestVolunteers();
+  return NextResponse.json({ deleted: { registrations, waitlist, volunteers } });
 }

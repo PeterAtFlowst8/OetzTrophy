@@ -15,6 +15,7 @@ export type SeoPageKey =
   | 'program'
   | 'kontakt'
   | 'registration'
+  | 'volunteerSignup'
   | 'qualification'
   | 'news'
   | 'gallery'
@@ -108,6 +109,18 @@ export const SEO_DEFAULTS: Record<SeoPageKey, { de: LocalizedSeo; en: LocalizedS
       title: 'Registration - OETZ TROPHY Race Weekend 2026',
       description:
         'Register for the OETZ TROPHY race weekend 2026. Qualification, Kayak Cross and OETZ TROPHY on the Ötztaler Ache in Tyrol, Austria.',
+    },
+  },
+  volunteerSignup: {
+    de: {
+      title: 'Freiwillige - Als Helfer:in bei der OETZ TROPHY anmelden',
+      description:
+        'Werde Teil der OETZ TROPHY Crew. Melde dich als Helfer:in beim Ötztaler Kajakfestival 2026 an — Streckenposten, Registrierung, Sicherheit, Erste Hilfe, Medien und mehr. 4 Tage in Oetz, Tirol.',
+    },
+    en: {
+      title: 'Volunteer - Join the OETZ TROPHY Crew 2026',
+      description:
+        'Join the OETZ TROPHY crew. Sign up to volunteer at the Ötztal Kayak Festival 2026 — marshalling, registration, safety, first aid, media and more across four days in Oetz, Tyrol.',
     },
   },
   qualification: {

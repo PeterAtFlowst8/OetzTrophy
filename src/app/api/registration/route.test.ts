@@ -207,4 +207,20 @@ describe('POST /api/registration', () => {
     expect(ran(sql, 'INSERT INTO registrations')).toBe(true);
     expect(create).toHaveBeenCalledTimes(1);
   });
+
+  it("re-activates an existing expired/cancelled registration to pending on re-submit", async () => {
+    const sql = makeSql((text) =>
+      text.includes('SELECT id, status FROM registrations') ? [{ id: 1, status: 'expired' }] :
+      text.includes("status = 'paid'") && text.includes('count(') ? [{ n: 0 }] : [],
+    );
+    vi.mocked(getDb).mockReturnValue(sql as never);
+    const create = vi.fn().mockResolvedValue({ id: 'cs_test_x', url: 'https://checkout.stripe.com/x' });
+    vi.mocked(getStripe).mockReturnValue({ checkout: { sessions: { create } } } as never);
+
+    const res = await POST(request(VALID_BODY));
+
+    expect(res.status).toBe(200);
+    expect(ran(sql, 'UPDATE registrations')).toBe(true);
+    expect(ran(sql, "status = 'pending'")).toBe(true); // expired row re-activated, not left dead
+  });
 });

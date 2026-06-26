@@ -25,6 +25,7 @@
 *.pem
 graphify-out/
 .impeccable/
+.playwright-mcp/
 
 # debug
 npm-debug.log*

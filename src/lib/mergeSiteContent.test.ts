@@ -58,6 +58,6 @@ describe('mergeSiteContent', () => {
         seen.set(key, def.type);
       }
     }
-    expect(seen.size).toBe(59);
+    expect(seen.size).toBe(63);
   });
 });

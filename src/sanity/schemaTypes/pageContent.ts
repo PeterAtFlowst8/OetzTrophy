@@ -14,6 +14,7 @@ import {
   BookIcon,
   MenuIcon,
   ColorWheelIcon,
+  UsersIcon,
 } from '@sanity/icons';
 import type { ComponentType } from 'react';
 import enMessages from '../../../messages/en.json';
@@ -64,6 +65,8 @@ const SECTION_TITLES: Record<string, string> = {
   gallery: 'Gallery Page',
   results: 'Results Page',
   registration: 'Registration Page',
+  volunteerSignup: 'Volunteer Signup Page',
+  volunteerEmail: 'Volunteer Confirmation Email',
 };
 
 const SECTION_DESCRIPTIONS: Record<string, string> = {
@@ -84,6 +87,8 @@ const SECTION_DESCRIPTIONS: Record<string, string> = {
   gallery: 'Coming-soon text for the gallery page.',
   results: 'Coming-soon text for the results page.',
   registration: 'Copy, field labels and confirmation text on the registration page.',
+  volunteerSignup: 'Copy, field labels, role/day options and confirmation text on the volunteer signup page.',
+  volunteerEmail: 'The confirmation email sent to a volunteer after they sign up. Both languages are sent in one email. Use {name} where the volunteer’s first name should appear.',
   terms: 'Participant terms shown from the registration form.',
   impressum: 'Legal notice page text.',
   datenschutz: 'Privacy policy page text.',
@@ -186,6 +191,7 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     kontakt: 'Contact link',
     datenschutz: 'Privacy policy link',
     terms: 'Terms link',
+    volunteer: 'Volunteer link',
     copyright: 'Copyright line',
   },
   kajakfestival: {
@@ -280,6 +286,54 @@ const FIELD_TITLES: Record<string, Record<string, string>> = {
     dataText: 'Data and media text',
     reviewNote: 'Review note',
   },
+  volunteerSignup: {
+    label: 'Page label (eyebrow)',
+    title: 'Page title',
+    formTitle: 'Form heading',
+    intro: 'Intro text',
+    h_about: 'Section: About you',
+    h_help: 'Section: Where you can help',
+    h_when: 'Section: When available',
+    h_exp: 'Section: Your experience',
+    firstName: 'First name label',
+    lastName: 'Last name label',
+    email: 'Email label',
+    tshirt: 'T-shirt size label',
+    help_sub: 'Roles hint',
+    when_sub: 'Availability hint',
+    roleMedia: 'Role 1 — title',
+    roleMediaDesc: 'Role 1 — description',
+    roleRegistration: 'Role 2 — title',
+    roleRegistrationDesc: 'Role 2 — description',
+    roleSafety: 'Role 3 — title',
+    roleSafetyDesc: 'Role 3 — description',
+    roleFirstAid: 'Role 4 — title',
+    roleFirstAidDesc: 'Role 4 — description',
+    other_label: 'Other-help label',
+    other_ph: 'Other-help placeholder',
+    dayThu: 'Day 1 — short label',
+    dayThuSub: 'Day 1 — description',
+    dayFri: 'Day 2 — short label',
+    dayFriSub: 'Day 2 — description',
+    daySat: 'Day 3 — short label',
+    daySatSub: 'Day 3 — description',
+    daySun: 'Day 4 — short label',
+    daySunSub: 'Day 4 — description',
+    exp_label: 'Experience label',
+    exp_ph: 'Experience placeholder',
+    requiredNote: 'Required-fields note',
+    age: 'Age confirmation checkbox',
+    consent: 'Consent checkbox',
+    submit: 'Submit button',
+    submitting: 'Submitting button',
+    note: 'Footer note',
+    successTitle: 'Success title',
+    successText: 'Success text',
+  },
+  volunteerEmail: {
+    subject: 'Email subject',
+    body: 'Email body',
+  },
 };
 
 const OPEN_SECTIONS = new Set([
@@ -287,6 +341,7 @@ const OPEN_SECTIONS = new Set([
   'festivalOverview',
   'events',
   'registration',
+  'volunteerSignup',
 ]);
 
 /**
@@ -489,6 +544,11 @@ const pageImageFields = [
     'Shown at the top of the registration page. Leave empty to keep the current photo.',
   ),
   imageField(
+    'imageVolunteerSignup',
+    'Volunteer Signup page header photo',
+    'Shown at the top of the volunteer signup page. Leave blank for the plain dark header.',
+  ),
+  imageField(
     'imageQualification',
     'Qualification page header photo',
     'Shown at the top of the Qualification page. Leave blank for the plain dark header.',
@@ -631,6 +691,7 @@ const MENU_PAGE_OPTIONS = [
   { title: 'Program', value: '/programm' },
   { title: 'News', value: '/news' },
   { title: 'Registration', value: '/registration' },
+  { title: 'Volunteer Signup', value: '/volunteer-signup' },
   { title: 'Qualification', value: '/qualification' },
   { title: 'Contact', value: '/kontakt' },
   { title: 'Gallery', value: '/gallery' },
@@ -835,6 +896,7 @@ const seoFields = [
   seoField('program', 'Program page'),
   seoField('kontakt', 'Contact page'),
   seoField('registration', 'Registration page'),
+  seoField('volunteerSignup', 'Volunteer Signup page'),
   seoField('qualification', 'Qualification page'),
   seoField('news', 'News page'),
   seoField('gallery', 'Gallery page'),
@@ -887,6 +949,11 @@ const FIELD_ORDER = [
   'imageRegistration',
   'registration',
   'seoRegistration',
+  // Volunteer signup
+  'imageVolunteerSignup',
+  'volunteerSignup',
+  'volunteerEmail',
+  'seoVolunteerSignup',
   // Qualification
   'imageQualification',
   'seoQualification',
@@ -930,6 +997,7 @@ export const PAGE_ICONS: Record<string, ComponentType> = {
   pageKajakfestival: CalendarIcon,
   pageProgram: ClockIcon,
   pageRegistration: ClipboardIcon,
+  pageVolunteerSignup: UsersIcon,
   pageQualification: CheckmarkCircleIcon,
   pageNews: DocumentTextIcon,
   pageGallery: ImagesIcon,
@@ -947,6 +1015,7 @@ const PAGE_SUBTITLES: Record<string, string> = {
   pageKajakfestival: 'Main text, schedule, location, header photo & SEO',
   pageProgram: 'Intro, daily schedule, header photo & SEO',
   pageRegistration: 'Form labels, confirmation text, header photo & SEO',
+  pageVolunteerSignup: 'Form labels, role/day options, confirmation text, header photo & SEO',
   pageQualification: 'How the qualification works: main text, event facts, rules, header photo & SEO',
   pageNews: 'Header photo & SEO (articles: Blog Posts)',
   pageGallery: 'Coming-soon text, header photo & SEO',

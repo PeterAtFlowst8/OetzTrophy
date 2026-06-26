@@ -4,11 +4,10 @@ import { isRegistrationOpen, isRegistrationTestMode } from '@/lib/registration';
 import { parseRegistrationInput } from '@/lib/registrationInput';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { getTurnstileConfig, verifyTurnstileToken } from '@/lib/turnstile';
-import { getStripe } from '@/lib/stripe';
+import { createRegistrationCheckoutSession } from '@/lib/checkout';
 import { getSiteSettings } from '@/lib/settings';
 import { resolveCaps, isCategoryFull } from '@/lib/capacity';
 import { isWaitlistEmailEnabled, sendWaitlistEmail } from '@/lib/waitlist-email';
-import { SITE_URL } from '@/lib/site';
 
 const DEFAULT_EXPERIENCE_LEVEL = 'race-eligible';
 
@@ -100,11 +99,13 @@ export async function POST(request: NextRequest) {
 
     // Space available → existing flow (now carrying category).
     if (existing.length > 0) {
+      // status reset to 'pending' so a previously expired/cancelled athlete who
+      // re-registers re-activates cleanly (a paid row is already 409'd above).
       await sql`
         UPDATE registrations
         SET name = ${name}, first_name = ${firstName}, last_name = ${lastName}, club = NULL,
             nationality = ${nationality}, tshirt_size = ${tshirtSize}, category = ${category},
-            experience_level = ${DEFAULT_EXPERIENCE_LEVEL},
+            experience_level = ${DEFAULT_EXPERIENCE_LEVEL}, status = 'pending',
             accepted_terms = ${acceptedTerms}, accepted_awp_rules = ${acceptedAwpRules},
             confirmed_over_18 = ${confirmedOver18}, updated_at = NOW()
         WHERE email = ${email}
@@ -122,42 +123,16 @@ export async function POST(request: NextRequest) {
       `;
     }
 
-    // Create Stripe Checkout Session.
-    // Fee priority: client-managed Studio value -> env override -> built-in default.
-    const registrationFee =
-      typeof settings.registrationFeeEur === 'number' && settings.registrationFeeEur > 0
-        ? Math.round(settings.registrationFeeEur * 100)
-        : parseInt(process.env.REGISTRATION_FEE_CENTS || '13500', 10);
-
-    const session = await getStripe().checkout.sessions.create({
-      mode: 'payment',
-      payment_method_types: ['card'],
-      customer_email: email,
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            unit_amount: registrationFee,
-            product_data: {
-              name: 'OETZ TROPHY Race Weekend Registration 2026',
-              description: `${name} (${nationality}) - T-shirt ${tshirtSize}`,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      metadata: {
-        email,
-        name,
-        firstName,
-        lastName,
-        nationality,
-        tshirtSize,
-        category,
-        type: 'race-weekend-registration',
-      },
-      success_url: `${SITE_URL}/registration/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/registration`,
+    // Create Stripe Checkout Session (shared with the reminder "resume" flow).
+    const session = await createRegistrationCheckoutSession({
+      email,
+      name,
+      firstName,
+      lastName,
+      nationality,
+      tshirtSize,
+      category,
+      settings,
     });
 
     // Store session ID

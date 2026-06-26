@@ -99,6 +99,7 @@ export default async function Footer() {
   ]);
 
   const footerLinks = [
+    { label: t('volunteer'), href: '/volunteer-signup' as const },
     { label: t('impressum'), href: '/impressum' as const },
     { label: t('terms'), href: '/terms-and-conditions' as const },
     { label: t('kontakt'), href: '/kontakt' as const },

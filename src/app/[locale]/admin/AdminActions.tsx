@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminActions() {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
+  const [sweeping, setSweeping] = useState(false);
 
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -29,6 +30,36 @@ export default function AdminActions() {
     }
   }
 
+  async function handleSweep(dryRun: boolean) {
+    if (
+      !dryRun &&
+      !window.confirm(
+        'Run the pending-payment sweep FOR REAL? This sends reminder emails and expires registrations left unpaid for 4+ days.',
+      )
+    )
+      return;
+    setSweeping(true);
+    try {
+      const res = await fetch('/api/admin/pending-sweep', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dryRun }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        const s = data?.summary ?? {};
+        window.alert(
+          `${dryRun ? 'DRY RUN — would' : 'Done —'} scan ${s.scanned ?? 0}, recover ${s.reconciledPaid ?? 0} paid, send ${s.remindersSent ?? 0} reminder(s), expire ${s.expired ?? 0}.`,
+        );
+        router.refresh();
+      } else {
+        window.alert(data?.error ?? 'Sweep failed.');
+      }
+    } finally {
+      setSweeping(false);
+    }
+  }
+
   const buttonStyle: React.CSSProperties = {
     fontFamily: 'var(--font-display)',
     fontSize: '16px',
@@ -47,6 +78,26 @@ export default function AdminActions() {
         style={{ ...buttonStyle, backgroundColor: '#7c2d12', color: '#ffedd5', cursor: deleting ? 'wait' : 'pointer' }}
       >
         {deleting ? 'Deleting…' : 'Delete test data'}
+      </button>
+      <button
+        type="button"
+        onClick={() => handleSweep(true)}
+        disabled={sweeping}
+        className="px-5 py-2 uppercase disabled:opacity-50"
+        style={{ ...buttonStyle, backgroundColor: 'transparent', color: 'var(--color-ink)', cursor: sweeping ? 'wait' : 'pointer' }}
+        title="Reconcile unpaid registrations against Stripe and preview reminders/expiry — no changes made"
+      >
+        {sweeping ? 'Sweeping…' : 'Sweep (dry run)'}
+      </button>
+      <button
+        type="button"
+        onClick={() => handleSweep(false)}
+        disabled={sweeping}
+        className="px-5 py-2 uppercase disabled:opacity-50"
+        style={{ ...buttonStyle, backgroundColor: '#f59e0b', color: '#1c1917', cursor: sweeping ? 'wait' : 'pointer' }}
+        title="Send due reminders and expire 4+ day unpaid registrations"
+      >
+        Sweep (live)
       </button>
       <a
         href="/api/admin/export"

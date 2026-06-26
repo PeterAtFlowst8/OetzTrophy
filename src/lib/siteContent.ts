@@ -91,6 +91,7 @@ export type SiteImageKey =
   | 'program'
   | 'kontakt'
   | 'registration'
+  | 'volunteerSignup'
   | 'qualification'
   | 'news'
   | 'gallery'

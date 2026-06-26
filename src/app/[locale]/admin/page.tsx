@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { isAdminAuthenticated } from '@/lib/admin-auth-server';
-import { listRegistrations, listWaitlist } from '@/lib/db';
+import { listRegistrations, listWaitlist, listVolunteers } from '@/lib/db';
 import { getSiteSettings } from '@/lib/settings';
 import { resolveCaps } from '@/lib/capacity';
 import { countPaidByCategory } from '@/lib/adminTable';
@@ -8,6 +8,7 @@ import AdminLogin from './AdminLogin';
 import AdminActions from './AdminActions';
 import RegistrationsTable from './RegistrationsTable';
 import WaitlistTable from './WaitlistTable';
+import VolunteersTable from './VolunteersTable';
 
 export const dynamic = 'force-dynamic'; // PII — never cache, always re-check the cookie
 
@@ -56,9 +57,10 @@ export default async function AdminPage() {
     );
   }
 
-  const [registrations, waitlist, settings] = await Promise.all([
+  const [registrations, waitlist, volunteers, settings] = await Promise.all([
     listRegistrations(),
     listWaitlist(),
+    listVolunteers(),
     getSiteSettings(),
   ]);
   const caps = resolveCaps(settings);
@@ -107,6 +109,18 @@ export default async function AdminPage() {
         {waitlist.filter((w) => w.category === 'women').length} women
       </p>
       <WaitlistTable rows={waitlist} />
+
+      <h2
+        className="uppercase mt-14 mb-3"
+        style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 700 }}
+      >
+        Volunteers
+      </h2>
+      <p className="mb-4" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-body-text)' }}>
+        {volunteers.length} total
+        {volunteers.some((v) => v.isTest) ? ` · ${volunteers.filter((v) => v.isTest).length} test` : ''}
+      </p>
+      <VolunteersTable rows={volunteers} />
     </main>
   );
 }
