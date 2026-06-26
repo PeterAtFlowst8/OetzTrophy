@@ -1,5 +1,0 @@
-{
-  "crons": [
-    { "path": "/api/cron/pending-sweep", "schedule": "0 9 * * *" }
-  ]
-}
