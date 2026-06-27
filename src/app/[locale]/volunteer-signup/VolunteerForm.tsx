@@ -53,12 +53,6 @@ export default function VolunteerForm({ headerImage }: Props) {
   const t = useTranslations('volunteerSignup');
   const locale = useLocale();
 
-  const roles = [
-    { key: 'media', label: t('roleMedia'), desc: t('roleMediaDesc') },
-    { key: 'registration', label: t('roleRegistration'), desc: t('roleRegistrationDesc') },
-    { key: 'safety', label: t('roleSafety'), desc: t('roleSafetyDesc') },
-    { key: 'first_aid', label: t('roleFirstAid'), desc: t('roleFirstAidDesc') },
-  ];
   const days = [
     { key: 'thu', label: t('dayThu'), sub: t('dayThuSub') },
     { key: 'fri', label: t('dayFri'), sub: t('dayFriSub') },
@@ -70,7 +64,6 @@ export default function VolunteerForm({ headerImage }: Props) {
     firstName: '',
     lastName: '',
     email: '',
-    roles: [] as string[],
     availability: [] as string[],
     otherHelp: '',
     experience: '',
@@ -249,52 +242,8 @@ export default function VolunteerForm({ headerImage }: Props) {
                 </div>
               </div>
 
-              {/* Where you can help */}
-              <SectionHeader>{t('h_help')}</SectionHeader>
-              <p className="mb-4" style={hintStyle}>
-                {t('help_sub')}
-              </p>
-              <div className="flex flex-col gap-2.5">
-                {roles.map((r) => {
-                  const checked = form.roles.includes(r.key);
-                  return (
-                    <label
-                      key={r.key}
-                      className="flex items-start gap-3.5 border px-4 py-3.5 cursor-pointer transition-colors"
-                      style={{
-                        borderColor: checked ? 'var(--color-accent)' : 'var(--color-border)',
-                        backgroundColor: checked ? 'rgba(245,158,11,0.08)' : 'white',
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => setForm({ ...form, roles: toggle(form.roles, r.key) })}
-                        className="mt-0.5 size-5 shrink-0"
-                        style={{ accentColor: 'var(--color-accent)' }}
-                      />
-                      <span className="flex flex-col gap-0.5">
-                        <span
-                          style={{
-                            fontFamily: 'var(--font-body)',
-                            fontSize: '15px',
-                            fontWeight: 600,
-                            color: 'var(--color-ink)',
-                          }}
-                        >
-                          {r.label}
-                        </span>
-                        <span
-                          style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--color-muted)' }}
-                        >
-                          {r.desc}
-                        </span>
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-              <div className="mt-5">
+              {/* Information about you */}
+              <div className="mt-8">
                 <label htmlFor="otherHelp" style={labelStyle}>
                   {t('other_label')}
                 </label>
